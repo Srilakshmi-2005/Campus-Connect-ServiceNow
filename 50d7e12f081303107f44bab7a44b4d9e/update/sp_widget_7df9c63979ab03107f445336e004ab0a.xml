@@ -1,0 +1,2020 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    c.selectedStudent = '';
+
+    c.selectedEvent = '';
+
+    c.loading = false;
+
+    c.sendingRequest = false;
+
+
+    /* =========================================
+       FIND MATCHES
+       ========================================= */
+
+    c.loadMatches = function() {
+
+        if (!c.selectedStudent ||
+            !c.selectedStudent.trim()) {
+
+            alert(
+                'Please enter your name.'
+            );
+
+            return;
+        }
+
+
+        if (!c.selectedEvent) {
+
+            alert(
+                'Please select an event.'
+            );
+
+            return;
+        }
+
+
+        c.loading = true;
+
+
+        c.server.get({
+
+            action: 'find_matches',
+
+            selectedStudent:
+                c.selectedStudent.trim(),
+
+            selectedEvent:
+                c.selectedEvent
+
+        }).then(function(response) {
+
+            c.loading = false;
+
+            var result =
+                response.data || {};
+
+            c.data.matches =
+                result.matches || [];
+
+            c.data.message =
+                result.message || '';
+
+            c.data.selectedEventName =
+                result.selectedEventName || '';
+
+        }, function(error) {
+
+            c.loading = false;
+
+            console.log(
+                'FIND MATCH ERROR:',
+                error
+            );
+
+            alert(
+                'Unable to find teammates. Please try again.'
+            );
+
+        });
+
+    };
+
+
+    /* =========================================
+       ENTER KEY
+       ========================================= */
+
+    c.handleStudentKeypress = function(event) {
+
+        if (event.which === 13) {
+
+            c.loadMatches();
+
+        }
+
+    };
+
+
+    /* =========================================
+       SEND TEAM REQUEST
+       ========================================= */
+
+    c.sendTeamRequest = function(match) {
+
+        if (c.sendingRequest) {
+            return;
+        }
+
+
+        if (!match ||
+            !match.studentId) {
+
+            alert(
+                'Unable to identify the selected student.'
+            );
+
+            return;
+        }
+
+
+        if (!c.selectedEvent) {
+
+            alert(
+                'Please select an event.'
+            );
+
+            return;
+        }
+
+
+        c.sendingRequest = true;
+
+
+        c.server.get({
+
+            action:
+                'send_team_request',
+
+            receiverStudent:
+                match.studentId,
+
+            eventId:
+                c.selectedEvent
+
+        }).then(function(response) {
+
+            c.sendingRequest = false;
+
+            var result =
+                response.data || {};
+
+
+            if (result.success === true) {
+
+                alert(
+                    'Team request sent successfully.'
+                );
+
+                /*
+                 * Go to My Team Requests.
+                 * The selected student will now be able
+                 * to see the request.
+                 */
+
+                window.location.href =
+                    '?id=my_team_requests';
+
+            } else {
+
+                alert(
+                    result.message ||
+                    'Unable to send the team request.'
+                );
+
+            }
+
+        }, function(error) {
+
+            c.sendingRequest = false;
+
+            console.log(
+                'SEND TEAM REQUEST ERROR:',
+                error
+            );
+
+            alert(
+                'Unable to send the team request.'
+            );
+
+        });
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   CAMPUS CONNECT - FIND TEAMMATES&#13;
+   COMPLETE STANDALONE CSS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-teammate-page {&#13;
+    min-height: 100vh;&#13;
+    padding: 32px 0 0 180px;&#13;
+    background: transparent;&#13;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",&#13;
+                 Roboto, Arial, sans-serif;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.cc-teammate-page *,&#13;
+.cc-teammate-page *::before,&#13;
+.cc-teammate-page *::after {&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HERO&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-teammate-hero {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto 28px;&#13;
+    padding: 30px 34px;&#13;
+    border-radius: 18px;&#13;
+    background: linear-gradient(&#13;
+        135deg,&#13;
+        #173f73 0%,&#13;
+        #1f5d9b 55%,&#13;
+        #2877b9 100%&#13;
+    );&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 22px;&#13;
+    box-shadow: 0 12px 30px rgba(23, 63, 115, 0.16);&#13;
+}&#13;
+&#13;
+.cc-hero-icon {&#13;
+    width: 62px;&#13;
+    height: 62px;&#13;
+    min-width: 62px;&#13;
+    border-radius: 16px;&#13;
+    background: rgba(255, 255, 255, 0.16);&#13;
+    color: #ffffff;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 30px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.cc-hero-content h1 {&#13;
+    margin: 0;&#13;
+    color: #ffffff;&#13;
+    font-size: 30px;&#13;
+    line-height: 1.2;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-hero-content p {&#13;
+    margin: 8px 0 0;&#13;
+    color: rgba(255, 255, 255, 0.84);&#13;
+    font-size: 15px;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SELECTION CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-selection-card {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto 28px;&#13;
+    padding: 28px;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5eaf1;&#13;
+    border-radius: 16px;&#13;
+    box-shadow: 0 6px 20px rgba(31, 45, 61, 0.07);&#13;
+}&#13;
+&#13;
+.cc-selection-header {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 16px;&#13;
+    margin-bottom: 24px;&#13;
+}&#13;
+&#13;
+.cc-selection-icon {&#13;
+    width: 48px;&#13;
+    height: 48px;&#13;
+    min-width: 48px;&#13;
+    border-radius: 12px;&#13;
+    background: #edf5ff;&#13;
+    color: #1f5d9b;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 23px;&#13;
+}&#13;
+&#13;
+.cc-selection-header h2 {&#13;
+    margin: 0;&#13;
+    color: #1f2937;&#13;
+    font-size: 21px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-selection-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #718096;&#13;
+    font-size: 14px;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FORM&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-form-group {&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+.cc-label {&#13;
+    display: block;&#13;
+    margin-bottom: 8px;&#13;
+    color: #344054;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.cc-select {&#13;
+    width: 100%;&#13;
+    height: 46px;&#13;
+    padding: 0 14px;&#13;
+    border: 1px solid #d4dce7;&#13;
+    border-radius: 9px;&#13;
+    background: #ffffff;&#13;
+    color: #243b53;&#13;
+    font-size: 14px;&#13;
+    outline: none;&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.cc-select::placeholder {&#13;
+    color: #98a2b3;&#13;
+}&#13;
+&#13;
+.cc-select:focus {&#13;
+    border-color: #2877b9;&#13;
+    box-shadow: 0 0 0 3px rgba(40, 119, 185, 0.12);&#13;
+}&#13;
+&#13;
+select.cc-select {&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   PRIMARY BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-send-request-btn {&#13;
+    min-height: 44px;&#13;
+    padding: 0 22px;&#13;
+    border: none;&#13;
+    border-radius: 9px;&#13;
+    background: #1f5d9b;&#13;
+    color: #ffffff;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    transition:&#13;
+        background 0.2s ease,&#13;
+        transform 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.cc-send-request-btn:hover:not(:disabled) {&#13;
+    background: #174d84;&#13;
+    transform: translateY(-1px);&#13;
+    box-shadow: 0 6px 15px rgba(31, 93, 155, 0.22);&#13;
+}&#13;
+&#13;
+.cc-send-request-btn:active:not(:disabled) {&#13;
+    transform: translateY(0);&#13;
+}&#13;
+&#13;
+.cc-send-request-btn:disabled {&#13;
+    opacity: 0.55;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   INFORMATION MESSAGE&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-info-message {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto 24px;&#13;
+    padding: 15px 18px;&#13;
+    border: 1px solid #d9e6f5;&#13;
+    border-radius: 10px;&#13;
+    background: #f3f8fd;&#13;
+    color: #35516e;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 10px;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.cc-message-icon {&#13;
+    font-size: 18px;&#13;
+    color: #2877b9;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   LOADING&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-loading-card {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto 28px;&#13;
+    padding: 22px 24px;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5eaf1;&#13;
+    border-radius: 14px;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 16px;&#13;
+    box-shadow: 0 5px 18px rgba(31, 45, 61, 0.06);&#13;
+}&#13;
+&#13;
+.cc-loading-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+    min-width: 42px;&#13;
+    border-radius: 50%;&#13;
+    background: #edf5ff;&#13;
+    color: #1f5d9b;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 22px;&#13;
+    animation: cc-teammate-spin 1s linear infinite;&#13;
+}&#13;
+&#13;
+.cc-loading-card strong {&#13;
+    display: block;&#13;
+    color: #25364a;&#13;
+    font-size: 15px;&#13;
+}&#13;
+&#13;
+.cc-loading-card p {&#13;
+    margin: 4px 0 0;&#13;
+    color: #7b8794;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+@keyframes cc-teammate-spin {&#13;
+    from {&#13;
+        transform: rotate(0deg);&#13;
+    }&#13;
+&#13;
+    to {&#13;
+        transform: rotate(360deg);&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESULTS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-results-section {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto;&#13;
+}&#13;
+&#13;
+.cc-results-header {&#13;
+    margin-bottom: 18px;&#13;
+    padding: 0 2px;&#13;
+    display: flex;&#13;
+    align-items: flex-end;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.cc-results-header h2 {&#13;
+    margin: 0;&#13;
+    color: #1f2937;&#13;
+    font-size: 22px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-results-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7b8794;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.cc-match-count {&#13;
+    padding: 7px 13px;&#13;
+    border-radius: 20px;&#13;
+    background: #edf5ff;&#13;
+    color: #1f5d9b;&#13;
+    font-size: 13px;&#13;
+    font-weight: 700;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MATCH CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-match-card {&#13;
+    margin-bottom: 20px;&#13;
+    overflow: hidden;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e3e8ef;&#13;
+    border-radius: 15px;&#13;
+    box-shadow: 0 5px 18px rgba(31, 45, 61, 0.06);&#13;
+    transition:&#13;
+        transform 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.cc-match-card:hover {&#13;
+    transform: translateY(-2px);&#13;
+    box-shadow: 0 10px 26px rgba(31, 45, 61, 0.09);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MATCH HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-match-card-header {&#13;
+    padding: 20px 22px;&#13;
+    border-bottom: 1px solid #edf0f4;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.cc-student-profile {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 13px;&#13;
+}&#13;
+&#13;
+.cc-student-avatar {&#13;
+    width: 48px;&#13;
+    height: 48px;&#13;
+    min-width: 48px;&#13;
+    border-radius: 50%;&#13;
+    background: #eaf3fc;&#13;
+    color: #1f5d9b;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 18px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-student-name {&#13;
+    margin: 0 0 5px;&#13;
+    color: #243b53;&#13;
+    font-size: 17px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-score {&#13;
+    color: #5c6b7a;&#13;
+    font-size: 12px;&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+.cc-match-badge {&#13;
+    padding: 7px 12px;&#13;
+    border-radius: 20px;&#13;
+    background: #edf8f2;&#13;
+    color: #19734a;&#13;
+    font-size: 12px;&#13;
+    font-weight: 700;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MATCH BODY&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-match-card-body {&#13;
+    padding: 22px;&#13;
+}&#13;
+&#13;
+.cc-info-block {&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+.cc-info-label {&#13;
+    margin-bottom: 6px;&#13;
+    color: #7b8794;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 0.7px;&#13;
+    text-transform: uppercase;&#13;
+}&#13;
+&#13;
+.cc-skills-text {&#13;
+    color: #344054;&#13;
+    font-size: 14px;&#13;
+    line-height: 1.55;&#13;
+    word-break: break-word;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MATCHING SKILLS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-match-skills {&#13;
+    display: flex;&#13;
+    flex-wrap: wrap;&#13;
+    gap: 7px;&#13;
+}&#13;
+&#13;
+.cc-skill {&#13;
+    padding: 6px 10px;&#13;
+    border-radius: 18px;&#13;
+    background: #edf5ff;&#13;
+    color: #1f5d9b;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST ACTION&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-request-action {&#13;
+    margin-top: 8px;&#13;
+    padding-top: 18px;&#13;
+    border-top: 1px solid #edf0f4;&#13;
+    display: flex;&#13;
+    justify-content: flex-end;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NO MATCH&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-no-match-card {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto;&#13;
+    padding: 50px 30px;&#13;
+    text-align: center;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5eaf1;&#13;
+    border-radius: 16px;&#13;
+    box-shadow: 0 5px 18px rgba(31, 45, 61, 0.05);&#13;
+}&#13;
+&#13;
+.cc-no-match-icon {&#13;
+    width: 58px;&#13;
+    height: 58px;&#13;
+    margin: 0 auto 15px;&#13;
+    border-radius: 50%;&#13;
+    background: #f1f4f8;&#13;
+    color: #7b8794;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 26px;&#13;
+}&#13;
+&#13;
+.cc-no-match-card h3 {&#13;
+    margin: 0;&#13;
+    color: #344054;&#13;
+    font-size: 19px;&#13;
+}&#13;
+&#13;
+.cc-no-match-card p {&#13;
+    max-width: 500px;&#13;
+    margin: 8px auto 0;&#13;
+    color: #7b8794;&#13;
+    font-size: 14px;&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 768px) {&#13;
+&#13;
+    .cc-teammate-page {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .cc-teammate-hero {&#13;
+        padding: 24px;&#13;
+        gap: 15px;&#13;
+    }&#13;
+&#13;
+    .cc-hero-icon {&#13;
+        width: 50px;&#13;
+        height: 50px;&#13;
+        min-width: 50px;&#13;
+        font-size: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-hero-content h1 {&#13;
+        font-size: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-selection-card {&#13;
+        padding: 21px;&#13;
+    }&#13;
+&#13;
+    .cc-results-header {&#13;
+        align-items: flex-start;&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-match-card-header {&#13;
+        align-items: flex-start;&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-request-action {&#13;
+        justify-content: stretch;&#13;
+    }&#13;
+&#13;
+    .cc-request-action .cc-send-request-btn {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 480px) {&#13;
+&#13;
+    .cc-teammate-page {&#13;
+        padding: 12px;&#13;
+    }&#13;
+&#13;
+    .cc-teammate-hero {&#13;
+        padding: 20px;&#13;
+        border-radius: 14px;&#13;
+    }&#13;
+&#13;
+    .cc-hero-content h1 {&#13;
+        font-size: 21px;&#13;
+    }&#13;
+&#13;
+    .cc-hero-content p {&#13;
+        font-size: 13px;&#13;
+    }&#13;
+&#13;
+    .cc-selection-card {&#13;
+        padding: 17px;&#13;
+    }&#13;
+&#13;
+    .cc-selection-header {&#13;
+        align-items: flex-start;&#13;
+    }&#13;
+&#13;
+    .cc-match-card-body {&#13;
+        padding: 17px;&#13;
+    }&#13;
+&#13;
+    .cc-match-card-header {&#13;
+        padding: 17px;&#13;
+    }&#13;
+&#13;
+    .cc-match-badge {&#13;
+        align-self: flex-start;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>find_teammates</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Find Teammates</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.matches = [];
+
+    data.events = [];
+
+    data.message = '';
+
+    data.selectedEventName = '';
+
+
+    var currentUser =
+        gs.getUserID();
+
+
+    if (!currentUser) {
+
+        data.message =
+            'Please log in to use Find Teammates.';
+
+        return;
+
+    }
+
+
+    /* =========================================
+       LOAD VERIFIED EVENTS
+       ========================================= */
+
+    var eventGR =
+        new GlideRecord(
+            'x_snc_campus_con_0_events'
+        );
+
+    eventGR.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+    eventGR.orderBy(
+        'event_date'
+    );
+
+    eventGR.query();
+
+
+    while (eventGR.next()) {
+
+        data.events.push({
+
+            sys_id:
+                eventGR.getUniqueValue(),
+
+            event_name:
+                eventGR.getDisplayValue(
+                    'event_name'
+                ) ||
+                eventGR.getValue(
+                    'event_name'
+                )
+
+        });
+
+    }
+
+
+    /* =========================================
+       FIND MATCHES
+       ========================================= */
+
+    if (
+        input &&
+        input.action == 'find_matches'
+    ) {
+
+        var selectedStudent =
+            String(
+                input.selectedStudent || ''
+            ).trim();
+
+        var selectedEvent =
+            String(
+                input.selectedEvent || ''
+            ).trim();
+
+
+        if (!selectedStudent) {
+
+            data.message =
+                'Please enter your name.';
+
+            return;
+
+        }
+
+
+        if (!selectedEvent) {
+
+            data.message =
+                'Please select an event.';
+
+            return;
+
+        }
+
+
+        /* GET EVENT */
+
+        var selectedEventGR =
+            new GlideRecord(
+                'x_snc_campus_con_0_events'
+            );
+
+
+        if (
+            !selectedEventGR.get(
+                selectedEvent
+            )
+        ) {
+
+            data.message =
+                'Selected event was not found.';
+
+            return;
+
+        }
+
+
+        data.selectedEventName =
+            selectedEventGR.getDisplayValue(
+                'event_name'
+            );
+
+
+        /* =====================================
+           FIND CURRENT STUDENT PROFILE
+           ===================================== */
+
+        var currentStudentProfile =
+            new GlideRecord(
+                'x_snc_campus_con_0_student_profile'
+            );
+
+
+        currentStudentProfile.addQuery(
+            'student.name',
+            selectedStudent
+        );
+
+        currentStudentProfile.setLimit(1);
+
+        currentStudentProfile.query();
+
+
+        if (!currentStudentProfile.next()) {
+
+            data.message =
+                'Student profile was not found.';
+
+            return;
+
+        }
+
+
+        var currentStudentId =
+            currentStudentProfile.getUniqueValue();
+
+
+        var currentSkills =
+            String(
+                currentStudentProfile.getValue(
+                    'skills'
+                ) || ''
+            ).toLowerCase();
+
+
+        if (!currentSkills) {
+
+            data.message =
+                'No skills are available for this student.';
+
+            return;
+
+        }
+
+
+        /* =====================================
+           CONVERT CURRENT STUDENT SKILLS
+           ===================================== */
+
+        var currentSkillArray =
+            currentSkills
+                .split(',')
+                .map(function(skill) {
+
+                    return skill.trim();
+
+                })
+                .filter(function(skill) {
+
+                    return skill !== '';
+
+                });
+
+
+        /* =====================================
+           FIND OTHER STUDENTS
+           ===================================== */
+
+        var studentGR =
+            new GlideRecord(
+                'x_snc_campus_con_0_student_profile'
+            );
+
+
+        studentGR.addQuery(
+            'sys_id',
+            '!=',
+            currentStudentId
+        );
+
+        studentGR.query();
+
+
+        while (studentGR.next()) {
+
+
+            var otherSkills =
+                String(
+                    studentGR.getValue(
+                        'skills'
+                    ) || ''
+                ).toLowerCase();
+
+
+            if (!otherSkills) {
+                continue;
+            }
+
+
+            var otherSkillArray =
+                otherSkills
+                    .split(',')
+                    .map(function(skill) {
+
+                        return skill.trim();
+
+                    })
+                    .filter(function(skill) {
+
+                        return skill !== '';
+
+                    });
+
+
+            var overlapSkills = [];
+
+
+            for (
+                var i = 0;
+                i < currentSkillArray.length;
+                i++
+            ) {
+
+                for (
+                    var j = 0;
+                    j < otherSkillArray.length;
+                    j++
+                ) {
+
+                    if (
+                        currentSkillArray[i] ===
+                        otherSkillArray[j]
+                    ) {
+
+                        if (
+                            overlapSkills.indexOf(
+                                currentSkillArray[i]
+                            ) === -1
+                        ) {
+
+                            overlapSkills.push(
+                                currentSkillArray[i]
+                            );
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            if (
+                overlapSkills.length === 0
+            ) {
+
+                continue;
+
+            }
+
+
+            var studentUserId =
+                studentGR.getValue(
+                    'student'
+                );
+
+
+            var studentName =
+                studentGR.getDisplayValue(
+                    'student'
+                );
+
+
+            data.matches.push({
+
+                studentId:
+                    studentUserId,
+
+                studentName:
+                    studentName,
+
+                skills:
+                    studentGR.getValue(
+                        'skills'
+                    ) || '',
+
+                collegeName:
+                    studentGR.getValue(
+                        'college_name'
+                    ) || '',
+
+                location:
+                    studentGR.getValue(
+                        'location'
+                    ) || '',
+
+                matchCount:
+                    overlapSkills.length,
+
+                overlapSkillsArray:
+                    overlapSkills
+
+            });
+
+        }
+
+
+        if (
+            data.matches.length === 0
+        ) {
+
+            data.message =
+                'No students with matching skills were found.';
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* =========================================
+       SEND TEAM REQUEST
+       ========================================= */
+
+    if (
+        input &&
+        input.action == 'send_team_request'
+    ) {
+
+
+        var receiverStudent =
+            String(
+                input.receiverStudent || ''
+            ).trim();
+
+
+        var eventId =
+            String(
+                input.eventId || ''
+            ).trim();
+
+
+        if (!receiverStudent) {
+
+            data.message =
+                'Receiver student information is missing.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        if (!eventId) {
+
+            data.message =
+                'Event information is missing.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        /* =====================================
+           GET SENDER STUDENT PROFILE
+           ===================================== */
+
+        var senderProfile =
+            new GlideRecord(
+                'x_snc_campus_con_0_student_profile'
+            );
+
+
+        senderProfile.addQuery(
+            'student',
+            currentUser
+        );
+
+        senderProfile.setLimit(1);
+
+        senderProfile.query();
+
+
+        if (!senderProfile.next()) {
+
+            data.message =
+                'Your student profile was not found.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        var senderStudent =
+            senderProfile.getUniqueValue();
+
+
+        /* =====================================
+           VALIDATE RECEIVER
+           ===================================== */
+
+        var receiverProfile =
+            new GlideRecord(
+                'x_snc_campus_con_0_student_profile'
+            );
+
+
+        receiverProfile.addQuery(
+            'student',
+            receiverStudent
+        );
+
+        receiverProfile.setLimit(1);
+
+        receiverProfile.query();
+
+
+        if (!receiverProfile.next()) {
+
+            data.message =
+                'Receiver student profile was not found.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        /* =====================================
+           VALIDATE EVENT
+           ===================================== */
+
+        var event =
+            new GlideRecord(
+                'x_snc_campus_con_0_events'
+            );
+
+
+        if (!event.get(eventId)) {
+
+            data.message =
+                'Selected event was not found.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        var eventStatus =
+            String(
+                event.getValue(
+                    'verification_status'
+                ) || ''
+            ).toLowerCase();
+
+
+        if (
+            eventStatus != 'verified'
+        ) {
+
+            data.message =
+                'Only verified events can be used for team requests.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        var eventName =
+            event.getDisplayValue(
+                'event_name'
+            );
+
+
+        /* =====================================
+           FIND EXISTING OPEN TEAM
+           FOR THIS SENDER + EVENT
+           ===================================== */
+
+        var team =
+            new GlideRecord(
+                'x_snc_campus_con_0_teams'
+            );
+
+
+        team.addQuery(
+            'team_lead',
+            currentUser
+        );
+
+        team.addQuery(
+            'event',
+            eventId
+        );
+
+        team.addQuery(
+            'formation_type',
+            'skill-matched'
+        );
+
+        team.addQuery(
+            'status',
+            'open'
+        );
+
+        team.setLimit(1);
+
+        team.query();
+
+
+        if (!team.next()) {
+
+
+            /* =================================
+               CREATE NEW TEAM
+               ================================= */
+
+            team =
+                new GlideRecord(
+                    'x_snc_campus_con_0_teams'
+                );
+
+
+            team.initialize();
+
+
+            var senderName =
+                senderProfile.getDisplayValue(
+                    'student'
+                );
+
+
+            team.setValue(
+                'team_name',
+                'Skill Match Team - ' +
+                senderName
+            );
+
+
+            team.setValue(
+                'team_lead',
+                currentUser
+            );
+
+
+            team.setValue(
+                'event',
+                eventId
+            );
+
+
+            team.setValue(
+                'formation_type',
+                'skill-matched'
+            );
+
+
+            team.setValue(
+                'status',
+                'open'
+            );
+
+
+            var teamId =
+                team.insert();
+
+
+            if (!teamId) {
+
+                data.message =
+                    'Unable to create the team.';
+
+                data.success = false;
+
+                return;
+
+            }
+
+        }
+
+
+        var teamId =
+            team.getUniqueValue();
+
+
+        /* =====================================
+           CHECK WHETHER REQUEST ALREADY EXISTS
+           ===================================== */
+
+        var existingMember =
+            new GlideRecord(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        existingMember.addQuery(
+            'team',
+            teamId
+        );
+
+        existingMember.addQuery(
+            'student',
+            receiverStudent
+        );
+
+
+        existingMember.query();
+
+
+        if (existingMember.next()) {
+
+            var existingStatus =
+                String(
+                    existingMember.getValue(
+                        'join_status'
+                    ) || ''
+                );
+
+
+            if (
+                existingStatus == 'requested'
+            ) {
+
+                data.message =
+                    'A team request has already been sent to this student.';
+
+                data.success = false;
+
+                return;
+
+            }
+
+
+            if (
+                existingStatus == 'accepted'
+            ) {
+
+                data.message =
+                    'This student is already a member of your team.';
+
+                data.success = false;
+
+                return;
+
+            }
+
+        }
+
+
+        /* =====================================
+           CHECK TEAM MEMBER COUNT
+           ===================================== */
+
+        var acceptedMembers =
+            new GlideRecord(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        acceptedMembers.addQuery(
+            'team',
+            teamId
+        );
+
+        acceptedMembers.addQuery(
+            'join_status',
+            'accepted'
+        );
+
+        acceptedMembers.query();
+
+
+        var acceptedCount = 0;
+
+
+        while (
+            acceptedMembers.next()
+        ) {
+
+            acceptedCount++;
+
+        }
+
+
+        if (
+            acceptedCount >= 5
+        ) {
+
+            data.message =
+                'This team already has the maximum number of members.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        /* =====================================
+           CREATE TEAM MEMBER REQUEST
+           ===================================== */
+
+        var member =
+            new GlideRecord(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        member.initialize();
+
+
+        member.setValue(
+            'team',
+            teamId
+        );
+
+
+        member.setValue(
+            'student',
+            receiverStudent
+        );
+
+
+        /*
+         * IMPORTANT:
+         * My Team Requests searches exactly
+         * for "Requested".
+         */
+
+        member.setValue(
+            'join_status',
+            'requested'
+        );
+
+
+        member.setValue(
+            'commitment_confirmed',
+            true
+        );
+
+
+        var memberId =
+            member.insert();
+
+
+        if (!memberId) {
+
+            data.message =
+                'Unable to create the team request.';
+
+            data.success = false;
+
+            return;
+
+        }
+
+
+        data.success = true;
+
+        data.eventName =
+            eventName;
+
+        data.message =
+            'Team request sent successfully.';
+
+        return;
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 09:24:32</sys_created_on>
+        <sys_id>7df9c63979ab03107f445336e004ab0a</sys_id>
+        <sys_mod_count>76</sys_mod_count>
+        <sys_name>Find Teammates</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_7df9c63979ab03107f445336e004ab0a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 17:02:44</sys_updated_on>
+        <template><![CDATA[<div class="cc-teammate-page">
+
+  <div class="cc-teammate-hero">
+
+    <div class="cc-hero-icon">✦</div>
+
+    <div class="cc-hero-content">
+
+      <h1>Find Teammates</h1>
+
+      <p>
+        Find students with matching skills and build your team.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- STUDENT + EVENT SELECTION -->
+
+  <div class="cc-selection-card">
+
+    <div class="cc-selection-header">
+
+      <div class="cc-selection-icon">♙</div>
+
+      <div>
+
+        <h2>Select Student</h2>
+
+        <p>
+          Enter your name and select the event to find
+          skill-matched teammates.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- STUDENT -->
+
+    <div class="cc-form-group">
+
+      <label class="cc-label">
+        Student
+      </label>
+
+      <input
+        type="text"
+        class="form-control cc-select"
+        ng-model="c.selectedStudent"
+        placeholder="Enter your name"
+        ng-keypress="c.handleStudentKeypress($event)">
+
+    </div>
+
+
+    <!-- EVENT -->
+
+    <div
+      class="cc-form-group"
+      style="margin-top:15px;">
+
+      <label class="cc-label">
+        Event
+      </label>
+
+      <select
+        class="form-control cc-select"
+        ng-model="c.selectedEvent"
+        ng-options="event.sys_id as event.event_name for event in data.events">
+
+        <option value="">
+          Select the event
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div style="margin-top:15px;">
+
+      <button
+        type="button"
+        class="cc-send-request-btn"
+        ng-click="c.loadMatches()"
+        ng-disabled="
+          c.loading ||
+          !c.selectedStudent ||
+          !c.selectedEvent
+        ">
+
+        Find Teammates
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <div
+    ng-if="
+      data.message &&
+      !c.loading &&
+      (!data.matches || data.matches.length === 0)
+    "
+    class="cc-info-message">
+
+    <span class="cc-message-icon">ⓘ</span>
+
+    <span>
+      {{data.message}}
+    </span>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    ng-if="c.loading"
+    class="cc-loading-card">
+
+    <div class="cc-loading-icon">
+      ⟳
+    </div>
+
+    <div>
+
+      <strong>
+        Finding skill-matched teammates...
+      </strong>
+
+      <p>
+        Comparing student skills.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- SELECTED EVENT -->
+
+  <div
+    class="cc-results-section"
+    ng-if="
+      !c.loading &&
+      data.matches &&
+      data.matches.length > 0
+    ">
+
+    <div class="cc-results-header">
+
+      <div>
+
+        <h2>
+          Skill-Matched Teammates
+        </h2>
+
+        <p>
+          Students with one or more common skills.
+        </p>
+
+      </div>
+
+      <div class="cc-match-count">
+
+        {{data.matches.length}}
+        Match<span ng-if="data.matches.length != 1">es</span>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="cc-match-card"
+      ng-repeat="match in data.matches track by match.studentId">
+
+
+      <div class="cc-match-card-header">
+
+        <div class="cc-student-profile">
+
+          <div class="cc-student-avatar">
+            {{match.studentName.charAt(0)}}
+          </div>
+
+          <div>
+
+            <h3 class="cc-student-name">
+              {{match.studentName}}
+            </h3>
+
+            <span class="cc-score">
+
+              {{match.matchCount}}
+              matching skill<span ng-if="match.matchCount != 1">
+                s
+              </span>
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="cc-match-badge">
+          ✓ Skill Match
+        </div>
+
+      </div>
+
+
+      <div class="cc-match-card-body">
+
+
+        <!-- EVENT -->
+
+        <div class="cc-info-block">
+
+          <div class="cc-info-label">
+            Event
+          </div>
+
+          <div class="cc-skills-text">
+            {{data.selectedEventName}}
+          </div>
+
+        </div>
+
+
+        <!-- SKILLS -->
+
+        <div class="cc-info-block">
+
+          <div class="cc-info-label">
+            Skills
+          </div>
+
+          <div class="cc-skills-text">
+            {{match.skills}}
+          </div>
+
+        </div>
+
+
+        <!-- COLLEGE -->
+
+        <div class="cc-info-block">
+
+          <div class="cc-info-label">
+            College Name
+          </div>
+
+          <div class="cc-skills-text">
+            {{match.collegeName}}
+          </div>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="cc-info-block">
+
+          <div class="cc-info-label">
+            Location
+          </div>
+
+          <div class="cc-skills-text">
+            {{match.location}}
+          </div>
+
+        </div>
+
+
+        <!-- MATCHING SKILLS -->
+
+        <div class="cc-info-block">
+
+          <div class="cc-info-label">
+            Matching Skills
+          </div>
+
+          <div class="cc-match-skills">
+
+            <span
+              class="cc-skill"
+              ng-repeat="skill in match.overlapSkillsArray">
+
+              {{skill}}
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- SEND REQUEST -->
+
+        <div class="cc-request-action">
+
+          <button
+            type="button"
+            class="cc-send-request-btn"
+            ng-click="c.sendTeamRequest(match)"
+            ng-disabled="c.sendingRequest">
+
+            {{c.sendingRequest
+              ? 'Sending...'
+              : 'Send Team Request'}}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- NO MATCH -->
+
+  <div
+    ng-if="
+      !c.loading &&
+      c.selectedStudent &&
+      c.selectedEvent &&
+      data.matches &&
+      data.matches.length === 0
+    "
+    class="cc-no-match-card">
+
+    <div class="cc-no-match-icon">
+      ⌕
+    </div>
+
+    <h3>
+      No Matching Teammates
+    </h3>
+
+    <p>
+      {{data.message ||
+        'No students with matching skills were found.'}}
+    </p>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

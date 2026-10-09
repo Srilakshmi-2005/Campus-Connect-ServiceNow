@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($window) {
+
+    var c = this;
+
+
+    var LAST_OPENED_KEY =
+        "campus_connect_notifications_last_opened";
+
+
+    var DELETED_KEY =
+        "campus_connect_notifications_deleted";
+
+
+    /*
+     * Get deleted notification IDs
+     */
+
+    function getDeletedNotifications() {
+
+        try {
+
+            return JSON.parse(
+                $window.localStorage.getItem(
+                    DELETED_KEY
+                ) || "[]"
+            );
+
+        } catch (e) {
+
+            return [];
+
+        }
+
+    }
+
+
+    /*
+     * Save deleted notification IDs
+     */
+
+    function saveDeletedNotifications(list) {
+
+        $window.localStorage.setItem(
+            DELETED_KEY,
+            JSON.stringify(list)
+        );
+
+    }
+
+
+    /*
+     * Remove deleted notifications
+     * from current page
+     */
+
+    function removeDeletedNotifications() {
+
+        var deleted =
+            getDeletedNotifications();
+
+
+        if (
+            !c.data ||
+            !c.data.notifications
+        ) {
+
+            return;
+
+        }
+
+
+        c.data.notifications =
+            c.data.notifications.filter(
+                function(notification) {
+
+                    return deleted.indexOf(
+                        notification.notification_id
+                    ) === -1;
+
+                }
+            );
+
+    }
+
+
+    /*
+     * Delete individual notification
+     */
+
+    c.deleteNotification =
+        function(notification) {
+
+            if (
+                !notification ||
+                !notification.notification_id
+            ) {
+
+                return;
+
+            }
+
+
+            var deleted =
+                getDeletedNotifications();
+
+
+            if (
+                deleted.indexOf(
+                    notification.notification_id
+                ) === -1
+            ) {
+
+                deleted.push(
+                    notification.notification_id
+                );
+
+            }
+
+
+            saveDeletedNotifications(
+                deleted
+            );
+
+
+            /*
+             * Remove immediately
+             */
+
+            var index =
+                c.data.notifications.indexOf(
+                    notification
+                );
+
+
+            if (index !== -1) {
+
+                c.data.notifications.splice(
+                    index,
+                    1
+                );
+
+            }
+
+
+            /*
+             * Update count
+             */
+
+            c.data.unread_count =
+                c.data.notifications.length;
+
+        };
+
+
+    /*
+     * Mark notifications as opened
+     */
+
+    function markNotificationsOpened() {
+
+        $window.localStorage.setItem(
+            LAST_OPENED_KEY,
+            new Date().toISOString()
+        );
+
+
+        /*
+         * Badge becomes zero
+         */
+
+        c.data.unread_count = 0;
+
+    }
+
+
+    /*
+     * Initialize
+     */
+
+    removeDeletedNotifications();
+
+    markNotificationsOpened();
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   NOTIFICATIONS PAGE LAYOUT&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-notifications-layout {&#13;
+&#13;
+    width: 100%;&#13;
+    min-height: 100vh;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR AREA&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-notifications-sidebar {&#13;
+&#13;
+    width: 208px;&#13;
+    min-width: 208px;&#13;
+&#13;
+    min-height: 100vh;&#13;
+&#13;
+    position: relative;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NOTIFICATIONS CONTENT AREA&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-notifications-content {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+    min-width: 0;&#13;
+    min-height: 100vh;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NOTIFICATIONS PAGE&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-notifications-page {&#13;
+&#13;
+    min-height: 100vh;&#13;
+&#13;
+    background: #f5f9ff;&#13;
+&#13;
+    padding: 30px;&#13;
+&#13;
+    font-family:&#13;
+        "Segoe UI",&#13;
+        Arial,&#13;
+        sans-serif;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-header {&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dbeafe;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    padding: 24px 28px;&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 15px&#13;
+        rgba(37, 99, 235, 0.08);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-header h2 {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #0f3d91;&#13;
+&#13;
+    font-size: 28px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-header p {&#13;
+&#13;
+    margin: 7px 0 0;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   UNREAD COUNT&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-count {&#13;
+&#13;
+    min-width: 42px;&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    background: #2563eb;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 10px&#13;
+        rgba(37, 99, 235, 0.25);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NOTIFICATION LIST&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-list {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 14px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NOTIFICATION CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-card {&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dbeafe;&#13;
+&#13;
+    border-left: 5px solid #2563eb;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    position: relative;&#13;
+&#13;
+    box-shadow:&#13;
+        0 3px 12px&#13;
+        rgba(37, 99, 235, 0.06);&#13;
+&#13;
+    transition:&#13;
+        all 0.2s ease;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-card:hover {&#13;
+&#13;
+    transform: translateY(-2px);&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 20px&#13;
+        rgba(37, 99, 235, 0.12);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-icon {&#13;
+&#13;
+    width: 48px;&#13;
+&#13;
+    height: 48px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    font-size: 24px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   CONTENT&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-content {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-content h4 {&#13;
+&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    color: #0f3d91;&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-content p {&#13;
+&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+    color: #475569;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-details {&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    margin-bottom: 7px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-content small {&#13;
+&#13;
+    color: #94a3b8;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   STATUS&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-status {&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-status span {&#13;
+&#13;
+    display: inline-block;&#13;
+&#13;
+    padding: 6px 10px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-request {&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-response {&#13;
+&#13;
+    background: #e0f2fe;&#13;
+&#13;
+    color: #0369a1;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.status-deadline {&#13;
+&#13;
+    background: #fef3c7;&#13;
+&#13;
+    color: #92400e;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   DELETE BUTTON&#13;
+   ========================================================= */&#13;
+&#13;
+.notification-delete {&#13;
+&#13;
+    width: 30px;&#13;
+&#13;
+    height: 30px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #94a3b8;&#13;
+&#13;
+    font-size: 22px;&#13;
+&#13;
+    line-height: 1;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    transition:&#13;
+        background 0.2s ease,&#13;
+        color 0.2s ease;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.notification-delete:hover {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    color: #2563eb;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EMPTY STATE&#13;
+   ========================================================= */&#13;
+&#13;
+.empty-notifications {&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dbeafe;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    padding: 60px 30px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 15px&#13;
+        rgba(37, 99, 235, 0.06);&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.empty-icon {&#13;
+&#13;
+    font-size: 45px;&#13;
+&#13;
+    margin-bottom: 15px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.empty-notifications h3 {&#13;
+&#13;
+    color: #0f3d91;&#13;
+&#13;
+    margin: 0 0 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.empty-notifications p {&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .cc-notifications-layout {&#13;
+&#13;
+        display: block;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-notifications-sidebar {&#13;
+&#13;
+        width: 100%;&#13;
+&#13;
+        min-width: 100%;&#13;
+&#13;
+        min-height: auto;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-notifications-content {&#13;
+&#13;
+        width: 100%;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 768px) {&#13;
+&#13;
+    .cc-notifications-page {&#13;
+&#13;
+        padding: 15px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .notification-header {&#13;
+&#13;
+        padding: 18px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .notification-header h2 {&#13;
+&#13;
+        font-size: 22px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .notification-card {&#13;
+&#13;
+        padding: 15px;&#13;
+&#13;
+        gap: 12px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .notification-status {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Connect notification center</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_notifications</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Notifications</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() { 
+ 
+    /* 
+     * Load existing Campus Connect Sidebar 
+     */ 
+    data.sidebar_widget = 
+        $sp.getWidget( 
+            "campus_connect_sidebar" 
+        ); 
+ 
+    data.notifications = []; 
+    data.unread_count = 0; 
+ 
+    var currentUser = gs.getUserID(); 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 1. TEAM JOIN REQUEST
+     * ========================================== 
+     * 
+     * The receiver gets a notification when
+     * someone sends a request to their team.
+     *
+     * Team.team_lead is Student Profile.
+     * Student Profile.student is sys_user.
+     */ 
+ 
+    var teamRequests = new GlideRecord( 
+        'x_snc_campus_con_0_team_members' 
+    ); 
+ 
+    teamRequests.addQuery( 
+        'join_status', 
+        'requested' 
+    ); 
+ 
+    teamRequests.addQuery( 
+        'team.team_lead.student', 
+        currentUser 
+    ); 
+ 
+    teamRequests.orderByDesc( 
+        'sys_created_on' 
+    ); 
+ 
+    teamRequests.query(); 
+ 
+ 
+    while (teamRequests.next()) { 
+ 
+        var requestTeamName = ''; 
+ 
+        if (!teamRequests.team.nil()) { 
+ 
+            requestTeamName = 
+                teamRequests.team.getDisplayValue(); 
+ 
+        } 
+ 
+        data.notifications.push({ 
+ 
+            type: 'team_request', 
+ 
+            icon: ']]>👥<![CDATA[', 
+ 
+            title: 'Team Join Request', 
+ 
+            message: 
+                'A student has requested to join your team.', 
+ 
+            details: requestTeamName, 
+ 
+            created_on: 
+                teamRequests.getDisplayValue( 
+                    'sys_created_on' 
+                ), 
+ 
+            record_id: 
+                teamRequests.getUniqueValue(), 
+ 
+            notification_id: 
+                'team_request_' + 
+                teamRequests.getUniqueValue(), 
+ 
+            unread: true 
+ 
+        }); 
+ 
+    } 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 2. TEAM REQUEST ACCEPTED / REJECTED
+     * ========================================== 
+     *
+     * IMPORTANT:
+     *
+     * The person who sent the request is the
+     * Team Lead.
+     *
+     * Team Lead -> Student Profile -> Student
+     *
+     * Therefore the notification must be shown
+     * to team.team_lead.student.
+     */ 
+ 
+    var teamResponses = new GlideRecord( 
+        'x_snc_campus_con_0_team_members' 
+    ); 
+ 
+ 
+    /* 
+     * The logged-in user must be the
+     * ORIGINAL REQUESTER / TEAM LEAD.
+     */ 
+ 
+    teamResponses.addQuery( 
+        'team.team_lead.student', 
+        currentUser 
+    ); 
+ 
+ 
+    /* 
+     * Only processed requests.
+     */ 
+ 
+    teamResponses.addQuery( 
+        'join_status', 
+        'IN', 
+        'accepted,rejected' 
+    ); 
+ 
+    teamResponses.orderByDesc( 
+        'sys_updated_on' 
+    ); 
+ 
+    teamResponses.query(); 
+ 
+ 
+    while (teamResponses.next()) { 
+ 
+        var status = 
+            String( 
+                teamResponses.getValue( 
+                    'join_status' 
+                ) || '' 
+            ).trim().toLowerCase(); 
+ 
+ 
+        var responseIcon = '❌'; 
+ 
+        var responseMessage = 
+            'Your team request has been rejected.'; 
+ 
+ 
+        /* 
+         * ACCEPTED
+         */ 
+ 
+        if (status === 'accepted') { 
+ 
+            responseIcon = '✅'; 
+ 
+            responseMessage = 
+                'Your team request has been accepted.'; 
+ 
+        } 
+ 
+ 
+        var responseTeamName = ''; 
+ 
+        if (!teamResponses.team.nil()) { 
+ 
+            responseTeamName = 
+                teamResponses.team.getDisplayValue(); 
+ 
+        } 
+ 
+ 
+        data.notifications.push({ 
+ 
+            type: 'team_response', 
+ 
+            icon: responseIcon, 
+ 
+            title: 'Team Request Update', 
+ 
+            message: responseMessage, 
+ 
+            details: responseTeamName, 
+ 
+            created_on: 
+                teamResponses.getDisplayValue( 
+                    'sys_updated_on' 
+                ), 
+ 
+            record_id: 
+                teamResponses.getUniqueValue(), 
+ 
+            notification_id: 
+                'team_response_' + 
+                teamResponses.getUniqueValue(), 
+ 
+            unread: true 
+ 
+        }); 
+ 
+    } 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 3. DEADLINE REMINDERS
+     * ========================================== 
+     */ 
+ 
+    var events = new GlideRecord( 
+        'x_snc_campus_con_0_events' 
+    ); 
+ 
+    events.addQuery( 
+        'verification_status', 
+        'verified' 
+    ); 
+ 
+    events.addNotNullQuery( 
+        'registration_deadline' 
+    ); 
+ 
+    events.orderBy( 
+        'registration_deadline' 
+    ); 
+ 
+    events.query(); 
+ 
+ 
+    var today = 
+        new GlideDateTime(); 
+ 
+ 
+    while (events.next()) { 
+ 
+        var deadline = 
+            new GlideDateTime( 
+                events.getValue( 
+                    'registration_deadline' 
+                ) 
+            ); 
+ 
+ 
+        if (!deadline.after(today)) { 
+ 
+            continue; 
+ 
+        } 
+ 
+ 
+        var difference = 
+            GlideDateTime.subtract( 
+                today, 
+                deadline 
+            ); 
+ 
+ 
+        var milliseconds = 
+            Math.abs( 
+                difference.getNumericValue() 
+            ); 
+ 
+ 
+        var days = 
+            Math.floor( 
+                milliseconds / 
+                (1000 * 60 * 60 * 24) 
+            ); 
+ 
+ 
+        if (days <= 7) { 
+ 
+            data.notifications.push({ 
+ 
+                type: 'deadline', 
+ 
+                icon: '⏰', 
+ 
+                title: 'Deadline Reminder', 
+ 
+                message: 
+                    'Event registration deadline is approaching.', 
+ 
+                details: 
+                    events.getDisplayValue( 
+                        'event_name' 
+                    ), 
+ 
+                created_on: 
+                    events.getDisplayValue( 
+                        'registration_deadline' 
+                    ), 
+ 
+                record_id: 
+                    events.getUniqueValue(), 
+ 
+                notification_id: 
+                    'deadline_' + 
+                    events.getUniqueValue(), 
+ 
+                unread: true 
+ 
+            }); 
+ 
+        } 
+ 
+    } 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 4. EVENT REGISTRATION SUCCESS
+     * ========================================== 
+     */ 
+ 
+    var registrations = new GlideRecord( 
+        'x_snc_campus_con_0_registrations' 
+    ); 
+ 
+    registrations.addQuery( 
+        'student', 
+        currentUser 
+    ); 
+ 
+    registrations.orderByDesc( 
+        'sys_created_on' 
+    ); 
+ 
+    registrations.query(); 
+ 
+ 
+    while (registrations.next()) { 
+ 
+        var registeredEventName = ''; 
+ 
+        if (!registrations.event.nil()) { 
+ 
+            registeredEventName = 
+                registrations.event.getDisplayValue(); 
+ 
+        } 
+ 
+ 
+        data.notifications.push({ 
+ 
+            type: 'registration_success', 
+ 
+            icon: ']]>🎉<![CDATA[', 
+ 
+            title: 'Registration Successful', 
+ 
+            message: 
+                'You have successfully registered for the event.', 
+ 
+            details: registeredEventName, 
+ 
+            created_on: 
+                registrations.getDisplayValue( 
+                    'sys_created_on' 
+                ), 
+ 
+            record_id: 
+                registrations.getUniqueValue(), 
+ 
+            notification_id: 
+                'registration_success_' + 
+                registrations.getUniqueValue(), 
+ 
+            unread: true 
+ 
+        }); 
+ 
+    } 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 5. SORT NOTIFICATIONS
+     * ========================================== 
+     */ 
+ 
+    data.notifications.sort( 
+        function(a, b) { 
+ 
+            if ( 
+                a.created_on < 
+                b.created_on 
+            ) { 
+ 
+                return 1; 
+ 
+            } 
+ 
+            if ( 
+                a.created_on > 
+                b.created_on 
+            ) { 
+ 
+                return -1; 
+ 
+            } 
+ 
+            return 0; 
+ 
+        } 
+    ); 
+ 
+ 
+    /* 
+     * ========================================== 
+     * 6. CURRENT COUNT
+     * ========================================== 
+     */ 
+ 
+    data.unread_count = 
+        data.notifications.length; 
+ 
+ 
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 06:43:09</sys_created_on>
+        <sys_id>d02bc24b99e703107f4413fc57679cf4</sys_id>
+        <sys_mod_count>20</sys_mod_count>
+        <sys_name>Campus Connect Notifications</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_d02bc24b99e703107f4413fc57679cf4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 17:38:56</sys_updated_on>
+        <template><![CDATA[<div class="cc-notifications-layout">
+
+    <!-- Campus Connect Sidebar -->
+    <div class="cc-notifications-sidebar">
+
+        <sp-widget widget="::c.data.sidebar_widget"></sp-widget>
+
+    </div>
+
+
+    <!-- Notifications Content -->
+    <div class="cc-notifications-content">
+
+        <div class="cc-notifications-page">
+
+            <div class="notification-header">
+
+                <div>
+                    <h2>]]>🔔<![CDATA[ Notifications</h2>
+                    <p>
+                        Stay updated with your Campus Connect activities.
+                    </p>
+                </div>
+
+                <div class="notification-count"
+                     ng-if="data.unread_count > 0">
+
+                    {{data.unread_count}}
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-list"
+                 ng-if="data.notifications.length > 0">
+
+                <div class="notification-card"
+                     ng-repeat="notification in data.notifications">
+
+                    <div class="notification-icon">
+                        {{notification.icon}}
+                    </div>
+
+
+                    <div class="notification-content">
+
+                        <h4>
+                            {{notification.title}}
+                        </h4>
+
+                        <p>
+                            {{notification.message}}
+                        </p>
+
+
+                        <div class="notification-details"
+                             ng-if="notification.details">
+
+                            <strong>
+                                {{notification.details}}
+                            </strong>
+
+                        </div>
+
+
+                        <small>
+                            {{notification.created_on}}
+                        </small>
+
+                    </div>
+
+
+                    <div class="notification-status">
+
+                        <span
+                            ng-if="notification.type == 'team_request'"
+                            class="status-request">
+
+                            Team Request
+
+                        </span>
+
+
+                        <span
+                            ng-if="notification.type == 'team_response'"
+                            class="status-response">
+
+                            Response
+
+                        </span>
+
+
+                        <span
+                            ng-if="notification.type == 'deadline'"
+                            class="status-deadline">
+
+                            Deadline
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Delete button -->
+                    <button
+                        type="button"
+                        class="notification-delete"
+                        title="Delete notification"
+                        ng-click="c.deleteNotification(notification)">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="empty-notifications"
+                 ng-if="data.notifications.length == 0">
+
+                <div class="empty-icon">
+                    ]]>🔔
+<![CDATA[                </div>
+
+                <h3>
+                    No notifications
+                </h3>
+
+                <p>
+                    You are all caught up!
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

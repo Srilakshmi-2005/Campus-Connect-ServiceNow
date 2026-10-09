@@ -1,0 +1,1703 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    /*
+     * =========================================
+     * INITIALIZE
+     * =========================================
+     */
+
+    c.loading = false;
+
+
+    /*
+     * =========================================
+     * REFRESH REGISTRATIONS
+     * =========================================
+     *
+     * Can be called later if we add
+     * refresh functionality.
+     */
+
+    c.refreshRegistrations = function() {
+
+        c.loading = true;
+
+
+        c.server.update().then(
+            function(response) {
+
+                c.data =
+                    response.data;
+
+                c.loading = false;
+
+            },
+            function(error) {
+
+                console.log(
+                    'My Registrations error:',
+                    error
+                );
+
+                c.loading = false;
+
+            }
+        );
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CAMPUS CONNECT - MY REGISTRATIONS&#13;
+   ========================================= */&#13;
+&#13;
+.cc-my-registrations {&#13;
+&#13;
+    width: 110%;&#13;
+&#13;
+    max-width: none;&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    padding: 28px 30px 50px 200px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    color: #14213d;&#13;
+&#13;
+    font-family: inherit;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PAGE HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.cc-page-header {&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-eyebrow {&#13;
+&#13;
+    margin-bottom: 6px;&#13;
+&#13;
+    color: #0066ff;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 1.3px;&#13;
+&#13;
+    line-height: 1.2;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-page-header h1 {&#13;
+&#13;
+    margin: 0 0 6px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 28px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    line-height: 1.2;&#13;
+&#13;
+    letter-spacing: -.2px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-page-header p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #52627a;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REGISTRATION TABLE&#13;
+   ========================================= */&#13;
+&#13;
+.cc-registration-panel {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    border: 1px solid #cfd9e6;&#13;
+&#13;
+    border-radius: 6px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    box-shadow:&#13;
+        0 3px 10px rgba(&#13;
+            7,&#13;
+            21,&#13;
+            47,&#13;
+            .05&#13;
+        );&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TABLE HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.cc-table-header {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        2.05fr&#13;
+        1.45fr&#13;
+        1.45fr&#13;
+        1.3fr&#13;
+        .85fr&#13;
+        .7fr;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    min-height: 34px;&#13;
+&#13;
+    padding: 0 17px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    background: #f0f4f9;&#13;
+&#13;
+    border-bottom: 1px solid #d8e0ea;&#13;
+&#13;
+    color: #52627a;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: .45px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-table-header span {&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TABLE ROW&#13;
+   ========================================= */&#13;
+&#13;
+.cc-registration-row {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        2.05fr&#13;
+        1.45fr&#13;
+        1.45fr&#13;
+        1.3fr&#13;
+        .85fr&#13;
+        .7fr;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    min-height: 54px;&#13;
+&#13;
+    padding: 0 17px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border-bottom: 1px solid #dce4ed;&#13;
+&#13;
+    color: #34445c;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    transition:&#13;
+        background .15s ease;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-registration-row:last-child {&#13;
+&#13;
+    border-bottom: none;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-registration-row:hover {&#13;
+&#13;
+    background: #fafcff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EVENT NAME&#13;
+   ========================================= */&#13;
+&#13;
+.cc-event-name {&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    padding-right: 15px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    line-height: 1.3;&#13;
+&#13;
+    text-overflow: ellipsis;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REGISTRATION ID&#13;
+   ========================================= */&#13;
+&#13;
+.cc-registration-id {&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    color: #40516a;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    line-height: 1.3;&#13;
+&#13;
+    text-overflow: ellipsis;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   STATUS BADGE&#13;
+   ========================================= */&#13;
+&#13;
+.cc-status {&#13;
+&#13;
+    display: inline-flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    min-height: 20px;&#13;
+&#13;
+    padding: 3px 9px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    line-height: 1;&#13;
+&#13;
+    text-transform: capitalize;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REGISTERED&#13;
+   ========================================= */&#13;
+&#13;
+.status-registered {&#13;
+&#13;
+    color: #167342;&#13;
+&#13;
+    background: #e8f7ee;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CONFIRMED&#13;
+   ========================================= */&#13;
+&#13;
+.status-confirmed {&#13;
+&#13;
+    color: #167342;&#13;
+&#13;
+    background: #e8f7ee;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   ATTENDED&#13;
+   ========================================= */&#13;
+&#13;
+.status-attended {&#13;
+&#13;
+    color: #1768bd;&#13;
+&#13;
+    background: #eaf3ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   COMPLETED&#13;
+   ========================================= */&#13;
+&#13;
+.status-completed {&#13;
+&#13;
+    color: #167342;&#13;
+&#13;
+    background: #e8f7ee;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PENDING&#13;
+   ========================================= */&#13;
+&#13;
+.status-pending {&#13;
+&#13;
+    color: #966000;&#13;
+&#13;
+    background: #fff2d9;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   NO SHOW&#13;
+   ========================================= */&#13;
+&#13;
+.status-no-show {&#13;
+&#13;
+    color: #a13a32;&#13;
+&#13;
+    background: #fdebea;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REJECTED&#13;
+   ========================================= */&#13;
+&#13;
+.status-rejected {&#13;
+&#13;
+    color: #a13a32;&#13;
+&#13;
+    background: #fdebea;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   DETAILS CELL&#13;
+   ========================================= */&#13;
+&#13;
+.cc-details-cell {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: flex-end;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   DETAILS BUTTON&#13;
+   ========================================= */&#13;
+&#13;
+.cc-details-btn {&#13;
+&#13;
+    min-width: 56px;&#13;
+&#13;
+    height: 27px;&#13;
+&#13;
+    padding: 0 10px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border: 1px solid #cbd7e5;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #243650;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    line-height: 25px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition:&#13;
+        background .15s ease,&#13;
+        border-color .15s ease,&#13;
+        color .15s ease;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-details-btn:hover {&#13;
+&#13;
+    border-color: #9eb8d5;&#13;
+&#13;
+    background: #f5f9fd;&#13;
+&#13;
+    color: #075db8;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EMPTY STATE&#13;
+   ========================================= */&#13;
+&#13;
+.cc-empty {&#13;
+&#13;
+    padding: 55px 20px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty-icon {&#13;
+&#13;
+    width: 52px;&#13;
+&#13;
+    height: 52px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    margin: 0 auto 12px;&#13;
+&#13;
+    border-radius: 13px;&#13;
+&#13;
+    background: #eef5ff;&#13;
+&#13;
+    font-size: 23px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty h3 {&#13;
+&#13;
+    margin: 0 0 6px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   BOTTOM SECTION&#13;
+   ========================================= */&#13;
+&#13;
+.cc-bottom-grid {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        2fr&#13;
+        1fr;&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    margin-top: 20px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PROGRESS CARD&#13;
+   ========================================= */&#13;
+&#13;
+.cc-progress-card,&#13;
+.cc-qr-card {&#13;
+&#13;
+    min-width: 0;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border: 1px solid #dfe6ef;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 16px rgba(&#13;
+            7,&#13;
+            21,&#13;
+            47,&#13;
+            .05&#13;
+        );&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-card h2,&#13;
+.cc-qr-card h2 {&#13;
+&#13;
+    margin: 0 0 24px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PROGRESS&#13;
+   ========================================= */&#13;
+&#13;
+.cc-progress {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-step {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    min-width: 65px;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-step span {&#13;
+&#13;
+    width: 31px;&#13;
+&#13;
+    height: 31px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    margin-bottom: 7px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    border: 1px solid #d5dfeb;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-step label {&#13;
+&#13;
+    color: #66758a;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-step.active span {&#13;
+&#13;
+    border-color: #0066ff;&#13;
+&#13;
+    background: #0066ff;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-step.active label {&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-line {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+    height: 2px;&#13;
+&#13;
+    margin-top: 15px;&#13;
+&#13;
+    background: #d9e1ec;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-progress-line.active {&#13;
+&#13;
+    background: #0066ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   REGISTRATION INFORMATION&#13;
+   ========================================= */&#13;
+&#13;
+.cc-registration-info {&#13;
+&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(3, 1fr);&#13;
+&#13;
+    gap: 25px;&#13;
+&#13;
+    margin-top: 28px;&#13;
+&#13;
+    padding-top: 20px;&#13;
+&#13;
+    border-top: 1px solid #edf1f5;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-registration-info label {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+    color: #7a8798;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: .6px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-registration-info strong {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    color: #14213d;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    line-height: 1.4;&#13;
+&#13;
+    text-overflow: ellipsis;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   QR CARD&#13;
+   ========================================= */&#13;
+&#13;
+.cc-qr-card {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    min-height: 240px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-qr-placeholder {&#13;
+&#13;
+    width: 125px;&#13;
+&#13;
+    height: 125px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    margin-bottom: 17px;&#13;
+&#13;
+    border: 5px solid #17253a;&#13;
+&#13;
+    color: #17253a;&#13;
+&#13;
+    font-size: 25px;&#13;
+&#13;
+    font-weight: 800;&#13;
+&#13;
+    letter-spacing: 3px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-qr-card h2 {&#13;
+&#13;
+    margin-bottom: 7px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-qr-card p {&#13;
+&#13;
+    max-width: 240px;&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE - TABLET&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 1000px) {&#13;
+&#13;
+    .cc-table-header,&#13;
+    .cc-registration-row {&#13;
+&#13;
+        grid-template-columns:&#13;
+            1.7fr&#13;
+            1.15fr&#13;
+            1.1fr&#13;
+            1fr&#13;
+            .8fr&#13;
+            .7fr;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-my-registrations {&#13;
+&#13;
+        padding-left: 20px;&#13;
+&#13;
+        padding-right: 20px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-bottom-grid {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE - SMALL TABLET&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .cc-table-header,&#13;
+    .cc-registration-row {&#13;
+&#13;
+        grid-template-columns:&#13;
+            1.8fr&#13;
+            1.2fr&#13;
+            1.15fr&#13;
+            .85fr;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    /* Hide registration ID */&#13;
+&#13;
+    .cc-table-header span:nth-child(2),&#13;
+    .cc-registration-row &gt; div:nth-child(2) {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    /* Hide event date */&#13;
+&#13;
+    .cc-table-header span:nth-child(4),&#13;
+    .cc-registration-row &gt; div:nth-child(4) {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-page-header h1 {&#13;
+&#13;
+        font-size: 26px;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE - MOBILE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-my-registrations {&#13;
+&#13;
+        padding: 20px 12px 40px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-page-header {&#13;
+&#13;
+        margin-bottom: 18px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-page-header h1 {&#13;
+&#13;
+        font-size: 24px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-page-header p {&#13;
+&#13;
+        font-size: 12px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-table-header {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-registration-row {&#13;
+&#13;
+        display: grid;&#13;
+&#13;
+        grid-template-columns:&#13;
+            1fr&#13;
+            auto;&#13;
+&#13;
+        gap: 8px 12px;&#13;
+&#13;
+        min-height: auto;&#13;
+&#13;
+        padding: 15px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-event-name {&#13;
+&#13;
+        grid-column: 1;&#13;
+&#13;
+        font-size: 12px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-registration-id {&#13;
+&#13;
+        grid-column: 1;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-registration-row &gt; div:nth-child(3),&#13;
+    .cc-registration-row &gt; div:nth-child(4) {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-registration-row &gt; div:nth-child(5) {&#13;
+&#13;
+        grid-column: 1;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-details-cell {&#13;
+&#13;
+        grid-column: 2;&#13;
+&#13;
+        grid-row: 1 / span 3;&#13;
+&#13;
+        align-items: center;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-registration-info {&#13;
+&#13;
+        grid-template-columns: 1fr;&#13;
+&#13;
+        gap: 15px;&#13;
+&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>my_registrations</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>My Registrations</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /*
+     * =========================================
+     * CAMPUS CONNECT
+     * MY REGISTRATIONS
+     * =========================================
+     *
+     * Shows registrations belonging to the
+     * currently logged-in student.
+     */
+
+
+    data.registrations = [];
+
+    data.loading = false;
+
+
+    /*
+     * =========================================
+     * CURRENT USER
+     * =========================================
+     */
+
+    var currentUser = gs.getUserID();
+
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    /*
+     * =========================================
+     * GET REGISTRATIONS
+     * =========================================
+     */
+
+    var registrationGR =
+        new GlideRecord(
+            'x_snc_campus_con_0_registrations'
+        );
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Only registrations of the logged-in
+     * student are returned.
+     */
+
+    registrationGR.addQuery(
+        'student',
+        currentUser
+    );
+
+
+    /*
+     * Show newest registrations first.
+     */
+
+    registrationGR.orderByDesc(
+        'registration_date'
+    );
+
+
+    registrationGR.query();
+
+
+    /*
+     * =========================================
+     * BUILD REGISTRATION DATA
+     * =========================================
+     */
+
+    while (
+        registrationGR.next()
+    ) {
+
+        var registration = {};
+
+
+        /*
+         * Registration ID
+         */
+
+        registration.sys_id =
+            registrationGR.getUniqueValue();
+
+
+        /*
+         * Registration Status
+         */
+
+        registration.status =
+            registrationGR.getDisplayValue(
+                'registration_status'
+            ) ||
+            'Registered';
+
+
+        registration.statusValue =
+            (
+                registrationGR.getValue(
+                    'registration_status'
+                ) ||
+                ''
+            ).toLowerCase();
+
+
+        /*
+         * Registration Date
+         */
+
+        registration.registrationDate =
+            registrationGR.getDisplayValue(
+                'registration_date'
+            );
+
+
+        /*
+         * =========================================
+         * EVENT INFORMATION
+         * =========================================
+         *
+         * Registration.Event is a reference
+         * to the Events table.
+         */
+
+        registration.eventName =
+            registrationGR.getDisplayValue(
+                'event'
+            ) ||
+            'Event';
+
+
+        registration.eventDate =
+            'Date not available';
+
+
+        registration.location =
+            'Location not specified';
+
+
+        registration.eventType =
+            'Campus Event';
+
+
+        registration.technologyTags =
+            '';
+
+
+        /*
+         * =========================================
+         * LOAD EVENT RECORD
+         * =========================================
+         */
+
+        var eventId =
+            registrationGR.getValue(
+                'event'
+            );
+
+
+        if (eventId) {
+
+            var eventGR =
+                new GlideRecord(
+                    'x_snc_campus_con_0_events'
+                );
+
+
+            if (
+                eventGR.get(eventId)
+            ) {
+
+                /*
+                 * Event Name
+                 */
+
+                registration.eventName =
+                    eventGR.getDisplayValue(
+                        'event_name'
+                    );
+
+
+                /*
+                 * Event Date
+                 */
+
+                registration.eventDate =
+                    eventGR.getDisplayValue(
+                        'event_date'
+                    );
+
+
+                /*
+                 * Location
+                 */
+
+                registration.location =
+                    eventGR.getDisplayValue(
+                        'location'
+                    ) ||
+                    'Location not specified';
+
+
+                /*
+                 * Event Type
+                 */
+
+                registration.eventType =
+                    eventGR.getDisplayValue(
+                        'event_type'
+                    ) ||
+                    'Campus Event';
+
+
+                /*
+                 * Technology Tags
+                 */
+
+                registration.technologyTags =
+                    eventGR.getValue(
+                        'technology_tags'
+                    ) ||
+                    '';
+
+            }
+
+        }
+
+
+        /*
+         * =========================================
+         * TECHNOLOGY TAG ARRAY
+         * =========================================
+         */
+
+        registration.technologyTagsArray = [];
+
+
+        if (
+            registration.technologyTags
+        ) {
+
+            registration.technologyTagsArray =
+                registration.technologyTags
+                    .split(/[,;\n]/)
+                    .map(function(tag) {
+
+                        return tag.trim();
+
+                    })
+                    .filter(function(tag) {
+
+                        return tag.length > 0;
+
+                    });
+
+        }
+
+
+        /*
+         * =========================================
+         * ADD TO RESULT
+         * =========================================
+         */
+
+        data.registrations.push(
+            registration
+        );
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 15:35:09</sys_created_on>
+        <sys_id>436ab272f16743107f443f8091a1ffac</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>My Registrations</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_436ab272f16743107f443f8091a1ffac</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 13:29:29</sys_updated_on>
+        <template><![CDATA[<div class="cc-my-registrations">
+
+    <!-- =========================================
+         PAGE HEADER
+         ========================================= -->
+
+    <div class="cc-page-header">
+
+        <div class="cc-eyebrow">
+            REGISTRATION TRACKING
+        </div>
+
+        <h1>
+            My Registrations
+        </h1>
+
+        <p>
+            Track event status, access venue details, and open confirmed QR tickets.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         REGISTRATION TABLE
+         ========================================= -->
+
+    <div class="cc-registration-panel">
+
+        <!-- TABLE HEADER -->
+
+        <div
+            class="cc-table-header"
+            ng-if="data.registrations.length">
+
+            <span>
+                EVENT
+            </span>
+
+            <span>
+                REGISTRATION ID
+            </span>
+
+            <span>
+                REGISTRATION DATE
+            </span>
+
+            <span>
+                EVENT DATE
+            </span>
+
+            <span>
+                STATUS
+            </span>
+
+            <span>
+            </span>
+
+        </div>
+
+
+        <!-- =====================================
+             REGISTRATION ROW
+             ===================================== -->
+
+        <div
+            class="cc-registration-row"
+            ng-repeat="registration in data.registrations">
+
+
+            <!-- EVENT -->
+
+            <div class="cc-event-name">
+
+                {{registration.eventName}}
+
+            </div>
+
+
+            <!-- REGISTRATION ID -->
+
+            <div class="cc-registration-id">
+
+                {{registration.registrationId}}
+
+            </div>
+
+
+            <!-- REGISTRATION DATE -->
+
+            <div>
+
+                {{registration.registrationDate}}
+
+            </div>
+
+
+            <!-- EVENT DATE -->
+
+            <div>
+
+                {{registration.eventDate}}
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div>
+
+                <span
+                    class="cc-status"
+                    ng-class="'status-' + registration.statusValue">
+
+                    {{registration.status}}
+
+                </span>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="cc-details-cell">
+
+                <button
+                    type="button"
+                    class="cc-details-btn"
+                    ng-click="c.showDetails(registration)">
+
+                    Details
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             EMPTY STATE
+             ===================================== -->
+
+        <div
+            class="cc-empty"
+            ng-if="!data.registrations.length">
+
+            <div class="cc-empty-icon">
+                ]]>📝
+<![CDATA[            </div>
+
+            <h3>
+                No Registrations Yet
+            </h3>
+
+            <p>
+                Your event registrations will appear here.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         REGISTRATION PROGRESS
+         ========================================= -->
+
+    <div
+        class="cc-bottom-grid"
+        ng-if="c.selectedRegistration">
+
+
+        <!-- =====================================
+             PROGRESS CARD
+             ===================================== -->
+
+        <div class="cc-progress-card">
+
+            <h2>
+                Registration progress
+            </h2>
+
+
+            <div class="cc-progress">
+
+
+                <!-- STEP 1 -->
+
+                <div class="cc-progress-step active">
+
+                    <span>
+                        ✓
+                    </span>
+
+                    <label>
+                        Submitted
+                    </label>
+
+                </div>
+
+
+                <div class="cc-progress-line active"></div>
+
+
+                <!-- STEP 2 -->
+
+                <div
+                    class="cc-progress-step"
+                    ng-class="{
+                        'active':
+                        c.selectedRegistration.statusValue == 'confirmed'
+                        || c.selectedRegistration.statusValue == 'attended'
+                    }">
+
+                    <span>
+                        2
+                    </span>
+
+                    <label>
+                        Confirmed
+                    </label>
+
+                </div>
+
+
+                <div class="cc-progress-line"></div>
+
+
+                <!-- STEP 3 -->
+
+                <div class="cc-progress-step">
+
+                    <span>
+                        3
+                    </span>
+
+                    <label>
+                        Reminder
+                    </label>
+
+                </div>
+
+
+                <div class="cc-progress-line"></div>
+
+
+                <!-- STEP 4 -->
+
+                <div
+                    class="cc-progress-step"
+                    ng-class="{
+                        'active':
+                        c.selectedRegistration.statusValue == 'attended'
+                    }">
+
+                    <span>
+                        4
+                    </span>
+
+                    <label>
+                        Completed
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTRATION INFORMATION -->
+
+            <div class="cc-registration-info">
+
+                <div>
+
+                    <label>
+                        EVENT
+                    </label>
+
+                    <strong>
+                        {{c.selectedRegistration.eventName}}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        EVENT DATE
+                    </label>
+
+                    <strong>
+                        {{c.selectedRegistration.eventDate}}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        REGISTRATION ID
+                    </label>
+
+                    <strong>
+                        {{c.selectedRegistration.registrationId}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             QR TICKET
+             ===================================== -->
+
+        <div class="cc-qr-card">
+
+            <div class="cc-qr-placeholder">
+                QR
+            </div>
+
+            <h2>
+                Registration Ticket
+            </h2>
+
+            <p>
+                Present your registration details at check-in.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

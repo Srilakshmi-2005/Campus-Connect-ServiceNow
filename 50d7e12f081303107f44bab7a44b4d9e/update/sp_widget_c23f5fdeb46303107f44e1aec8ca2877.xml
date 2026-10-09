@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($http, $window, spUtil) { 
+ 
+    var c = this; 
+ 
+ 
+    // ========================================= 
+    // INITIAL VALUES 
+    // ========================================= 
+ 
+    c.email = ""; 
+    c.password = ""; 
+    c.message = ""; 
+    c.isLoggingIn = false; 
+ 
+ 
+    // ========================================= 
+    // LOGIN 
+    // ========================================= 
+ 
+    c.login = function() { 
+ 
+        if (c.isLoggingIn) { 
+            return; 
+        } 
+ 
+ 
+        // ========================================= 
+        // VALIDATE EMAIL 
+        // ========================================= 
+ 
+        if (!c.email) { 
+ 
+            c.message = 
+                "Please enter your college email address."; 
+ 
+            return; 
+        } 
+ 
+ 
+        // ========================================= 
+        // VALIDATE PASSWORD 
+        // ========================================= 
+ 
+        if (!c.password) { 
+ 
+            c.message = 
+                "Please enter your password."; 
+ 
+            return; 
+        } 
+ 
+ 
+        c.message = ""; 
+        c.isLoggingIn = true; 
+ 
+ 
+        // ========================================= 
+        // SERVICE NOW LOGIN URL 
+        // ========================================= 
+ 
+        var url = 
+            spUtil.getURL({ 
+                sysparm_type: "view_form.login" 
+            }); 
+ 
+ 
+        // ========================================= 
+        // AUTHENTICATE 
+        // ========================================= 
+ 
+        $http({ 
+ 
+            method: "post", 
+ 
+            url: url, 
+ 
+            data: $.param({ 
+ 
+                sysparm_type: "login", 
+ 
+                "ni.nolog.user_password": true, 
+ 
+                remember_me: false, 
+ 
+                user_name: c.email, 
+ 
+                user_password: c.password, 
+ 
+                get_redirect_url: true, 
+ 
+                is_direct_redirect: true, 
+ 
+                sysparm_goto_url: null, 
+ 
+                mfa_redirect_url: null, 
+ 
+                cert_login: false 
+ 
+            }), 
+ 
+            headers: { 
+                "Content-Type": 
+                    "application/x-www-form-urlencoded" 
+            } 
+ 
+        }).then(function(response) { 
+ 
+            // ========================================= 
+            // AUTHENTICATION RESPONSE 
+            // ========================================= 
+ 
+            if ( 
+                response.data && 
+                response.data.status === "success" 
+            ) { 
+ 
+                // ========================================= 
+                // CHECK STUDENT PROFILE 
+                // ========================================= 
+ 
+                c.server.get({ 
+                    action: "check_student" 
+                }).then(function(studentResponse) { 
+ 
+                    var result = studentResponse.data; 
+ 
+                    // ========================================= 
+                    // STUDENT PROFILE FOUND 
+                    // ========================================= 
+ 
+                    if (result.studentExists) { 
+ 
+                        c.isLoggingIn = false; 
+                        c.message = ""; 
+ 
+                        $window.location.href = 
+                            "?id=campus_connect_home"; 
+ 
+                        return; 
+                    } 
+ 
+ 
+                    // ========================================= 
+                    // STUDENT PROFILE NOT FOUND 
+                    // ========================================= 
+ 
+                    c.isLoggingIn = false; 
+                    c.password = ""; 
+ 
+                    c.message = 
+                        result.message || 
+                        "This account is not registered as a Campus Connect student."; 
+ 
+ 
+                    // ========================================= 
+                    // LOG OUT NON-STUDENT USER 
+                    // ========================================= 
+ 
+                    $http({ 
+                        method: "get", 
+                        url: "/logout.do" 
+                    }).finally(function() { 
+ 
+                        $window.location.href = 
+                            "?id=campus_student_login"; 
+ 
+                    }); 
+ 
+                }, function() { 
+ 
+                    c.isLoggingIn = false; 
+                    c.password = ""; 
+ 
+                    c.message = 
+                        "Unable to verify your Campus Connect student profile."; 
+ 
+                }); 
+ 
+                return; 
+            } 
+ 
+ 
+            // ========================================= 
+            // INVALID CREDENTIALS 
+            // ========================================= 
+ 
+            c.isLoggingIn = false; 
+            c.password = ""; 
+ 
+            c.message = 
+                ( 
+                    response.data && 
+                    response.data.message 
+                ) || 
+                "Invalid email or password."; 
+ 
+ 
+        }, function() { 
+ 
+            c.isLoggingIn = false; 
+            c.password = ""; 
+ 
+            c.message = 
+                "Unable to process your login request. Please try again."; 
+ 
+        }); 
+ 
+    }; 
+ 
+ 
+    // ========================================= 
+    // FORGOT PASSWORD 
+    // ========================================= 
+ 
+    c.forgotPassword = function() { 
+ 
+        $window.location.href = 
+            "$pwd_reset.do?sysparm_url=ss_default"; 
+ 
+    }; 
+ 
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.student-login-page {&#13;
+    min-height: 100vh;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    padding: 40px 20px;&#13;
+&#13;
+    background:&#13;
+        radial-gradient(&#13;
+            circle at 15% 20%,&#13;
+            rgba(37, 99, 235, 0.12),&#13;
+            transparent 30%&#13;
+        ),&#13;
+        radial-gradient(&#13;
+            circle at 85% 80%,&#13;
+            rgba(30, 64, 175, 0.12),&#13;
+            transparent 30%&#13;
+        ),&#13;
+        linear-gradient(&#13;
+            135deg,&#13;
+            #ffffff,&#13;
+            #eff6ff,&#13;
+            #dbeafe&#13;
+        );&#13;
+&#13;
+    font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* Login Card */&#13;
+&#13;
+.login-card {&#13;
+    width: 100%;&#13;
+    max-width: 430px;&#13;
+&#13;
+    padding: 40px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border-radius: 22px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 20px 50px rgba(30, 64, 175, 0.15);&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+/* Icon */&#13;
+&#13;
+.login-icon {&#13;
+    width: 70px;&#13;
+    height: 70px;&#13;
+&#13;
+    margin: 0 auto 20px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    font-size: 35px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 20px rgba(37, 99, 235, 0.12);&#13;
+}&#13;
+&#13;
+&#13;
+/* Heading */&#13;
+&#13;
+.login-card h1 {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 30px;&#13;
+&#13;
+    font-weight: 800;&#13;
+&#13;
+    color: #0f3d91;&#13;
+}&#13;
+&#13;
+&#13;
+/* Subtitle */&#13;
+&#13;
+.login-subtitle {&#13;
+    margin: 10px 0 30px;&#13;
+&#13;
+    color: #475569;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Form */&#13;
+&#13;
+.form-group {&#13;
+    text-align: left;&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Labels */&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+}&#13;
+&#13;
+&#13;
+/* Input */&#13;
+&#13;
+.form-control {&#13;
+    width: 100%;&#13;
+&#13;
+    height: 48px;&#13;
+&#13;
+    padding: 0 14px;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #0f172a;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    transition: 0.2s;&#13;
+}&#13;
+&#13;
+&#13;
+/* Input Placeholder */&#13;
+&#13;
+.form-control::placeholder {&#13;
+    color: #94a3b8;&#13;
+}&#13;
+&#13;
+&#13;
+/* Input Focus */&#13;
+&#13;
+.form-control:focus {&#13;
+    border-color: #2563eb;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px rgba(37, 99, 235, 0.12);&#13;
+}&#13;
+&#13;
+&#13;
+/* Login Button */&#13;
+&#13;
+.login-submit {&#13;
+    width: 100%;&#13;
+&#13;
+    height: 50px;&#13;
+&#13;
+    margin-top: 8px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: linear-gradient(&#13;
+        135deg,&#13;
+        #1d4ed8,&#13;
+        #2563eb&#13;
+    );&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 16px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: 0.25s;&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 20px rgba(37, 99, 235, 0.20);&#13;
+}&#13;
+&#13;
+&#13;
+/* Button Hover */&#13;
+&#13;
+.login-submit:hover {&#13;
+    transform: translateY(-2px);&#13;
+&#13;
+    background: linear-gradient(&#13;
+        135deg,&#13;
+        #1e40af,&#13;
+        #1d4ed8&#13;
+    );&#13;
+&#13;
+    box-shadow:&#13;
+        0 10px 22px rgba(37, 99, 235, 0.30);&#13;
+}&#13;
+&#13;
+&#13;
+/* Button Active */&#13;
+&#13;
+.login-submit:active {&#13;
+    transform: translateY(0);&#13;
+}&#13;
+&#13;
+&#13;
+/* Links */&#13;
+&#13;
+.login-links {&#13;
+    margin-top: 25px;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+&#13;
+/* Link */&#13;
+&#13;
+.login-links a {&#13;
+    color: #2563eb;&#13;
+&#13;
+    text-decoration: none;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    transition: 0.2s;&#13;
+}&#13;
+&#13;
+&#13;
+/* Link Hover */&#13;
+&#13;
+.login-links a:hover {&#13;
+    color: #1e40af;&#13;
+&#13;
+    text-decoration: underline;&#13;
+}&#13;
+&#13;
+&#13;
+/* Mobile */&#13;
+&#13;
+@media (max-width: 500px) {&#13;
+&#13;
+    .student-login-page {&#13;
+        padding: 20px 12px;&#13;
+    }&#13;
+&#13;
+    .login-card {&#13;
+        padding: 30px 22px;&#13;
+    }&#13;
+&#13;
+    .login-card h1 {&#13;
+        font-size: 26px;&#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Student login page for Campus Connect</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_student_login</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Student Login</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.studentExists = false;
+    data.message = "";
+
+    // =========================================
+    // CHECK WHETHER LOGGED-IN USER IS A STUDENT
+    // =========================================
+
+    if (input && input.action === "check_student") {
+
+        var userId = gs.getUserID();
+
+        if (!userId) {
+            data.studentExists = false;
+            data.message = "User is not authenticated.";
+            return;
+        }
+
+        // =========================================
+        // CHECK STUDENT PROFILE
+        // =========================================
+
+        var studentProfile = new GlideRecord(
+            "x_snc_campus_con_0_student_profile"
+        );
+
+        studentProfile.addQuery("student", userId);
+        studentProfile.setLimit(1);
+        studentProfile.query();
+
+        if (studentProfile.next()) {
+
+            data.studentExists = true;
+            data.message = "Student profile found.";
+
+        } else {
+
+            data.studentExists = false;
+            data.message =
+                "This account is not registered as a Campus Connect student.";
+        }
+
+        return;
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 04:56:18</sys_created_on>
+        <sys_id>c23f5fdeb46303107f44e1aec8ca2877</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>Campus Connect Student Login</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_c23f5fdeb46303107f44e1aec8ca2877</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-07 08:52:52</sys_updated_on>
+        <template><![CDATA[<div class="student-login-page"> <div class="login-card"> <div class="login-icon"> ]]>🎓<![CDATA[ </div> <h1>Student Login</h1> <p class="login-subtitle"> Welcome back to Campus Connect </p> <form ng-submit="c.login()"> <div class="form-group"> <label>Email Address</label> <input type="email" class="form-control" placeholder="Enter your college email" ng-model="c.email" autocomplete="username" required> </div> <div class="form-group"> <label>Password</label> <input type="password" class="form-control" placeholder="Enter your password" ng-model="c.password" autocomplete="current-password" required> </div> <div ng-if="c.message" role="alert" style="color:#c62828; margin-bottom:12px;"> {{c.message}} </div> <button type="submit" class="login-submit" ng-disabled="c.isLoggingIn"> <span ng-if="!c.isLoggingIn"> Login </span> <span ng-if="c.isLoggingIn"> Logging in... </span> </button> </form> <div class="login-links"> <a href="javascript:void(0)" ng-click="c.forgotPassword()"> Forgot Password? </a> <span> | </span> <a href="?id=campus_student_signup"> Create Student Account </a> </div> </div></div>]]></template>
+    </sp_widget>
+</record_update>

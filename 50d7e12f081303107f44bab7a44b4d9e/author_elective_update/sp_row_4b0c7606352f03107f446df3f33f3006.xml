@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_row">
+    <sp_row action="DELETE">
+        <aria_label/>
+        <class_name/>
+        <order>1</order>
+        <semantic_tag/>
+        <sp_column display_value="2">cf9b36c2352f03107f446df3f33f30a4</sp_column>
+        <sp_container/>
+        <sys_class_name>sp_row</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 07:41:29</sys_created_on>
+        <sys_id>4b0c7606352f03107f446df3f33f3006</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>1</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_row_4b0c7606352f03107f446df3f33f3006</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 07:41:29</sys_updated_on>
+    </sp_row>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_row_4b0c7606352f03107f446df3f33f3006</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_row"><sp_row action="INSERT_OR_UPDATE"><aria_label/><class_name/><order>1</order><semantic_tag/><sp_column display_value="2">cf9b36c2352f03107f446df3f33f30a4</sp_column><sp_container/><sys_class_name>sp_row</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-27 07:41:29</sys_created_on><sys_id>4b0c7606352f03107f446df3f33f3006</sys_id><sys_mod_count>0</sys_mod_count><sys_name>1</sys_name><sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package><sys_policy/><sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope><sys_update_name>sp_row_4b0c7606352f03107f446df3f33f3006</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-27 07:41:29</sys_updated_on></sp_row></record_update>]]></payload>
+        <payload_hash>894787767</payload_hash>
+        <record_name>1</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 07:41:29</sys_created_on>
+        <sys_id>cf0c7606352f03107f446df3f33f3008</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0e1cfd6ee0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 07:41:29</sys_updated_on>
+        <type>Row</type>
+        <update_guid>c30c7606c42f031026dcfe0634796708</update_guid>
+        <update_guid_history>c30c7606c42f031026dcfe0634796708:894787767</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="1">293cba06352f03107f446df3f33f30d8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 07:42:13</sys_created_on>
+        <sys_db_object display_value="" name="sp_row">sp_row</sys_db_object>
+        <sys_id>035842cd589e46609f3195b35e416840</sys_id>
+        <sys_metadata>4b0c7606352f03107f446df3f33f3006</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>1</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_row_4b0c7606352f03107f446df3f33f3006</sys_update_name>
+        <sys_update_version display_value="sp_row_4b0c7606352f03107f446df3f33f3006">cf0c7606352f03107f446df3f33f3008</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 07:42:13</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

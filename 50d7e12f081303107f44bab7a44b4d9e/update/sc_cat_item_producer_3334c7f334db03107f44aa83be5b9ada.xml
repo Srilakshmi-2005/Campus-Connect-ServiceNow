@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
+    <sc_cat_item_producer action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>true</active>
+        <additional_review>false</additional_review>
+        <allow_edit>false</allow_edit>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <can_cancel>false</can_cancel>
+        <category display_value="Campus Connect">bedd9327b4d303107f44121bcaf323c0</category>
+        <cc_render_type>system</cc_render_type>
+        <checked_out/>
+        <cost>0</cost>
+        <create_universal_request>false</create_universal_request>
+        <custom_cart/>
+        <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description><![CDATA[<div style="position: relative; overflow: hidden; margin: 4px 0 20px 0; padding: 24px 24px 22px 24px; border-radius: 16px; background: linear-gradient(135deg, #07152f 0%, #0b2d5c 60%, #1261a0 100%); border: 1px solid #0b315f; box-shadow: 0 8px 24px rgba(7,21,47,0.16); font-family: Arial, Helvetica, sans-serif;">
+<div style="position: absolute; width: 150px; height: 150px; border-radius: 50%; background: rgba(77,163,255,0.10); top: -75px; right: -35px;"> </div>
+<div style="position: absolute; width: 90px; height: 90px; border-radius: 50%; background: rgba(255,255,255,0.05); bottom: -45px; right: 110px;"> </div>
+<div style="position: relative; z-index: 2;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+<div style="display: flex; align-items: center; gap: 14px;">
+<div style="width: 48px; height: 48px; min-width: 48px; border-radius: 13px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-size: 23px; box-shadow: 0 5px 14px rgba(0,0,0,0.15);">&#x1f465;</div>
+<div>
+<div style="color: #8dccff; font-size: 10px; font-weight: bold; letter-spacing: 1.6px; text-transform: uppercase; margin-bottom: 4px;">CAMPUS CONNECT</div>
+<div style="color: #ffffff; font-size: 20px; font-weight: bold; line-height: 1.25;">Create or Join a Team</div>
+</div>
+</div>
+<div style="padding: 7px 12px; border-radius: 20px; background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; font-size: 10px; font-weight: 600; white-space: nowrap;">TEAM COLLABORATION</div>
+</div>
+<div style="color: rgba(255,255,255,0.76); font-size: 13px; line-height: 1.6; max-width: 680px; margin-top: 15px;">Build your campus team, connect with like-minded students, and collaborate together for verified campus opportunities.</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.13);">
+<div style="display: flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 9px; background: rgba(77,163,255,0.13); border: 1px solid rgba(77,163,255,0.16); color: #b9ddff; font-size: 11px; font-weight: 600;">&#x1f680; Create Team</div>
+<div style="display: flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 9px; background: rgba(61,220,151,0.10); border: 1px solid rgba(61,220,151,0.13); color: #a9f0d0; font-size: 11px; font-weight: 600;">&#x1f91d; Join Team</div>
+<div style="display: flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 9px; background: rgba(195,155,255,0.10); border: 1px solid rgba(195,155,255,0.13); color: #dbc7ff; font-size: 11px; font-weight: 600;">&#x1f3af; Collaborate</div>
+<div style="display: flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 9px; background: rgba(255,190,100,0.10); border: 1px solid rgba(255,190,100,0.13); color: #ffd69b; font-size: 11px; font-weight: 600;">&#x1f3c6; Participate</div>
+</div>
+<div style="margin-top: 15px; color: rgba(255,255,255,0.52); font-size: 10.5px;">✦ Collaborate with students and build stronger teams through Campus Connect.</div>
+</div>
+</div>]]></description>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <fulfillment_automation_level>unspecified</fulfillment_automation_level>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <location/>
+        <make_item_non_conversational>false</make_item_non_conversational>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Create or Join Team</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>false</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_save_as_draft>false</no_save_as_draft>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <picture/>
+        <post_insert_script><![CDATA[/**
+* This script is executed after the record is generated. 
+* `current` Is the GlideRecord produced by Record Producer. Use `current.update()` to update the record
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></post_insert_script>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=3334c7f334db03107f44aa83be5b9ada&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <redirect_url>catalog_home</redirect_url>
+        <request_method/>
+        <roles/>
+        <save_options/>
+        <save_script><![CDATA[/**
+* This script is executed at every step save in Catalog Builder. 
+* This script is executed before `Script` is executed.
+* `current` Is the GlideRecord produced by Record Producer. 
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></save_script>
+        <sc_catalogs>e0d08b13c3330100c8b837659bba8fb4</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <script><![CDATA[(function() {
+
+    var choice = (producer.what_do_you_want_to_do + '').toLowerCase();
+
+
+    /*
+     * =========================================================
+     * CREATE TEAM
+     * =========================================================
+     */
+
+    if (choice.indexOf('create') > -1) {
+
+        current.team_name = producer.team_name;
+        current.event = producer.select_event;
+        current.team_lead = gs.getUserID();
+
+        // Formation Type selected by the student
+        current.formation_type = producer.formation_type;
+
+        // New teams always start as Open
+        current.status = 'open';
+
+
+        /*
+         * Do NOT use current.insert().
+         *
+         * The Record Producer automatically inserts
+         * the Teams record after this script finishes.
+         *
+         * The Team Lead will be added as the first
+         * Team Member through the After Insert Business Rule.
+         */
+
+
+        /*
+         * Redirect to Campus Connect Home
+         */
+
+        producer.portal_redirect =
+            "?id=campus_connect_home";
+    }
+
+
+    /*
+     * =========================================================
+     * JOIN TEAM
+     * =========================================================
+     */
+
+    else if (choice.indexOf('join') > -1) {
+
+        var selectedTeam = producer.select_team_to_join;
+
+
+        /*
+         * Validate selected team
+         */
+
+        if (!selectedTeam) {
+
+            gs.addErrorMessage(
+                'Please select a team to join.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Verify selected team exists
+         * and is still Open.
+         */
+
+        var teamGr = new GlideRecord(
+            'x_snc_campus_con_0_teams'
+        );
+
+
+        if (!teamGr.get(selectedTeam)) {
+
+            gs.addErrorMessage(
+                'The selected team could not be found.'
+            );
+
+            return;
+        }
+
+
+        if (teamGr.getValue('status') != 'open') {
+
+            gs.addErrorMessage(
+                'This team is no longer open for joining.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Prevent duplicate membership/request
+         */
+
+        var existingMember = new GlideRecord(
+            'x_snc_campus_con_0_team_members'
+        );
+
+
+        existingMember.addQuery(
+            'team',
+            selectedTeam
+        );
+
+
+        existingMember.addQuery(
+            'student',
+            gs.getUserID()
+        );
+
+
+        existingMember.setLimit(1);
+        existingMember.query();
+
+
+        if (existingMember.next()) {
+
+            gs.addErrorMessage(
+                'You already have a membership or request for this team.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Count accepted members
+         */
+
+        var countGr = new GlideAggregate(
+            'x_snc_campus_con_0_team_members'
+        );
+
+
+        countGr.addQuery(
+            'team',
+            selectedTeam
+        );
+
+
+        countGr.addQuery(
+            'join_status',
+            'Accepted'
+        );
+
+
+        countGr.addAggregate('COUNT');
+        countGr.query();
+
+
+        var acceptedCount = 0;
+
+
+        if (countGr.next()) {
+
+            acceptedCount = parseInt(
+                countGr.getAggregate('COUNT'),
+                10
+            ) || 0;
+        }
+
+
+        /*
+         * Maximum team size = 5
+         */
+
+        if (acceptedCount >= 5) {
+
+            teamGr.setValue(
+                'status',
+                'closed'
+            );
+
+            teamGr.update();
+
+
+            gs.addErrorMessage(
+                'This team is already full.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Create Team Member request
+         */
+
+        var tm = new GlideRecord(
+            'x_snc_campus_con_0_team_members'
+        );
+
+
+        tm.initialize();
+
+
+        tm.setValue(
+            'team',
+            selectedTeam
+        );
+
+
+        tm.setValue(
+            'student',
+            gs.getUserID()
+        );
+
+
+        tm.setValue(
+            'join_status',
+            'Requested'
+        );
+
+
+        tm.setValue(
+            'commitment_confirmed',
+            true
+        );
+
+
+        var memberId = tm.insert();
+
+
+        /*
+         * Verify insert
+         */
+
+        if (!memberId) {
+
+            gs.addErrorMessage(
+                'Unable to create the team join request.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Success message
+         */
+
+        gs.addInfoMessage(
+            'Team join request sent successfully.'
+        );
+
+
+        /*
+         * Redirect to My Team Requests
+         */
+
+        producer.portal_redirect =
+            "?id=my_team_requests";
+    }
+
+})();]]></script>
+        <secondary_owners/>
+        <short_description>Start a new team or request to join an existing one for an event</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <state/>
+        <sys_class_name>sc_cat_item_producer</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-20 08:31:33</sys_created_on>
+        <sys_id>3334c7f334db03107f44aa83be5b9ada</sys_id>
+        <sys_mod_count>60</sys_mod_count>
+        <sys_name>Create or Join Team</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sc_cat_item_producer_3334c7f334db03107f44aa83be5b9ada</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2026-10-08 17:27:22</sys_updated_on>
+        <table_name>x_snc_campus_con_0_teams</table_name>
+        <taxonomy_topic/>
+        <template/>
+        <template_manager_roles/>
+        <turn_off_nowassist_conversation>false</turn_off_nowassist_conversation>
+        <type>item</type>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <version>60</version>
+        <view/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow/>
+    </sc_cat_item_producer>
+    <sys_translated_text action="delete_multiple" query="documentkey=3334c7f334db03107f44aa83be5b9ada"/>
+    <fx_price action="delete_multiple" query="id=3334c7f334db03107f44aa83be5b9ada"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>3334c7f334db03107f44aa83be5b9ada</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-20 08:31:33</sys_created_on>
+        <sys_id>8064cbf334db03107f44aa83be5b9ad9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-20 08:31:33</sys_updated_on>
+        <table>sc_cat_item_producer</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

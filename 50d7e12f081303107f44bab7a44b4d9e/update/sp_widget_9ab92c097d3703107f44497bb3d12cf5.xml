@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.event-details-page {&#13;
+    max-width: 1000px;&#13;
+    margin: 30px auto;&#13;
+    padding: 0 20px 40px;&#13;
+}&#13;
+&#13;
+.event-header {&#13;
+    background: linear-gradient(135deg, #0d47a1, #1976d2);&#13;
+    color: white;&#13;
+    padding: 35px;&#13;
+    border-radius: 14px;&#13;
+    margin-bottom: 25px;&#13;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);&#13;
+}&#13;
+&#13;
+.event-header h1 {&#13;
+    margin: 0 0 10px;&#13;
+    font-size: 32px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.event-header p {&#13;
+    margin: 0;&#13;
+    font-size: 17px;&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+.details-card {&#13;
+    background: white;&#13;
+    border-radius: 14px;&#13;
+    padding: 25px;&#13;
+    margin-bottom: 25px;&#13;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);&#13;
+    border: 1px solid #e3e8ef;&#13;
+}&#13;
+&#13;
+.details-card h2 {&#13;
+    margin: 0 0 20px;&#13;
+    color: #0d47a1;&#13;
+    font-size: 22px;&#13;
+    border-bottom: 2px solid #e3e8ef;&#13;
+    padding-bottom: 12px;&#13;
+}&#13;
+&#13;
+.detail-row {&#13;
+    display: flex;&#13;
+    align-items: flex-start;&#13;
+    padding: 13px 0;&#13;
+    border-bottom: 1px solid #edf0f4;&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.detail-row:last-child {&#13;
+    border-bottom: none;&#13;
+}&#13;
+&#13;
+.detail-row strong {&#13;
+    width: 230px;&#13;
+    min-width: 230px;&#13;
+    color: #37474f;&#13;
+}&#13;
+&#13;
+.detail-row span {&#13;
+    color: #555;&#13;
+    flex: 1;&#13;
+}&#13;
+&#13;
+.detail-row a {&#13;
+    color: #1565c0;&#13;
+    font-weight: 600;&#13;
+    text-decoration: none;&#13;
+}&#13;
+&#13;
+.detail-row a:hover {&#13;
+    text-decoration: underline;&#13;
+}&#13;
+&#13;
+.alert {&#13;
+    margin: 30px auto;&#13;
+    max-width: 800px;&#13;
+}&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .event-details-page {&#13;
+        margin: 15px auto;&#13;
+        padding: 0 12px 30px;&#13;
+    }&#13;
+&#13;
+    .event-header {&#13;
+        padding: 25px 20px;&#13;
+    }&#13;
+&#13;
+    .event-header h1 {&#13;
+        font-size: 25px;&#13;
+    }&#13;
+&#13;
+    .detail-row {&#13;
+        display: block;&#13;
+    }&#13;
+&#13;
+    .detail-row strong {&#13;
+        display: block;&#13;
+        width: auto;&#13;
+        min-width: auto;&#13;
+        margin-bottom: 6px;&#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Displays complete event and organizer details</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>event_details</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Event Details</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.event = null;
+    data.organizer = null;
+    data.error = "";
+
+    var eventSysId = options.sys_id || $sp.getParameter("sys_id");
+
+    if (!eventSysId) {
+        data.error = "Event was not specified.";
+        return;
+    }
+
+    var eventGR = new GlideRecord("x_snc_campus_con_0_events");
+
+    if (!eventGR.get(eventSysId)) {
+        data.error = "Event not found.";
+        return;
+    }
+
+   data.event = {
+    name: eventGR.getDisplayValue("event_name"),
+    eventType: eventGR.getDisplayValue("event_type"),
+    contactNumber: eventGR.getDisplayValue("contact_number"),
+        technologyTags: eventGR.getDisplayValue("technology_tags"),
+        eventDate: eventGR.getDisplayValue("event_date"),
+        registrationDeadline:
+            eventGR.getDisplayValue("registration_deadline"),
+        location: eventGR.getDisplayValue("location"),
+        mapsLink: eventGR.getDisplayValue("google_maps_link"),
+        fees: eventGR.getDisplayValue("fees"),
+        currencyType: eventGR.getDisplayValue("currency_type"),
+        organizer: eventGR.getDisplayValue("organizer")
+    };
+
+    if (eventGR.organizer) {
+
+        var organizerGR = new GlideRecord(
+            "x_snc_campus_con_0_event_organizers"
+        );
+
+        if (organizerGR.get(eventGR.getValue("organizer"))) {
+
+            data.organizer = {
+                name:
+                    organizerGR.getDisplayValue("organizer_name"),
+
+                college:
+                    organizerGR.getDisplayValue(
+                        "college_institution"
+                    ),
+
+                email:
+                    organizerGR.getDisplayValue(
+                        "contact_email"
+                    ),
+
+                contactNumber:
+                    organizerGR.getDisplayValue(
+                        "contact_number"
+                    ),
+
+                verificationStatus:
+                    organizerGR.getDisplayValue(
+                        "verification_status"
+                    )
+            };
+        }
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-06 04:44:42</sys_created_on>
+        <sys_id>9ab92c097d3703107f44497bb3d12cf5</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Event Details</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_9ab92c097d3703107f44497bb3d12cf5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 08:20:51</sys_updated_on>
+        <template><![CDATA[<div class="event-details-page">
+
+    <div ng-if="data.error" class="alert alert-danger">
+        {{data.error}}
+    </div>
+
+    <div ng-if="data.event">
+
+        <div class="event-header">
+            <h1>{{data.event.name}}</h1>
+            <p>{{data.event.eventType}}</p>
+        </div>
+
+        <div class="details-card">
+
+            <h2>Event Details</h2>
+
+            <div class="detail-row">
+                <strong>Event Type</strong>
+                <span>{{data.event.eventType}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Technology Tags</strong>
+                <span>{{data.event.technologyTags}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Event Date</strong>
+                <span>{{data.event.eventDate}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Registration Deadline</strong>
+                <span>{{data.event.registrationDeadline}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Location</strong>
+                <span>{{data.event.location}}</span>
+            </div>
+            
+
+            <div class="detail-row">
+                <strong>Fees</strong>
+                <span>
+                    {{data.event.currencyType}}
+                    {{data.event.fees}}
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Google Maps</strong>
+
+                <a
+                    ng-if="data.event.mapsLink"
+                    ng-href="{{data.event.mapsLink}}"
+                    target="_blank">
+                    View Location on Google Maps
+                </a>
+
+                <span ng-if="!data.event.mapsLink">
+                    Not available
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="details-card" ng-if="data.organizer">
+
+            <h2>Organizer Details</h2>
+
+            <div class="detail-row">
+                <strong>Organizer Name</strong>
+                <span>{{data.organizer.name}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>College / Institution</strong>
+                <span>{{data.organizer.college}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Contact Email</strong>
+                <span>{{data.organizer.email}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Contact Number</strong>
+                <span>{{data.organizer.contactNumber}}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Verification Status</strong>
+                <span>{{data.organizer.verificationStatus}}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

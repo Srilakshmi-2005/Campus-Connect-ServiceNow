@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>false</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,timeFromCreateToActivate=2842000,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Sends reminders for upcoming Campus Connect event deadlines.</description>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source/>
+        <internal_name>event_deadline_reminder_flow</internal_name>
+        <label_cache>[{"name":"3512d00e-9e62-403d-b400-80ae6a96af53.Records","label":"1 - Look Up Records➛Events Records","reference":"x_snc_campus_con_0_events","reference_display":"Events","type":"records","base_type":"records","usedInstances":{"15f96b8e-8119-4a7e-b97f-466fbc6b255f":["items"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"15f96b8e-8119-4a7e-b97f-466fbc6b255f.item","label":"2 - For Each➛Events Record","reference":"x_snc_campus_con_0_events","reference_display":"Events","type":"reference","base_type":"reference","usedInstances":{"987532c8-bd7c-4164-b764-0920aa3964e3":["record"]},"attributes":{"pills_draggable_inside_block":"true","pills_draggable_outside_block":"false"}}]</label_cache>
+        <master_snapshot>59bf519d19e743107f443733a6e8f271</master_snapshot>
+        <master_snapshot_digest/>
+        <name>Event Deadline Reminder Flow</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id>e1bf519d19e743107f443733a6e8f293</remote_trigger_id>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>published</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:15:14</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9fd4119919a743107f443733a6e8f257</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>Event Deadline Reminder Flow</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_hub_flow_9fd4119919a743107f443733a6e8f257</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:09:51</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record>c461a151192b43107f443733a6e8f281</version_record>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=9fd4119919a743107f443733a6e8f257"/>
+    <sys_variable_value action="delete_multiple" query="document_key=9fd4119919a743107f443733a6e8f257"/>
+    <sys_flow_timer_trigger action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <day_of_month>1</day_of_month>
+        <day_of_week/>
+        <name/>
+        <published_version/>
+        <run_period/>
+        <run_start>2026-09-24 17:02:37</run_start>
+        <sys_class_name>sys_flow_timer_trigger</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e1bf519d19e743107f443733a6e8f293</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:09:52</sys_updated_on>
+        <time>1970-01-01 22:00:00</time>
+        <timer_type>11</timer_type>
+        <trigger_definition display_value="Daily">89142dc0c32222002841b63b12d3ae8a</trigger_definition>
+    </sys_flow_timer_trigger>
+    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=9fd4119919a743107f443733a6e8f257"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=9fd4119919a743107f443733a6e8f257^sys_idNOT IN5fd4119919a743107f443733a6e8f258"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>9fd4119919a743107f443733a6e8f257</id>
+        <name>Event Deadline Reminder Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:15:14</sys_created_on>
+        <sys_id>5fd4119919a743107f443733a6e8f258</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:15:14</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=5fd4119919a743107f443733a6e8f258"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=9fd4119919a743107f443733a6e8f257^sys_idNOT IN179515d919a743107f443733a6e8f26c"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">9fd4119919a743107f443733a6e8f257</flow>
+        <generation_source/>
+        <name>Daily</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:18:30</sys_created_on>
+        <sys_id>179515d919a743107f443733a6e8f26c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:36</sys_updated_on>
+        <trigger_definition display_value="Daily">89142dc0c32222002841b63b12d3ae8a</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/31Sy07DMBD8FeRziZyUZ25ICIkDVIKKC0LRxt60lvzCcVoC4t9ZJ2kFBRH54tnd2Zlxnj+Yhho1K9lSGWQzpmzEYEEve4+ErrSSWMWxZsBKiC70rIyhwxlrgjNLNF5DpOYGdEugCxIDK3POZ2wDusPHvr2VxEUMFkxinfiGKl3zy3N+zHM6R0VRck6HqlK1RNw//dsk1krLgJaVzy8z5iHQgpjWfxyUIvmpDr0mVXOQJygFF/OCPs6Li5O8PpvXeSHngHhKfQdjP03EP4L6HgG+RbQS5T6fXykGBLmwut93rOkRxrwMvLXqHSeqgA2SIYFjcX+tpqhGWKydErjwUTk7IhFqPc0Ipztj70cHKWRsoNNxFzIhXUt86JPmpGKS1Dyu3fZht/BG2cHgVNROgN7fIMag6i5im14BNRoiqgx4r+yq8sFt1DBMWkw2xJY12m1paatWNgORhGcUEWQ3hF8P8BMElVzcEQ0Nfw7uq9cu7R19TIqr0TQ1tCIoH6+IbrP7OT9fvgDuwsmD8QIAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>daily</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=9fd4119919a743107f443733a6e8f257^sys_idNOT INd296d15d19a743107f443733a6e8f2b7,c16c9dd519e743107f443733a6e8f20b"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Look Up Records">43400a1587003300663ca1bb36cb0b4b</action_type>
+        <action_type_parent display_value="Look Up Records">d1c56ec50b30030085c083eb37673a50</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">9fd4119919a743107f443733a6e8f257</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:22:49</sys_created_on>
+        <sys_id>d296d15d19a743107f443733a6e8f2b7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:36</sys_updated_on>
+        <ui_id>3512d00e-9e62-403d-b400-80ae6a96af53</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/9VXXU/bMBT9K1WeNimqEloK69MmGNIeaCVA7AEhy0luWg/XyWynH6D+913HcVraAqVUDB59fT/OvT7HcW4ePJZ4Xe84bQcBDQ+Pj4Kg1QqCTqcV0zCKWp04CqJ25PmeoCNAT00jDrgcU16Y9ZQoEZOYjvJCkTgTJCAwBqEV+iRM5ZzOrivXn84eDxlPJAive3PrezmVmFqD9LoPK1t6lgPhNAKO4VemcqNnYPhbo34UvN6FKeCWRNjUmUwMlsD3YKpBJIClUsoV+N6IioTqTM5qiwSa9AVfGIZMaMzoGeepYveY/jgwfilgWzHYvXpJqhlZczzMWAz9XLNMWIsFajczXoxEzzZgpgspLbh200VLoTAf5AazAVEhSi+H2eTCFTxjomyv2uRZTHm9olpLFhUalDkL4DDCRGRE85yJAcllNmZlMGIZNQccF82UZxMsqthANGlsgDdxRLR5hvbT0nxNJTNdnGMaDEZAjONpEzt0lRWynMqYxLxQ5YakQtlc3rycFflbGJS266o/YkeEDiqWLNc/MGAMVStzfytiHwYLSiB3E2ZqqiV2SxgwhXiMHbukCWcC+r0eMqMxAbj7/oeOqa3fHahmhO5C4Kz6qXH5jR5fvq74IPrl3XWZvEvN3SR4sjyjbee7MXjT0CsxPrJVYgz3JkaE+5/kqGXx8dT4kr5swy+ILD56lgSHi/NWmdTETu4llW0pjJ25fMaAJ48+J1u04YL7hpaNaPZUZxWVU1Nj5bty8Om/K28kcpoQOxcmygNEkmFCLPPxGO6MBvbyAZvlBj3Ma0UEz1+L31Z4U9JloYfShtf3ugRoQ2eN+93v75IHju9bgHSBl4iocWVRbgDubm6XvqJ6a29Ubx28jupItJuHGn09tQ0Ddq89c3TO/97401V/JN1SQDi/raVyslvN8LU1D0zNFS23XiXmZWbZndMnCLbnt+Q7i943BYcYWtUjVq5kwpIB6EV155VkekL53ab9il21hsr23vwubT+rvU640BlqgEhQeFTLD9MQnzHr10PoW/Nut8MvoWFQDm9biC7ynE4bFzXGjcCrK4LVNSpOt/f4snuPz6Eb/Eb1uPl/ih+xXSl8+w8DJDzfNRAAAA==</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=d296d15d19a743107f443733a6e8f2b7"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Send Notification">0d8dd9f10f11101051218e8ebc767e27</action_type>
+        <action_type_parent display_value="Send Notification">7eda5d710f11101051218e8ebc767ec1</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">9fd4119919a743107f443733a6e8f257</flow>
+        <generation_source/>
+        <order>3</order>
+        <parent_ui_id>15f96b8e-8119-4a7e-b97f-466fbc6b255f</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:48:07</sys_created_on>
+        <sys_id>c16c9dd519e743107f443733a6e8f20b</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:36</sys_updated_on>
+        <ui_id>987532c8-bd7c-4164-b764-0920aa3964e3</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/8WVWU/jMBDHv0qV56aKc4e3lbpISCxILMvLClk+xmDJcULiFLpVv/s6R48UCgjB7qMnnus/84t/rxzJnRMn5CnnmUCeQAh5yIuQj1JIgbIkTsBPnamjSQ72ZgWsqLg9L4hqWsNqhSKRxTQFN0Uoc0OSgEuzRLhhHAvKYupHkZhJA/l6bf24rEtFljeDu7Wwe6l4Bdo5+X07dUpS2UwGKudkdfDJLEvAilBQ1nFesCYHbSZncxvjvV1svK82bRy21eawZz5Ex7I12k9tPWjqwJMBzcFmE0TVMHVyojkxRbXcWiog/FKrneFeatN3mpOnWv6x8QO/vSfAtsYGFbZHPCi0EaeQDC5LIwvdWwyhaqNcoZpcX/QttNqCII0ye9o2tY0HZVtzW4SpGluQ+HlfPF5t8p1K3XU3VKsKRtT2RIypJG0M1O04Gnlt5Tl/cQKgoBMsJ2Up9R0uq2Ihu8C2zHx2p+xhJlTxaOup5Z2eEdb2NLPqkdmptc878w2pZNvgDxvGOk+HnM9G0shfWj40cNYOniMvCTKPuYkfBW7oMeLSlFOXUF9EYRinMUXOutMYPzRte71agy64k7bTFXf7YK/WrJKl+WZrXMCgxno60JKi1/Ys8HdrtRdzR8wTrjXDjORlU2NWaOxhWNgy6ud0fN/YP8bIdZt+ctGnf2/pI+cjrQyUjGwDJP6nQZJ6/weSoaJPomQ0gy+HZDSRESOMUiooZC6ijLlhAqmb+iRxIfJYIPzA8xLxJiNvkRG+vl5774gujBSSkW5kOzaEiDniUYYySMLAYi3CMEiCgMSQCj/1jiAymdt9UlLD5AryblKTi3GCjwG0Hf/2iXm7wY3vQQEv9z2AVO3lGTgKXueo/5N/5K2pl3X3u8GQE6lwv2FH2Hom4jHOjgUdwUeEAGaAYyFBcbtR/X/vHzxcI9UtJTbalprzF2b95ZzuD7wGgwcBcBsAi6LKSTvGrpdDkMMMQRL4qZvFvgUZgsilPAhcZMEGICB8/hmP3e1fOK1i7BwKAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=c16c9dd519e743107f443733a6e8f20b"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=9fd4119919a743107f443733a6e8f257^sys_idNOT IN827bd19519e743107f443733a6e8f27e"/>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">5dbf519d19e743107f443733a6e8f22d</block>
+        <comment/>
+        <connected_to/>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">9fd4119919a743107f443733a6e8f257</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="For Each">098e1dc5c3e232002841b63b12d3ae33</logic_definition>
+        <order>2</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:44:05</sys_created_on>
+        <sys_id>827bd19519e743107f443733a6e8f27e</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:36</sys_updated_on>
+        <ui_id>15f96b8e-8119-4a7e-b97f-466fbc6b255f</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/51TwW7bMAz9F50TQ7ZTo86twFCgh65AV/QyFAYt0YlQWdIkOaln5N9HxU469DTsZPGRfHxPlCdmh+iGGF7sXQhqZ9j259uKKZMwOk9MSbZleS27Oue1KIuqLDgvbjd5W5VtXsgSUFZsxQz0SJUqYh8oPIAeUjxN5Q1VcY7rGqtiveGlXLcbzte3HLCCuoLupsyeUVgvw+lErVIFp2F8/X8GsVdaelzMOPCkLaJn2+lLKo4OGw0tahq0MFD/v3q+dD4spr/cQWKn0F956ZNUFHzF8COikUiDOtABV6wHIyFaP7Jt9AMBHkE+GT1eK/bKRKJjqfYjqN/EnXOeCjskRwLn5DVsloucYbG3SuCTi8qaGYnQ6qVHWD305vssP60AOxh0vKyAkCEQH7qkOalYJHU/9vb4fBl4r8zZ35LUVoC+RhCjV+0QMaQ1oMaeiJoenFNm1zhvD+rcTFr6bKcpyDptjzQ0PcsMRBKe0RVBdk/4tzP8Cl4lF49EQ82ns/vm15Dmzj4Wxc1smgqC8MrFO6I74CLu9Jbe68wU5ochUahAA18S9nD5G1JipCUr8Td0tP49Sf3ETn8ACSw9F1cDAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=9fd4119919a743107f443733a6e8f257"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_9fd4119919a743107f443733a6e8f257"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_9fd4119919a743107f443733a6e8f257"/>
+    <sys_hub_flow_snapshot action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>true</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Sends reminders for upcoming Campus Connect event deadlines.</description>
+        <flow_priority>MEDIUM</flow_priority>
+        <internal_name>event_deadline_reminder_flow</internal_name>
+        <label_cache>[{"name":"3512d00e-9e62-403d-b400-80ae6a96af53.Records","label":"1 - Look Up Records➛Events Records","reference":"x_snc_campus_con_0_events","reference_display":"Events","type":"records","base_type":"records","usedInstances":{"15f96b8e-8119-4a7e-b97f-466fbc6b255f":["items"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"15f96b8e-8119-4a7e-b97f-466fbc6b255f.item","label":"2 - For Each➛Events Record","reference":"x_snc_campus_con_0_events","reference_display":"Events","type":"reference","base_type":"reference","usedInstances":{"987532c8-bd7c-4164-b764-0920aa3964e3":["record"]},"attributes":{"pills_draggable_inside_block":"true","pills_draggable_outside_block":"false"}}]</label_cache>
+        <master>true</master>
+        <name>Event Deadline Reminder Flow</name>
+        <natlang/>
+        <outputs/>
+        <parent_flow display_value="Event Deadline Reminder Flow">9fd4119919a743107f443733a6e8f257</parent_flow>
+        <remote_trigger_id/>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <status>published</status>
+        <sys_class_name>sys_hub_flow_snapshot</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>59bf519d19e743107f443733a6e8f271</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <type>flow</type>
+        <version>2</version>
+    </sys_hub_flow_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=59bf519d19e743107f443733a6e8f271"/>
+    <sys_variable_value action="delete_multiple" query="document_key=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=59bf519d19e743107f443733a6e8f271"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=59bf519d19e743107f443733a6e8f271^sys_idNOT INddbf519d19e743107f443733a6e8f272"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>59bf519d19e743107f443733a6e8f271</id>
+        <name>Event Deadline Reminder Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_id>ddbf519d19e743107f443733a6e8f272</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=ddbf519d19e743107f443733a6e8f272"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=59bf519d19e743107f443733a6e8f271^sys_idNOT INddbf519d19e743107f443733a6e8f27f"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">59bf519d19e743107f443733a6e8f271</flow>
+        <generation_source/>
+        <name>Daily</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_id>ddbf519d19e743107f443733a6e8f27f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <trigger_definition display_value="Daily">89142dc0c32222002841b63b12d3ae8a</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/31Sy07DMBD8FeRziZyUZ25ICIkDVIKKC0LRxt60lvzCcVoC4t9ZJ2kFBRH54tnd2Zlxnj+Yhho1K9lSGWQzpmzEYEEve4+ErrSSWMWxZsBKiC70rIyhwxlrgjNLNF5DpOYGdEugCxIDK3POZ2wDusPHvr2VxEUMFkxinfiGKl3zy3N+zHM6R0VRck6HqlK1RNw//dsk1krLgJaVzy8z5iHQgpjWfxyUIvmpDr0mVXOQJygFF/OCPs6Li5O8PpvXeSHngHhKfQdjP03EP4L6HgG+RbQS5T6fXykGBLmwut93rOkRxrwMvLXqHSeqgA2SIYFjcX+tpqhGWKydErjwUTk7IhFqPc0Ipztj70cHKWRsoNNxFzIhXUt86JPmpGKS1Dyu3fZht/BG2cHgVNROgN7fIMag6i5im14BNRoiqgx4r+yq8sFt1DBMWkw2xJY12m1paatWNgORhGcUEWQ3hF8P8BMElVzcEQ0Nfw7uq9cu7R19TIqr0TQ1tCIoH6+IbrP7OT9fvgDuwsmD8QIAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>daily</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=59bf519d19e743107f443733a6e8f271^sys_idNOT IN11bf519d19e743107f443733a6e8f27e,ddbf519d19e743107f443733a6e8f27e"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Look Up Records">43400a1587003300663ca1bb36cb0b4b</action_type>
+        <action_type_parent display_value="Look Up Records">d1c56ec50b30030085c083eb37673a50</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>43400a1587003300663ca1bb36cb0b4b</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">59bf519d19e743107f443733a6e8f271</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_id>11bf519d19e743107f443733a6e8f27e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <ui_id>3512d00e-9e62-403d-b400-80ae6a96af53</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+WX30/bMBDH/5UqT5sUVQkthfVpEwxpErQSTOwBIctJnNbDdTLb6Q9Q//edYzuN2gCtFCbQHn0++753vk/s3D15NPGG3mnaDwIcHp+eBEGvFwSDQS/GYRT1BnEURP3I8z2OZwQ8FY4YgeEcs0KPl0jyGMV4lhcSxRlHASJzwpUEn4TKnOHVrXX97uzxlLJEEO4N7+59L8cCtlZEeMOnral9tTEcEQauP624La1qlVdDVM4Z22V9WWdkJjKRaCmB75GlIjwhoCHFTBLfm2GeYJWJVWURBCdjzjaGKeUKdvS081LSR4h7Gmi/lEBWMTFz1RDZEhlzeo4VvlGiiFUhrGs8zWhMpKlHQlJcMHVWtxmHca5oxs0Sk7ZZnbFixkemHF61gTsRsBQSRJBcJ6qV2zTSm2m2uHYqLygva2InWRZjVo2wUoJGhdJ6njzCyAw2QjOc55RPUC6yOS0Xg5ZZd8Jg0E1ZtoCgkk54F8daeBfqirsXYD8vzbdYUJ3FFWwDi0EQZdAhyByhzApRlnKOYlbIckJgLs1e3tr35EqeMSzlJnMoOfpTaN2mDjZjZIqml8SC5uobbDEnNrm1vxcex8Gm5YCAhGoVssaIIBMqQaG2Q944YZST8WgEDdZZEPLw9TeeYxN/OJHdCNw5h+qNU+3yCzw+fd7yAfX12V3Y/knMNkEuq+hAPquXsam0Fukd22XTBhbpsDWkIY+PBDUEf39MH06pKcErqMYnLzbZ8aafZCYUMrV8jdU98TqYiD3EOiLGuoc70eo5/RaIlBKWNN1xF3pi6447+j/vuHeJAwhKkDk9ystmgoYHoS1z4ow6kXoD6WEDVeuKq+Dlj/eXrb4s23FDVWmDq2QXJNxRWefxYHL2kOPIuYHYnZ9GT4NEd5OULbZ9izijBabXGjC9o3aAearSrArZUHP3ptWn6fwftT/e9oeWrS0I101AHhQzPDTm0XoX+N5BxNebzcycP9NzLT9+nyHYf8tPxhSW2njIEIwWNJkQtYnuvJJMLTB7aJq3HYfcQZXpvcFDuv8itoNwgyiQggSRcHj1l3QID6/db0joG/Nhn5A9tLhyXOFl57oS06jQfkaAdDIpz6b+HflRWW2T91t8ir7bm9cdViOD7sw+xP9neyDc/wUyAyi4chEAAA==</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=11bf519d19e743107f443733a6e8f27e"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Send Notification">0d8dd9f10f11101051218e8ebc767e27</action_type>
+        <action_type_parent display_value="Send Notification">7eda5d710f11101051218e8ebc767ec1</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>0d8dd9f10f11101051218e8ebc767e27</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">59bf519d19e743107f443733a6e8f271</flow>
+        <generation_source/>
+        <order>3</order>
+        <parent_ui_id>15f96b8e-8119-4a7e-b97f-466fbc6b255f</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_id>ddbf519d19e743107f443733a6e8f27e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <ui_id>987532c8-bd7c-4164-b764-0920aa3964e3</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/9WV207cMBCGX2WV680qzjncVd0iIVEqLbQ3VWX5MAZLjpMmzha64t1rJ9kjCwVaKvXSY49n5p/57K8rT3LvxIt5znkhUCAQQgEKEhSiHHKgLEszCHNv6mlSgj3ZAKsabtdLojpnWK1QIoqU5uDnCBV+TDLwaZEJP05TQVlKwyQRM2mgvL+3fly2tSJ3X0Z3a2E3UvEGtHfy9dvUq0ljIxlovJPVwdZzU1WEgrJHF+tcD3M3d7Vb84p1JWiD5dp4PnrOx53J2dzuWCeXDpp6cGtAc7B5CKJamHol0ZyYqrnbWBog/JNWW8ON1GYotCS3rfxpI0ehOyfAVsZGETZLPAo0mMWcGHJpmo6ZrtnoVUkG7aAJB0E6Zd7v2oYDn2ojKz24GELV2rtSXakvBkW8zQU7/ehamwTUrlCXuQ1uqxCXN9WPxTrJU6l7ScYSVcWI2qyIMY2knXHprLxOXh1TezAf1xsU9AdLUtdSX+O6qZayj2ezL2fXyi5mQlU/bJqtvNYzwlypM9sJMju19nlv/kIa6er+aK+xzi7mZy2/d3Dm5oijIIuKgPlZmER+HDDi05xTn9BQJHGc5ilF3v3Ua+/a94q07VYx2yr8vXMFD/qNSuFe7F5p3A+cc2aNrM07m94SRn3upyNzOXpqkKNwO7c7d265u8WtZpiRsu5azCqNAwxLm0b7kLEPa/vLSHtGgmvSrvr5Op7wCNsD2/mu7+Ri2BhRC1+I2jCjR0jLg/+ItLGsP0dtT+t90vbU/iegMUqpoFD4iDLmxxnkfh6SzIckYJEIoyDIxCtA+x1e8dPTu/Ol6cpIIRnpm7gFTIiUI54UqIAsjuxrIeI4yqKIpJCLMA8e4Wwyt1OppIbJAsq+d5OL/QAv/O9+X8eawoM4x8sbcdxCsU/jYsc+whg9DePA3mu+Pdvx/snCUBKp8DBcjxB6UNtfpvWxTPYQJkIAM8CxkKC4ncLhwX2TP1RcAmnYzamL5Ho48LqP+15jLfQ2xgPcd9v5drRfPZypFgweZcHuAiyqpiRuIvoKDx+JuECQRWHuF2loHwmIEp/yKPKRfTQACIiQv81v/O0XIok77QMLAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=ddbf519d19e743107f443733a6e8f27e"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=59bf519d19e743107f443733a6e8f271^sys_idNOT IN55bf519d19e743107f443733a6e8f27c"/>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">5dbf519d19e743107f443733a6e8f22d</block>
+        <comment/>
+        <connected_to/>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Event Deadline Reminder Flow">59bf519d19e743107f443733a6e8f271</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="For Each">098e1dc5c3e232002841b63b12d3ae33</logic_definition>
+        <order>2</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_id>55bf519d19e743107f443733a6e8f27c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <ui_id>15f96b8e-8119-4a7e-b97f-466fbc6b255f</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/51TwW6jMBD9F58TZCBFTW5Vq0qVulsprXpZVdFgD4lVY7O2Scoi/n3HgdCqp9WeYJ7fzLz3MD2zbWja4F/sjfdqb9jm19uCKRMxeu+ZkmzD0rWs1ilfizwr8ozz7HqVlkVeppnMAWXBFsxAjcRUAWtP5RF0G+u+z6+IxTku11hkyxXP5bJccb685oAFrAuorvJki8I66YeBWqXyjYbu9f8niIPS0uFkpgFH2gI6tum/Hf2rOQ0laqI+TO6+mQ1dE0s3SpiAx6lnO6P0iCIyvmD4EdBIpPUVaI8LVoOREKzr2Ca4lgCHIJ+M7mbGQZlA41jkfnj1hzamnEdihWRI4Hg4l7spxxGu7iDAM40WoXUTVRysEujHKCRW0Opw+xUbCU9NUNaMLQFKfem2uq3NzzEJNg+4fDZCWk8isIlGo/TJR/V8sKftReW9MudQpkNtBei5ghCcKtsQ9fQMNdY0aFdD0yiz3zXOHtW5mbTUyV5TkVTanmhpvMoJiCg8oVwhuSf87gy/glPRxQ8aQ83DgvnO32rw/tMLhbj73UYlo7PJw26MIbYIp5pwQwuOOMkd3uKtH2fPmQrlScJLxB4u/1Q86OgGKfEVOln3HsV/YsNfImQ+y50DAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=59bf519d19e743107f443733a6e8f271"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_59bf519d19e743107f443733a6e8f271"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_59bf519d19e743107f443733a6e8f271"/>
+    <sys_hub_flow action="UPDATE">
+        <sys_id>9fd4119919a743107f443733a6e8f257</sys_id>
+        <latest_snapshot>59bf519d19e743107f443733a6e8f271</latest_snapshot>
+        <compiler_build/>
+        <version_record/>
+    </sys_hub_flow>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=9fd4119919a743107f443733a6e8f257^sys_idNOT IN6dbf519d19e743107f443733a6e8f296"/>
+    <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
+        <binding_strategy>com.snc.process_flow.engine.binding.RunAlways</binding_strategy>
+        <plan/>
+        <plan_id>9fd4119919a743107f443733a6e8f257</plan_id>
+        <snapshot>59bf519d19e743107f443733a6e8f271</snapshot>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 17:02:37</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>6dbf519d19e743107f443733a6e8f296</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 17:02:37</sys_updated_on>
+        <trigger display_value="">e1bf519d19e743107f443733a6e8f293</trigger>
+    </sys_flow_trigger_plan>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=9fd4119919a743107f443733a6e8f257"/>
+</record_update>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="DELETE">
+        <category>custom</category>
+        <css/>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <human_readable_url_structure/>
+        <id>campus_organizer_signup</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 05:21:00</sys_created_on>
+        <sys_id>0c65a71eb4a303107f44e1aec8ca28d1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>campus_organizer_signup</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_page_0c65a71eb4a303107f44e1aec8ca28d1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 05:21:00</sys_updated_on>
+        <title>Campus Connect Organizer Signup</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="DELETE" query="documentkey=0c65a71eb4a303107f44e1aec8ca28d1"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_page_0c65a71eb4a303107f44e1aec8ca28d1</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page"><sp_page action="INSERT_OR_UPDATE"><category>custom</category><css/><draft>false</draft><dynamic_title_structure/><human_readable_url_structure/><id>campus_organizer_signup</id><internal>false</internal><omit_watcher>false</omit_watcher><public>false</public><roles/><seo_script/><short_description/><sys_class_name>sp_page</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-28 05:21:00</sys_created_on><sys_id>0c65a71eb4a303107f44e1aec8ca28d1</sys_id><sys_mod_count>0</sys_mod_count><sys_name>campus_organizer_signup</sys_name><sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package><sys_policy/><sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope><sys_update_name>sp_page_0c65a71eb4a303107f44e1aec8ca28d1</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-28 05:21:00</sys_updated_on><title>Campus Connect Organizer Signup</title><use_seo_script>false</use_seo_script></sp_page><sys_translated_text action="delete_multiple" query="documentkey=0c65a71eb4a303107f44e1aec8ca28d1"/></record_update>]]></payload>
+        <payload_hash>1743496610</payload_hash>
+        <record_name>campus_organizer_signup</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 05:21:00</sys_created_on>
+        <sys_id>3e75e71eb4a303107f44e1aec8ca289b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0e67594c90000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 05:21:00</sys_updated_on>
+        <type>Page</type>
+        <update_guid>3e75e71e86a30310fa209f49c69b019a</update_guid>
+        <update_guid_history>3e75e71e86a30310fa209f49c69b019a:1743496610</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="campus_organizer_signup">d81e9562b4e343107f44e1aec8ca281c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 14:07:52</sys_created_on>
+        <sys_db_object display_value="" name="sp_page">sp_page</sys_db_object>
+        <sys_id>1e26c5abcbf24621838cb817786054d9</sys_id>
+        <sys_metadata>0c65a71eb4a303107f44e1aec8ca28d1</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>campus_organizer_signup</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_page_0c65a71eb4a303107f44e1aec8ca28d1</sys_update_name>
+        <sys_update_version display_value="sp_page_0c65a71eb4a303107f44e1aec8ca28d1">3e75e71eb4a303107f44e1aec8ca289b</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 14:07:52</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,1456 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+
+    c.processing = false;
+
+
+    /* =========================================
+       ACCEPT / REJECT REQUEST
+       ========================================= */
+
+    c.respond = function(
+        request,
+        decision
+    ) {
+
+
+        if (
+            !request ||
+            !request.sys_id
+        ) {
+
+            alert(
+                'Unable to identify the team request.'
+            );
+
+            return;
+
+        }
+
+
+        if (c.processing) {
+            return;
+        }
+
+
+        c.processing = true;
+
+
+        c.server.get({
+
+            action:
+                'respond_to_request',
+
+            requestId:
+                request.sys_id,
+
+            decision:
+                decision
+
+        }).then(function(response) {
+
+
+            c.processing = false;
+
+
+            var result =
+                response.data || {};
+
+
+            if (
+                result.responseMessage
+            ) {
+
+                alert(
+                    result.responseMessage
+                );
+
+            }
+
+
+            /*
+             * Reload the widget.
+             *
+             * Accepted / Rejected request
+             * will no longer appear under
+             * Pending Team Requests.
+             */
+
+            c.server.update();
+
+
+        }, function(error) {
+
+
+            c.processing = false;
+
+
+            console.log(
+                'REQUEST RESPONSE ERROR:',
+                error
+            );
+
+
+            alert(
+                'Unable to update the team request.'
+            );
+
+
+        });
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   CAMPUS CONNECT - MY TEAM REQUESTS&#13;
+   COMPLETE STANDALONE CSS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-team-requests-page {&#13;
+    min-height: 100vh;&#13;
+    padding: 32px 0 0 180px;&#13;
+    background: transparent;&#13;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",&#13;
+                 Roboto, Arial, sans-serif;&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+.cc-team-requests-page *,&#13;
+.cc-team-requests-page *::before,&#13;
+.cc-team-requests-page *::after {&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HERO&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-team-requests-hero {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto 28px;&#13;
+    padding: 30px 34px;&#13;
+    border-radius: 18px;&#13;
+    background: linear-gradient(&#13;
+        135deg,&#13;
+        #173f73 0%,&#13;
+        #1f5d9b 55%,&#13;
+        #2877b9 100%&#13;
+    );&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 22px;&#13;
+    box-shadow: 0 12px 30px rgba(23, 63, 115, 0.16);&#13;
+}&#13;
+&#13;
+.cc-team-requests-hero .cc-hero-icon {&#13;
+    width: 62px;&#13;
+    height: 62px;&#13;
+    min-width: 62px;&#13;
+    border-radius: 16px;&#13;
+    background: rgba(255, 255, 255, 0.16);&#13;
+    color: #ffffff;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 28px;&#13;
+}&#13;
+&#13;
+.cc-team-requests-hero .cc-hero-content h1 {&#13;
+    margin: 0;&#13;
+    color: #ffffff;&#13;
+    font-size: 30px;&#13;
+    line-height: 1.2;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-team-requests-hero .cc-hero-content p {&#13;
+    margin: 8px 0 0;&#13;
+    color: rgba(255, 255, 255, 0.84);&#13;
+    font-size: 15px;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.cc-hero-eyebrow {&#13;
+    margin-bottom: 5px;&#13;
+    color: rgba(255, 255, 255, 0.72);&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 1.3px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST SECTION&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-requests-section {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto;&#13;
+}&#13;
+&#13;
+.cc-section-header {&#13;
+    margin-bottom: 18px;&#13;
+    display: flex;&#13;
+    align-items: flex-end;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.cc-section-eyebrow {&#13;
+    margin-bottom: 5px;&#13;
+    color: #1f5d9b;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 1px;&#13;
+}&#13;
+&#13;
+.cc-section-header h2 {&#13;
+    margin: 0;&#13;
+    color: #1f2937;&#13;
+    font-size: 22px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-section-header p {&#13;
+    margin: 5px 0 0;&#13;
+    color: #7b8794;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.cc-request-count {&#13;
+    padding: 7px 14px;&#13;
+    border-radius: 20px;&#13;
+    background: #edf5ff;&#13;
+    color: #1f5d9b;&#13;
+    font-size: 13px;&#13;
+    font-weight: 700;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST LIST&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-team-request-list {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-team-request-card {&#13;
+    overflow: hidden;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e3e8ef;&#13;
+    border-radius: 16px;&#13;
+    box-shadow: 0 6px 20px rgba(31, 45, 61, 0.07);&#13;
+    transition:&#13;
+        transform 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.cc-team-request-card:hover {&#13;
+    transform: translateY(-2px);&#13;
+    box-shadow: 0 10px 27px rgba(31, 45, 61, 0.10);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-request-card-header {&#13;
+    padding: 21px 23px;&#13;
+    border-bottom: 1px solid #edf0f4;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+}&#13;
+&#13;
+.cc-request-student {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 14px;&#13;
+}&#13;
+&#13;
+.cc-student-avatar {&#13;
+    width: 50px;&#13;
+    height: 50px;&#13;
+    min-width: 50px;&#13;
+    border-radius: 50%;&#13;
+    background: #eaf3fc;&#13;
+    color: #1f5d9b;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 19px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-student-details h3 {&#13;
+    margin: 0 0 6px;&#13;
+    color: #243b53;&#13;
+    font-size: 17px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-pending-badge {&#13;
+    display: inline-flex;&#13;
+    align-items: center;&#13;
+    padding: 5px 9px;&#13;
+    border-radius: 15px;&#13;
+    background: #fff7e6;&#13;
+    color: #9a6700;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-request-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+    min-width: 42px;&#13;
+    border-radius: 11px;&#13;
+    background: #f0f5fb;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST BODY&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-request-card-body {&#13;
+    padding: 23px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   INFORMATION GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-info-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(2, minmax(0, 1fr));&#13;
+    gap: 16px;&#13;
+}&#13;
+&#13;
+.cc-info-block {&#13;
+    min-width: 0;&#13;
+    padding: 15px 16px;&#13;
+    border: 1px solid #e8edf3;&#13;
+    border-radius: 11px;&#13;
+    background: #fafbfd;&#13;
+}&#13;
+&#13;
+.cc-info-label {&#13;
+    margin-bottom: 7px;&#13;
+    color: #7b8794;&#13;
+    font-size: 10px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 0.8px;&#13;
+}&#13;
+&#13;
+.cc-info-value {&#13;
+    color: #26384a;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    line-height: 1.5;&#13;
+    word-break: break-word;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REQUEST ACTIONS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-request-actions {&#13;
+    margin-top: 22px;&#13;
+    padding-top: 20px;&#13;
+    border-top: 1px solid #edf0f4;&#13;
+    display: flex;&#13;
+    justify-content: flex-end;&#13;
+    gap: 11px;&#13;
+}&#13;
+&#13;
+.cc-accept-btn,&#13;
+.cc-reject-btn {&#13;
+    min-height: 43px;&#13;
+    padding: 0 18px;&#13;
+    border-radius: 9px;&#13;
+    font-size: 13px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    transition:&#13;
+        background 0.2s ease,&#13;
+        border-color 0.2s ease,&#13;
+        color 0.2s ease,&#13;
+        transform 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.cc-accept-btn {&#13;
+    border: 1px solid #1d8755;&#13;
+    background: #1d8755;&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+.cc-accept-btn:hover:not(:disabled) {&#13;
+    background: #176d45;&#13;
+    border-color: #176d45;&#13;
+    transform: translateY(-1px);&#13;
+    box-shadow: 0 5px 14px rgba(29, 135, 85, 0.20);&#13;
+}&#13;
+&#13;
+.cc-reject-btn {&#13;
+    border: 1px solid #d9534f;&#13;
+    background: #ffffff;&#13;
+    color: #c43d39;&#13;
+}&#13;
+&#13;
+.cc-reject-btn:hover:not(:disabled) {&#13;
+    background: #fff4f3;&#13;
+    border-color: #c43d39;&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+.cc-accept-btn:disabled,&#13;
+.cc-reject-btn:disabled {&#13;
+    opacity: 0.55;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EMPTY STATE&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-no-requests-card {&#13;
+    width: 100%;&#13;
+    max-width: 1180px;&#13;
+    margin: 0 auto;&#13;
+    padding: 62px 30px;&#13;
+    text-align: center;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e3e8ef;&#13;
+    border-radius: 16px;&#13;
+    box-shadow: 0 6px 20px rgba(31, 45, 61, 0.06);&#13;
+}&#13;
+&#13;
+.cc-empty-icon {&#13;
+    width: 64px;&#13;
+    height: 64px;&#13;
+    margin: 0 auto 17px;&#13;
+    border-radius: 50%;&#13;
+    background: #edf8f2;&#13;
+    color: #218653;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    font-size: 27px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-no-requests-card h3 {&#13;
+    margin: 0;&#13;
+    color: #344054;&#13;
+    font-size: 20px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-no-requests-card p {&#13;
+    max-width: 510px;&#13;
+    margin: 9px auto 0;&#13;
+    color: #7b8794;&#13;
+    font-size: 14px;&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - TABLET&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 768px) {&#13;
+&#13;
+    .cc-team-requests-page {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero {&#13;
+        padding: 24px;&#13;
+        gap: 15px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero .cc-hero-icon {&#13;
+        width: 50px;&#13;
+        height: 50px;&#13;
+        min-width: 50px;&#13;
+        font-size: 23px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero .cc-hero-content h1 {&#13;
+        font-size: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-section-header {&#13;
+        align-items: flex-start;&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-info-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .cc-request-card-header {&#13;
+        align-items: flex-start;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE - MOBILE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 480px) {&#13;
+&#13;
+    .cc-team-requests-page {&#13;
+        padding: 12px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero {&#13;
+        padding: 20px;&#13;
+        border-radius: 14px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero .cc-hero-content h1 {&#13;
+        font-size: 21px;&#13;
+    }&#13;
+&#13;
+    .cc-team-requests-hero .cc-hero-content p {&#13;
+        font-size: 13px;&#13;
+    }&#13;
+&#13;
+    .cc-request-card-header {&#13;
+        padding: 17px;&#13;
+    }&#13;
+&#13;
+    .cc-request-card-body {&#13;
+        padding: 17px;&#13;
+    }&#13;
+&#13;
+    .cc-request-icon {&#13;
+        display: none;&#13;
+    }&#13;
+&#13;
+    .cc-request-actions {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-accept-btn,&#13;
+    .cc-reject-btn {&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .cc-no-requests-card {&#13;
+        padding: 45px 20px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>View and respond to incoming team requests</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>my_team_requests</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>My Team Requests</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.requests = [];
+    data.sentRequests = [];
+    data.responseMessage = '';
+
+    var currentUser = gs.getUserID();
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    /* =========================================
+       ACCEPT / REJECT REQUEST
+       ========================================= */
+
+    if (
+        input &&
+        input.action == 'respond_to_request'
+    ) {
+
+        var requestId =
+            String(input.requestId || '');
+
+        var decision =
+            String(input.decision || '').toLowerCase();
+
+
+        if (!requestId) {
+
+            data.responseMessage =
+                'Team request information is missing.';
+
+            return;
+        }
+
+
+        if (
+            decision != 'accepted' &&
+            decision != 'rejected'
+        ) {
+
+            data.responseMessage =
+                'Invalid request decision.';
+
+            return;
+        }
+
+
+        /* =====================================
+           GET TEAM MEMBER REQUEST
+           ===================================== */
+
+        var member =
+            new GlideRecord(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        if (!member.get(requestId)) {
+
+            data.responseMessage =
+                'The team request was not found.';
+
+            return;
+        }
+
+
+        /* =====================================
+           GET TEAM
+           ===================================== */
+
+        var requestTeam =
+            new GlideRecord(
+                'x_snc_campus_con_0_teams'
+            );
+
+
+        if (
+            !requestTeam.get(
+                member.getValue('team')
+            )
+        ) {
+
+            data.responseMessage =
+                'The associated team was not found.';
+
+            return;
+        }
+
+
+        /* =====================================
+           SECURITY CHECK
+           ===================================== */
+
+        /*
+         * The Team Member student is the RECEIVER.
+         *
+         * Example:
+         * Sruthi sends request to Hema
+         *
+         * member.student = Hema
+         * currentUser    = Hema
+         *
+         * Therefore Hema is authorized to respond.
+         */
+
+        if (
+            member.getValue('student') != currentUser
+        ) {
+
+            data.responseMessage =
+                'You are not authorized to respond to this request.';
+
+            return;
+        }
+
+
+        /* =====================================
+           REQUEST MUST BE PENDING
+           ===================================== */
+
+        if (
+            member.getValue('join_status') != 'requested'
+        ) {
+
+            data.responseMessage =
+                'This team request has already been processed.';
+
+            return;
+        }
+
+
+        /* =====================================
+           ACCEPT
+           ===================================== */
+
+        if (
+            decision == 'accepted'
+        ) {
+
+            var acceptedMembers =
+                new GlideRecord(
+                    'x_snc_campus_con_0_team_members'
+                );
+
+
+            acceptedMembers.addQuery(
+                'team',
+                requestTeam.getUniqueValue()
+            );
+
+
+            acceptedMembers.addQuery(
+                'join_status',
+                'accepted'
+            );
+
+
+            acceptedMembers.query();
+
+
+            var acceptedCount = 0;
+
+
+            while (
+                acceptedMembers.next()
+            ) {
+
+                acceptedCount++;
+
+            }
+
+
+            /*
+             * Maximum team size = 5
+             */
+
+            if (
+                acceptedCount >= 5
+            ) {
+
+                data.responseMessage =
+                    'This team already has the maximum number of members.';
+
+                return;
+            }
+
+
+            /* =================================
+               ACCEPT MEMBER
+               ================================= */
+
+            member.setValue(
+                'join_status',
+                'accepted'
+            );
+
+
+            member.setValue(
+                'commitment_confirmed',
+                true
+            );
+
+
+            var acceptedId =
+                member.update();
+
+
+            if (!acceptedId) {
+
+                data.responseMessage =
+                    'Unable to accept the team request.';
+
+                return;
+            }
+
+
+            /* =================================
+               CHECK FINAL TEAM SIZE
+               ================================= */
+
+            var finalAccepted =
+                new GlideRecord(
+                    'x_snc_campus_con_0_team_members'
+                );
+
+
+            finalAccepted.addQuery(
+                'team',
+                requestTeam.getUniqueValue()
+            );
+
+
+            finalAccepted.addQuery(
+                'join_status',
+                'accepted'
+            );
+
+
+            finalAccepted.query();
+
+
+            var finalCount = 0;
+
+
+            while (
+                finalAccepted.next()
+            ) {
+
+                finalCount++;
+
+            }
+
+
+            if (
+                finalCount >= 5
+            ) {
+
+                requestTeam.setValue(
+                    'status',
+                    'closed'
+                );
+
+
+                requestTeam.update();
+
+            }
+
+
+            data.responseMessage =
+                'Team request accepted successfully.';
+
+            return;
+        }
+
+
+        /* =========================================
+           REJECT
+           ========================================= */
+
+        if (
+            decision == 'rejected'
+        ) {
+
+            member.setValue(
+                'join_status',
+                'rejected'
+            );
+
+
+            member.setValue(
+                'commitment_confirmed',
+                true
+            );
+
+
+            var rejectedId =
+                member.update();
+
+
+            if (!rejectedId) {
+
+                data.responseMessage =
+                    'Unable to reject the team request.';
+
+                return;
+            }
+
+
+            data.responseMessage =
+                'Team request rejected.';
+
+            return;
+        }
+
+    }
+
+
+    /* =========================================
+       INCOMING TEAM REQUESTS
+       ========================================= */
+
+    var incomingMember =
+        new GlideRecord(
+            'x_snc_campus_con_0_team_members'
+        );
+
+
+    /*
+     * Logged-in student is the RECEIVER.
+     *
+     * Example:
+     * Sruthi → Hema
+     *
+     * incomingMember.student = Hema
+     */
+
+    incomingMember.addQuery(
+        'student',
+        currentUser
+    );
+
+
+    incomingMember.addQuery(
+        'join_status',
+        'requested'
+    );
+
+
+    incomingMember.orderByDesc(
+        'sys_created_on'
+    );
+
+
+    incomingMember.query();
+
+
+    while (
+        incomingMember.next()
+    ) {
+
+        var request = {};
+
+
+        request.sys_id =
+            incomingMember.getUniqueValue();
+
+
+        /* =====================================
+           GET TEAM
+           ===================================== */
+
+        var team =
+            new GlideRecord(
+                'x_snc_campus_con_0_teams'
+            );
+
+
+        var teamId =
+            incomingMember.getValue('team');
+
+
+        var requesterUserId = '';
+
+
+        if (
+            teamId &&
+            team.get(teamId)
+        ) {
+
+            request.teamName =
+                team.getValue(
+                    'team_name'
+                ) ||
+                team.getDisplayValue(
+                    'team_name'
+                );
+
+
+            request.eventName =
+                team.getDisplayValue(
+                    'event'
+                );
+
+
+            /* =================================
+               IMPORTANT:
+               TEAM LEAD = REQUESTER
+               ================================= */
+
+            requesterUserId =
+                team.getValue(
+                    'team_lead'
+                );
+
+
+        } else {
+
+            request.teamName = '';
+            request.eventName = '';
+
+        }
+
+
+        /* =====================================
+           REQUESTER DETAILS
+           ===================================== */
+
+        /*
+         * Do NOT use:
+         *
+         * incomingMember.student
+         *
+         * because that is the RECEIVER.
+         *
+         * We use team.team_lead because the
+         * Team Lead is the person who created
+         * the team and sent the request.
+         */
+
+        request.studentName = '';
+
+
+        if (
+            requesterUserId
+        ) {
+
+            var requesterUser =
+                new GlideRecord('sys_user');
+
+
+            if (
+                requesterUser.get(
+                    requesterUserId
+                )
+            ) {
+
+                request.studentName =
+                    requesterUser.getDisplayValue(
+                        'name'
+                    );
+
+            }
+
+        }
+
+
+        request.status =
+            incomingMember.getDisplayValue(
+                'join_status'
+            );
+
+
+        /* =====================================
+           GET REQUESTER STUDENT PROFILE
+           ===================================== */
+
+        request.collegeName = '';
+        request.skills = '';
+        request.location = '';
+
+
+        var requesterProfile =
+            new GlideRecord(
+                'x_snc_campus_con_0_student_profile'
+            );
+
+
+        requesterProfile.addQuery(
+            'student',
+            requesterUserId
+        );
+
+
+        requesterProfile.setLimit(1);
+
+        requesterProfile.query();
+
+
+        if (
+            requesterProfile.next()
+        ) {
+
+            request.collegeName =
+                requesterProfile.getValue(
+                    'college_name'
+                ) || '';
+
+
+            request.skills =
+                requesterProfile.getValue(
+                    'skills'
+                ) || '';
+
+
+            request.location =
+                requesterProfile.getValue(
+                    'location'
+                ) || '';
+
+        }
+
+
+        /* =====================================
+           ADD REQUEST
+           ===================================== */
+
+        data.requests.push(
+            request
+        );
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 15:32:46</sys_created_on>
+        <sys_id>6bb72cda35ab43107f446df3f33f30a6</sys_id>
+        <sys_mod_count>39</sys_mod_count>
+        <sys_name>My Team Requests</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_6bb72cda35ab43107f446df3f33f30a6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 16:51:57</sys_updated_on>
+        <template><![CDATA[<div class="cc-team-requests-page">
+
+
+    <!-- HERO -->
+
+    <div class="cc-team-requests-hero">
+
+        <div class="cc-hero-icon">
+            ]]>👥
+<![CDATA[        </div>
+
+        <div class="cc-hero-content">
+
+            <div class="cc-hero-eyebrow">
+                TEAM COLLABORATION
+            </div>
+
+            <h1>
+                My Team Requests
+            </h1>
+
+            <p>
+                Review teammate requests and decide who joins your team.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- INCOMING REQUESTS -->
+
+    <div
+        class="cc-requests-section"
+        ng-if="
+            data.requests &&
+            data.requests.length > 0
+        ">
+
+
+        <div class="cc-section-header">
+
+            <div>
+
+                <div class="cc-section-eyebrow">
+                    TEAM REQUESTS
+                </div>
+
+                <h2>
+                    Incoming Team Requests
+                </h2>
+
+                <p>
+                    Students who want to join your team.
+                </p>
+
+            </div>
+
+
+            <div class="cc-request-count">
+
+                {{data.requests.length}}
+
+                Request<span
+                    ng-if="data.requests.length != 1">
+                    s
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="cc-team-request-list">
+
+
+            <div
+                class="cc-team-request-card"
+                ng-repeat="request in data.requests">
+
+
+                <!-- HEADER -->
+
+                <div class="cc-request-card-header">
+
+
+                    <div class="cc-request-student">
+
+
+                        <div class="cc-student-avatar">
+
+                            {{request.studentName.charAt(0)}}
+
+                        </div>
+
+
+                        <div class="cc-student-details">
+
+                            <h3>
+                                {{request.studentName}}
+                            </h3>
+
+                            <span class="cc-pending-badge">
+
+                                ● Pending Response
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cc-request-icon">
+                        ]]>👥
+<![CDATA[                    </div>
+
+                </div>
+
+
+                <!-- REQUEST DETAILS -->
+
+                <div class="cc-request-card-body">
+
+
+                    <div class="cc-info-grid">
+
+
+                        <!-- FROM -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                FROM
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.studentName}}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- EVENT -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                EVENT
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.eventName}}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- COLLEGE -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                COLLEGE
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.collegeName}}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SKILLS -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                SKILLS
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.skills}}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LOCATION -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                LOCATION
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.location}}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TEAM -->
+
+                        <div class="cc-info-block">
+
+                            <div class="cc-info-label">
+                                TEAM
+                            </div>
+
+                            <div class="cc-info-value">
+
+                                {{request.teamName}}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+
+                    <div class="cc-request-actions">
+
+
+                        <button
+                            type="button"
+                            class="cc-accept-btn"
+                            ng-click="
+                                c.respond(
+                                    request,
+                                    'accepted'
+                                )
+                            "
+                            ng-disabled="c.processing">
+
+                            ✓
+                            <span>
+                                Accept Request
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="cc-reject-btn"
+                            ng-click="
+                                c.respond(
+                                    request,
+                                    'rejected'
+                                )
+                            "
+                            ng-disabled="c.processing">
+
+                            ✕
+                            <span>
+                                Reject Request
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+
+    <div
+        class="cc-no-requests-card"
+        ng-if="
+            !data.requests ||
+            data.requests.length === 0
+        ">
+
+        <div class="cc-empty-icon">
+            ✓
+        </div>
+
+        <h3>
+            No Pending Team Requests
+        </h3>
+
+        <p>
+            You don't have any teammate requests waiting for your response.
+        </p>
+
+    </div>
+
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>formation_type</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 06:42:18</sys_created_on>
+        <sys_id>4c8e268635ab03107f446df3f33f30f1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>formation_type</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_ui_policy_action_4c8e268635ab03107f446df3f33f30f1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 06:42:18</sys_updated_on>
+        <table>x_snc_campus_con_0_teams</table>
+        <ui_policy display_value="Lock Closed Team">448e268635ab03107f446df3f33f3066</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=4c8e268635ab03107f446df3f33f30f1"/>
+</record_update>

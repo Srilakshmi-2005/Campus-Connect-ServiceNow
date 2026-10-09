@@ -1,0 +1,1607 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.processing = '';
+
+
+    /*
+     * =========================================
+     * ACCEPT / REJECT TEAM REQUEST
+     * =========================================
+     */
+
+    c.respond = function(
+        request,
+        decision
+    ) {
+
+        if (
+            !request ||
+            !request.sys_id
+        ) {
+
+            return;
+
+        }
+
+
+        c.processing =
+            request.sys_id;
+
+
+        c.server.get({
+
+            action:
+                'respond_to_request',
+
+            requestId:
+                request.sys_id,
+
+            decision:
+                decision
+
+        }).then(
+
+            function(response) {
+
+                c.data =
+                    response.data;
+
+
+                c.processing =
+                    '';
+
+            },
+
+            function(error) {
+
+                console.log(
+                    'My Teams request error:',
+                    error
+                );
+
+
+                c.processing =
+                    '';
+
+            }
+
+        );
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================&#13;
+   CAMPUS CONNECT&#13;
+   MY TEAMS&#13;
+   ========================================= */&#13;
+&#13;
+.cc-my-teams {&#13;
+    max-width: 2000px;&#13;
+&#13;
+    margin: 0 auto;&#13;
+&#13;
+    padding: 28px 50px 24px 300px;&#13;
+&#13;
+    color: #14213d;&#13;
+&#13;
+    font-family: inherit;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PAGE HEADER&#13;
+   ========================================= */&#13;
+&#13;
+.cc-page-header {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-end;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    gap: 25px;&#13;
+&#13;
+    margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-eyebrow {&#13;
+    margin-bottom: 6px;&#13;
+&#13;
+    color: #0066ff;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 1.4px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-page-header h1 {&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 30px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    line-height: 1.2;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-page-header p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #52627a;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   CREATE BUTTON&#13;
+   ========================================= */&#13;
+&#13;
+.cc-create-btn {&#13;
+    display: inline-flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    padding: 11px 18px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #0066d6;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    text-decoration: none;&#13;
+&#13;
+    white-space: nowrap;&#13;
+&#13;
+    box-shadow:&#13;
+        0 5px 14px rgba(0, 102, 214, .18);&#13;
+&#13;
+    transition:&#13;
+        background .18s ease,&#13;
+        transform .18s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-create-btn:hover {&#13;
+    background: #0055b5;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    text-decoration: none;&#13;
+&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   SECTION TITLE&#13;
+   ========================================= */&#13;
+&#13;
+.cc-section-title {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    margin-bottom: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-section-title h2 {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 18px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-section-title &gt; span {&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM GRID&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-grid {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(2, minmax(0, 1fr));&#13;
+&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM CARD&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-card {&#13;
+    padding: 20px;&#13;
+&#13;
+    border: 1px solid #dfe6ef;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    box-shadow:&#13;
+        0 5px 18px rgba(7, 21, 47, .06);&#13;
+&#13;
+    transition:&#13;
+        transform .18s ease,&#13;
+        box-shadow .18s ease,&#13;
+        border-color .18s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-team-card:hover {&#13;
+    transform: translateY(-2px);&#13;
+&#13;
+    border-color: #cbd9e8;&#13;
+&#13;
+    box-shadow:&#13;
+        0 10px 25px rgba(7, 21, 47, .09);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM TOP&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-top {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-start;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    padding-bottom: 17px;&#13;
+&#13;
+    border-bottom: 1px solid #edf1f5;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-team-top h2 {&#13;
+    margin: 9px 0 4px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 20px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-event-name {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #60718a;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-team-icon {&#13;
+    width: 43px;&#13;
+    height: 43px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: #eaf3ff;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM STATUS&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-status {&#13;
+    display: inline-flex;&#13;
+&#13;
+    padding: 5px 10px;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    text-transform: capitalize;&#13;
+}&#13;
+&#13;
+&#13;
+.team-status-open {&#13;
+    color: #176d40;&#13;
+&#13;
+    background: #e8f7ee;&#13;
+}&#13;
+&#13;
+&#13;
+.team-status-closed {&#13;
+    color: #8d3c35;&#13;
+&#13;
+    background: #fdebea;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM INFORMATION&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-info {&#13;
+    display: grid;&#13;
+&#13;
+    grid-template-columns:&#13;
+        repeat(2, minmax(0, 1fr));&#13;
+&#13;
+    gap: 18px;&#13;
+&#13;
+    padding: 19px 0;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-info-label {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+    color: #78879a;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: .6px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-info-item strong {&#13;
+    display: block;&#13;
+&#13;
+    color: #14213d;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   TEAM FOOTER&#13;
+   ========================================= */&#13;
+&#13;
+.cc-team-footer {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding-top: 15px;&#13;
+&#13;
+    border-top: 1px solid #edf1f5;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-badge {&#13;
+    padding: 6px 10px;&#13;
+&#13;
+    border-radius: 15px;&#13;
+&#13;
+    color: #075db8;&#13;
+&#13;
+    background: #eaf3ff;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-badge.member {&#13;
+    color: #596a80;&#13;
+&#13;
+    background: #f1f4f7;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-member-note {&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   PENDING REQUESTS&#13;
+   ========================================= */&#13;
+&#13;
+.cc-requests-section {&#13;
+    margin-top: 30px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-list {&#13;
+    display: flex;&#13;
+&#13;
+    flex-direction: column;&#13;
+&#13;
+    gap: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-card {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 14px;&#13;
+&#13;
+    padding: 14px 16px;&#13;
+&#13;
+    border: 1px solid #dfe6ef;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    box-shadow:&#13;
+        0 3px 12px rgba(7, 21, 47, .04);&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-avatar {&#13;
+    width: 40px;&#13;
+    height: 40px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e8f2ff;&#13;
+&#13;
+    color: #1768bd;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-content {&#13;
+    flex: 1;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-content h3 {&#13;
+    margin: 0 0 3px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-content p {&#13;
+    margin: 0 0 4px;&#13;
+&#13;
+    color: #60718a;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-event {&#13;
+    color: #8794a6;&#13;
+&#13;
+    font-size: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-request-actions {&#13;
+    display: flex;&#13;
+&#13;
+    gap: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-accept-btn,&#13;
+.cc-reject-btn {&#13;
+    padding: 8px 13px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-accept-btn {&#13;
+    border: 1px solid #159447;&#13;
+&#13;
+    background: #159447;&#13;
+&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-accept-btn:hover {&#13;
+    background: #117b3a;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-reject-btn {&#13;
+    border: 1px solid #d4dde8;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #3e4f65;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-reject-btn:hover {&#13;
+    background: #f5f7fa;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   EMPTY&#13;
+   ========================================= */&#13;
+&#13;
+.cc-empty {&#13;
+    padding: 55px 20px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    border: 1px dashed #d5deea;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    background: #fbfcfe;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty-icon {&#13;
+    width: 55px;&#13;
+    height: 55px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    margin: 0 auto 13px;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    background: #eef5ff;&#13;
+&#13;
+    font-size: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty h3 {&#13;
+    margin: 0 0 7px;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-empty p {&#13;
+    margin: 0 auto 20px;&#13;
+&#13;
+    max-width: 450px;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   MESSAGE&#13;
+   ========================================= */&#13;
+&#13;
+.cc-message {&#13;
+    margin-top: 15px;&#13;
+&#13;
+    padding: 10px 14px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #eef6ff;&#13;
+&#13;
+    color: #1768bd;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================&#13;
+   RESPONSIVE&#13;
+   ========================================= */&#13;
+&#13;
+@media (max-width: 800px) {&#13;
+&#13;
+    .cc-page-header {&#13;
+        align-items: flex-start;&#13;
+&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-team-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-my-teams {&#13;
+        padding: 20px 14px 40px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-page-header h1 {&#13;
+        font-size: 25px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-team-info {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-request-card {&#13;
+        align-items: flex-start;&#13;
+&#13;
+        flex-wrap: wrap;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-request-actions {&#13;
+        width: 100%;&#13;
+&#13;
+        margin-left: 54px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Displays teams, members and pending team requests for the logged-in student.</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>my_teams</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>My Teams</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /*
+     * =========================================
+     * CAMPUS CONNECT - MY TEAMS
+     * =========================================
+     */
+
+    data.teams = [];
+    data.requests = [];
+    data.message = '';
+
+    var currentUser = gs.getUserID();
+
+
+    /*
+     * =========================================
+     * CHECK CURRENT USER
+     * =========================================
+     */
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * RESPOND TO JOIN REQUEST
+     * =========================================
+     *
+     * Logged-in user = RECEIVER
+     *
+     * They can Accept / Reject a request
+     * that belongs to them.
+     */
+
+    if (
+        input &&
+        input.action == 'respond_to_request'
+    ) {
+
+        var requestId =
+            input.requestId;
+
+        var decision =
+            input.decision;
+
+
+        if (!requestId || !decision) {
+
+            data.message =
+                'Request information is missing.';
+
+        } else {
+
+            var member =
+                new GlideRecord(
+                    'x_snc_campus_con_0_team_members'
+                );
+
+
+            if (!member.get(requestId)) {
+
+                data.message =
+                    'Team request not found.';
+
+            }
+
+            /*
+             * =========================================
+             * SECURITY
+             * =========================================
+             *
+             * The request must belong to
+             * the currently logged-in user.
+             */
+
+            else if (
+                member.getValue('student') != currentUser
+            ) {
+
+                data.message =
+                    'You are not authorized to respond to this request.';
+
+            }
+
+
+            else if (
+                member.getValue('join_status') != 'Requested'
+            ) {
+
+                data.message =
+                    'This request has already been processed.';
+
+            }
+
+
+            /*
+             * =========================================
+             * ACCEPT REQUEST
+             * =========================================
+             */
+
+            else if (decision == 'accepted') {
+
+                var teamId =
+                    member.getValue('team');
+
+
+                var team =
+                    new GlideRecord(
+                        'x_snc_campus_con_0_teams'
+                    );
+
+
+                if (!team.get(teamId)) {
+
+                    data.message =
+                        'The team could not be found.';
+
+                }
+
+
+                else if (
+                    team.getValue('status') != 'open'
+                ) {
+
+                    data.message =
+                        'This team is no longer open for joining.';
+
+                }
+
+
+                else {
+
+                    /*
+                     * Count accepted members.
+                     */
+
+                    var acceptedCountGr =
+                        new GlideAggregate(
+                            'x_snc_campus_con_0_team_members'
+                        );
+
+
+                    acceptedCountGr.addQuery(
+                        'team',
+                        teamId
+                    );
+
+
+                    acceptedCountGr.addQuery(
+                        'join_status',
+                        'Accepted'
+                    );
+
+
+                    acceptedCountGr.addAggregate(
+                        'COUNT'
+                    );
+
+
+                    acceptedCountGr.query();
+
+
+                    var acceptedCount = 0;
+
+
+                    if (
+                        acceptedCountGr.next()
+                    ) {
+
+                        acceptedCount =
+                            parseInt(
+                                acceptedCountGr.getAggregate(
+                                    'COUNT'
+                                ),
+                                10
+                            ) || 0;
+
+                    }
+
+
+                    /*
+                     * Maximum team size = 5.
+                     */
+
+                    if (
+                        acceptedCount >= 5
+                    ) {
+
+                        team.setValue(
+                            'status',
+                            'closed'
+                        );
+
+                        team.update();
+
+
+                        data.message =
+                            'This team is already full.';
+
+                    }
+
+
+                    else {
+
+                        /*
+                         * Accept request.
+                         */
+
+                        member.setValue(
+                            'join_status',
+                            'Accepted'
+                        );
+
+
+                        member.setValue(
+                            'commitment_confirmed',
+                            true
+                        );
+
+
+                        member.update();
+
+
+                        /*
+                         * Recount members.
+                         */
+
+                        var finalCountGr =
+                            new GlideAggregate(
+                                'x_snc_campus_con_0_team_members'
+                            );
+
+
+                        finalCountGr.addQuery(
+                            'team',
+                            teamId
+                        );
+
+
+                        finalCountGr.addQuery(
+                            'join_status',
+                            'Accepted'
+                        );
+
+
+                        finalCountGr.addAggregate(
+                            'COUNT'
+                        );
+
+
+                        finalCountGr.query();
+
+
+                        var finalCount = 0;
+
+
+                        if (
+                            finalCountGr.next()
+                        ) {
+
+                            finalCount =
+                                parseInt(
+                                    finalCountGr.getAggregate(
+                                        'COUNT'
+                                    ),
+                                    10
+                                ) || 0;
+
+                        }
+
+
+                        /*
+                         * Close team at 5 members.
+                         */
+
+                        if (
+                            finalCount >= 5
+                        ) {
+
+                            team.setValue(
+                                'status',
+                                'closed'
+                            );
+
+                            team.update();
+
+                        }
+
+
+                        data.message =
+                            'Team request accepted successfully.';
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+             * =========================================
+             * REJECT REQUEST
+             * =========================================
+             */
+
+            else if (decision == 'rejected') {
+
+                member.setValue(
+                    'join_status',
+                    'Rejected'
+                );
+
+
+                member.setValue(
+                    'commitment_confirmed',
+                    true
+                );
+
+
+                member.update();
+
+
+                data.message =
+                    'Team request rejected.';
+
+            }
+
+
+            else {
+
+                data.message =
+                    'Invalid request decision.';
+
+            }
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * GET MY TEAMS
+     * =========================================
+     *
+     * A team belongs to the user when:
+     *
+     * 1. User is Team Lead
+     *
+     * OR
+     *
+     * 2. User is an Accepted Team Member
+     */
+
+    var myTeamIds = {};
+
+
+    /*
+     * =========================================
+     * A. USER IS TEAM LEAD
+     * =========================================
+     */
+
+    var leadTeams =
+        new GlideRecord(
+            'x_snc_campus_con_0_teams'
+        );
+
+
+    leadTeams.addQuery(
+        'team_lead',
+        currentUser
+    );
+
+
+    leadTeams.query();
+
+
+    while (
+        leadTeams.next()
+    ) {
+
+        myTeamIds[
+            leadTeams.getUniqueValue()
+        ] = true;
+
+    }
+
+
+    /*
+     * =========================================
+     * B. USER IS ACCEPTED MEMBER
+     * =========================================
+     */
+
+    var memberTeams =
+        new GlideRecord(
+            'x_snc_campus_con_0_team_members'
+        );
+
+
+    memberTeams.addQuery(
+        'student',
+        currentUser
+    );
+
+
+    memberTeams.addQuery(
+        'join_status',
+        'Accepted'
+    );
+
+
+    memberTeams.query();
+
+
+    while (
+        memberTeams.next()
+    ) {
+
+        var memberTeamId =
+            memberTeams.getValue('team');
+
+
+        if (memberTeamId) {
+
+            myTeamIds[
+                memberTeamId
+            ] = true;
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * BUILD TEAM CARDS
+     * =========================================
+     */
+
+    for (
+        var teamId in myTeamIds
+    ) {
+
+        var teamGR =
+            new GlideRecord(
+                'x_snc_campus_con_0_teams'
+            );
+
+
+        if (
+            !teamGR.get(teamId)
+        ) {
+
+            continue;
+
+        }
+
+
+        var teamData = {};
+
+
+        teamData.sys_id =
+            teamGR.getUniqueValue();
+
+
+        teamData.teamName =
+            teamGR.getDisplayValue(
+                'team_name'
+            );
+
+
+        teamData.eventName =
+            teamGR.getDisplayValue(
+                'event'
+            ) ||
+            'Campus Event';
+
+
+        teamData.teamLead =
+            teamGR.getDisplayValue(
+                'team_lead'
+            );
+
+
+        teamData.status =
+            teamGR.getDisplayValue(
+                'status'
+            );
+
+
+        teamData.statusValue =
+            (
+                teamGR.getValue(
+                    'status'
+                ) ||
+                ''
+            ).toLowerCase();
+
+
+        teamData.formationType =
+            teamGR.getDisplayValue(
+                'formation_type'
+            ) ||
+            'Not specified';
+
+
+        teamData.isLead =
+            teamGR.getValue(
+                'team_lead'
+            ) == currentUser;
+
+
+        /*
+         * =========================================
+         * COUNT ACCEPTED MEMBERS
+         * =========================================
+         */
+
+        var countGR =
+            new GlideAggregate(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        countGR.addQuery(
+            'team',
+            teamId
+        );
+
+
+        countGR.addQuery(
+            'join_status',
+            'Accepted'
+        );
+
+
+        countGR.addAggregate(
+            'COUNT'
+        );
+
+
+        countGR.query();
+
+
+        teamData.acceptedCount = 0;
+
+
+        if (
+            countGR.next()
+        ) {
+
+            teamData.acceptedCount =
+                parseInt(
+                    countGR.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0;
+
+        }
+
+
+        data.teams.push(
+            teamData
+        );
+
+    }
+
+
+    
+
+
+    /*
+     * =========================================
+     * HELPER
+     * =========================================
+     */
+
+    function getInitials(name) {
+
+        if (!name) {
+
+            return 'ST';
+
+        }
+
+
+        var parts =
+            name.trim().split(/\s+/);
+
+
+        if (parts.length == 1) {
+
+            return parts[0]
+                .substring(0, 2)
+                .toUpperCase();
+
+        }
+
+
+        return (
+            parts[0].charAt(0) +
+            parts[parts.length - 1].charAt(0)
+        ).toUpperCase();
+
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 15:46:34</sys_created_on>
+        <sys_id>1afd7a3af16743107f443f8091a1ff91</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>My Teams</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_1afd7a3af16743107f443f8091a1ff91</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 15:00:50</sys_updated_on>
+        <template><![CDATA[<div class="cc-my-teams">
+
+    <!-- =========================================
+         PAGE HEADER
+         ========================================= -->
+
+    <div class="cc-page-header">
+
+        <div>
+
+            <div class="cc-eyebrow">
+                COLLABORATION
+            </div>
+
+            <h1>
+                My Teams
+            </h1>
+
+            <p>
+                Manage your teams and members.
+            </p>
+
+        </div>
+
+
+        <a
+            href="?id=sc_cat_item&sys_id=3334c7f334db03107f44aa83be5b9ada"
+            class="cc-create-btn">
+
+            + Create Team
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================================
+         MY TEAMS
+         ========================================= -->
+
+    <div class="cc-section-title">
+
+        <h2>
+            Your Teams
+        </h2>
+
+        <span>
+            {{data.teams.length}}
+            team<span ng-if="data.teams.length != 1">s</span>
+        </span>
+
+    </div>
+
+
+    <!-- =========================================
+         TEAM CARDS
+         ========================================= -->
+
+    <div
+        class="cc-team-grid"
+        ng-if="data.teams.length > 0">
+
+        <div
+            class="cc-team-card"
+            ng-repeat="team in data.teams track by team.sys_id">
+
+
+            <!-- CARD TOP -->
+
+            <div class="cc-team-top">
+
+                <div>
+
+                    <span
+                        class="cc-team-status"
+                        ng-class="'team-status-' + team.statusValue">
+
+                        {{team.status}}
+
+                    </span>
+
+                    <h2>
+                        {{team.teamName}}
+                    </h2>
+
+                    <p class="cc-event-name">
+                        {{team.eventName}}
+                    </p>
+
+                </div>
+
+
+                <div class="cc-team-icon">
+                    ]]>👥
+<![CDATA[                </div>
+
+            </div>
+
+
+            <!-- TEAM INFORMATION -->
+
+            <div class="cc-team-info">
+
+
+                <div class="cc-info-item">
+
+                    <span class="cc-info-label">
+                        TEAM LEAD
+                    </span>
+
+                    <strong>
+                        {{team.teamLead}}
+                    </strong>
+
+                </div>
+
+
+                <div class="cc-info-item">
+
+                    <span class="cc-info-label">
+                        MEMBERS
+                    </span>
+
+                    <strong>
+                        {{team.acceptedCount}} / 5
+                    </strong>
+
+                </div>
+
+
+                <div class="cc-info-item">
+
+                    <span class="cc-info-label">
+                        FORMATION
+                    </span>
+
+                    <strong>
+                        {{team.formationType}}
+                    </strong>
+
+                </div>
+
+
+                <div class="cc-info-item">
+
+                    <span class="cc-info-label">
+                        TEAM STATUS
+                    </span>
+
+                    <strong>
+                        {{team.status}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEAM ACTION -->
+
+            <div class="cc-team-footer">
+
+                <span
+                    class="cc-role-badge"
+                    ng-if="team.isLead">
+
+                    Team Lead
+
+                </span>
+
+                <span
+                    class="cc-role-badge member"
+                    ng-if="!team.isLead">
+
+                    Member
+
+                </span>
+
+
+                <span class="cc-member-note">
+                    {{team.acceptedCount}} accepted member<span
+                        ng-if="team.acceptedCount != 1">s</span>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         NO TEAMS
+         ========================================= -->
+
+    <div
+        class="cc-empty"
+        ng-if="data.teams.length == 0">
+
+        <div class="cc-empty-icon">
+            ]]>👥
+<![CDATA[        </div>
+
+        <h3>
+            You are not part of any team yet
+        </h3>
+
+        <p>
+            Create a team or join an existing team to start collaborating.
+        </p>
+
+        <a
+            href="?id=sc_cat_item&sys_id=3334c7f334db03107f44aa83be5b9ada"
+            class="cc-create-btn">
+
+            Create or Join Team
+
+        </a>
+
+    </div>
+
+
+
+
+    <!-- =========================================
+         MESSAGE
+         ========================================= -->
+
+    <div
+        class="cc-message"
+        ng-if="data.message">
+
+        {{data.message}}
+
+    </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>false</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,timeFromCreateToActivate=77006000,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Notifies the admin when a student submits an ID card for verification.</description>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source/>
+        <internal_name>student_id_verification_notification_flow</internal_name>
+        <label_cache>[{"name":"{{static.6816f79cc0a8016401c5a33be04be441}}","label":"System Administrator","reference":"sys_user","reference_display":"User","type":"reference","base_type":"reference","usedInstances":{"88a4a0e5-ae53-470d-b815-f88be6aef41b":["approval_conditions"]}},{"name":"Created_1.current","label":"Trigger - Record Created➛Student Profile Record","reference":"x_snc_campus_con_0_student_profile","reference_display":"Student Profile","type":"reference","base_type":"reference","usedInstances":{"b6701612-3059-4745-aa56-40e3d4967abb":["record"],"88a4a0e5-ae53-470d-b815-f88be6aef41b":["record"],"644d2ff3-f96e-44f6-bf85-8b7616d2926f":["record"],"ef4ff4df-cf22-41b8-84bb-9df0508edcaa":["record"],"f9f9f620-a3a2-41a6-bc00-d36deac154cd":["record"]},"attributes":{}},{"name":"88a4a0e5-ae53-470d-b815-f88be6aef41b.__action_status__","label":"1 - Ask For Approval➛Action Status","reference_display":"Action Status","type":"object","base_type":"object","usedInstances":{},"attributes":{"uiType":"object","co_type_name":"FD5a1eaf830c274310af0fe5e691974bd7","action_error_output":"true","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"88a4a0e5-ae53-470d-b815-f88be6aef41b.approval_state","label":"1 - Ask For Approval➛Approval State","reference_display":"Approval State","type":"choice","base_type":"choice","choices":[{"label":"-- None --","value":"","order":0.0},{"label":"Not Yet Requested","value":"not requested","order":1.0},{"label":"Requested","value":"requested","order":2.0},{"label":"Approved","value":"approved","order":3.0},{"label":"Rejected","value":"rejected","order":4.0},{"label":"Cancelled","value":"cancelled","order":5.0},{"label":"No Longer Required","value":"not_required","order":6.0},{"label":"Skipped","value":"skipped","order":7.0}],"usedInstances":{"a74e69d3-e851-44dc-93f1-a52be00f1eab":["condition"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}}]</label_cache>
+        <master_snapshot>b4cf073ef1e743107f443f8091a1ff46</master_snapshot>
+        <master_snapshot_digest/>
+        <name>Student ID Verification Notification Flow</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id>8d4437cf992743107f4413fc57679c69</remote_trigger_id>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>published</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:34</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>dc8e4b7af1e743107f443f8091a1ff9a</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>Student ID Verification Notification Flow</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_hub_flow_dc8e4b7af1e743107f443f8091a1ff9a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:59:38</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record>361df70399a743107f4413fc57679cf5</version_record>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_variable_value action="delete_multiple" query="document_key=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_flow_record_trigger action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition table="x_snc_campus_con_0_student_profile">verification_status=Pending<item display_value="Pending" endquery="false" field="verification_status" goto="false" newquery="false" operator="=" or="false" value="Pending"/>
+        </condition>
+        <name/>
+        <on_delete>false</on_delete>
+        <on_insert>true</on_insert>
+        <on_update>false</on_update>
+        <published_version/>
+        <run_flow_in>background</run_flow_in>
+        <run_on_extended>false</run_on_extended>
+        <run_when_setting>both</run_when_setting>
+        <run_when_user_list/>
+        <run_when_user_setting>any</run_when_user_setting>
+        <sys_class_name>sys_flow_record_trigger</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:03</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8d4437cf992743107f4413fc57679c69</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:03</sys_updated_on>
+        <table>x_snc_campus_con_0_student_profile</table>
+        <trigger_definition/>
+    </sys_flow_record_trigger>
+    <sys_trigger_runner_mapping action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <data>{"run_on_extended":"false","run_flow_in":"background","run_when_user_list":[],"run_when_setting":"both","run_when_user_setting":"any"}</data>
+        <identifier>dc8e4b7af1e743107f443f8091a1ff9a</identifier>
+        <identifier_type>flow</identifier_type>
+        <runner>FDTriggerRunner</runner>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:03</sys_created_on>
+        <sys_id>8d4437cf992743107f4413fc57679c6a</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-01 05:06:02</sys_updated_on>
+        <trigger display_value="">8d4437cf992743107f4413fc57679c69</trigger>
+    </sys_trigger_runner_mapping>
+    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT IN8d4437cf992743107f4413fc57679c6a"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT IN9c8e4b7af1e743107f443f8091a1ff9b"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>dc8e4b7af1e743107f443f8091a1ff9a</id>
+        <name>Student ID Verification Notification Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:34</sys_created_on>
+        <sys_id>9c8e4b7af1e743107f443f8091a1ff9b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 16:57:34</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=9c8e4b7af1e743107f443f8091a1ff9b"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT IN029e0f7af1e743107f443f8091a1fff7,b19e0f7af1e743107f443f8091a1ffbc"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name,uiTypeLabel=Table Name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</model>
+        <model_id>dc8e4b7af1e743107f443f8091a1ff9a</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_dc8e4b7af1e743107f443f8091a1ff9a</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:58</sys_created_on>
+        <sys_id>029e0f7af1e743107f443f8091a1fff7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 17:03:04</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=029e0f7af1e743107f443f8091a1fff7"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id,uiTypeLabel=Document ID</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</model>
+        <model_id>dc8e4b7af1e743107f443f8091a1ff9a</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_dc8e4b7af1e743107f443f8091a1ff9a</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:57</sys_created_on>
+        <sys_id>b19e0f7af1e743107f443f8091a1ffbc</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 17:03:03</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=b19e0f7af1e743107f443f8091a1ffbc"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT INb19e0f7af1e743107f443f8091a1ff5b"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <generation_source/>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:57</sys_created_on>
+        <sys_id>b19e0f7af1e743107f443f8091a1ff5b</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 13:45:14</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/9VY227bOBD9FUFPu4AL6GLHcd66SYoN0G0K2919yAYCxUtMrEy6IqXULfLvO9TFlnVx7NhpnZcAImnyzOGZM8Pc/bAjFNLIvrCnKIyo3bO50DQWKJouFxSGtRkOBJqbuTkSBGkZL+0LHSe0Z7NYzqd0voiQhsUMRQoGZUxobF+4PTtFUUInS3VDYCf4fbZNsaddTMP3t0AJHGA0XyQqwFIETqB0QqjQwSKWjGeLCVdwzPLv4jeTfIH1ebUAz3hEYirsi7v7nr1AMRymDZAftSlu0GCG0cijDvZd3/Mcxzvvu+GZH7oe8RF1HNiwzkwNvW4haB06/aapIJSsWGlwF1NEbkW0XK2YAfU5T3P0TfHvsPu5Y9YxCtgxzedWn0HBSD6MZ5JjervQXIp8JMeZT8oomYtPOX7DJWUoiXTJJYwkCvajCwPZgCgQsclMPo7LAz9wkUVXTEYSo2j1hbSOeZhoqgzhcCVAfZBzo2QSZ+jH15e346vgn/fTyz+vx8H4ejId31xOr6/spyyu4GtidswRFliCPJynlQA+cBqZC1RLFcBN9myFY77Q77HmaanBp95a15dSEJ6x0tA2LqfUprbL6LeJ23E65Y0rJ5YST2nMGcfIDIO4kU7Uv4nj+OQzhMnFw976PTtDiFDUod+QVfRbZaAFom4hoxrlNiUXI7tIue84v0jMhVW9VMtzSWh0td7OhsmHB1A3F4tEG7YekdAq0DJAhAQVHs1SwPScuPPYmgp/XttxImCLYHVDTYVnRK4Y/cgVBHAH+TmhX5P8Gt6BWbGSvOwEWM4+FieME2FJuFn4Y+Ekjo3llgbIbubooaAcNowo1hWVsC+q+vUXV8rofB1EF4aMswaE1ekgPqsMOIeiDsRyf8zkb15JWuO2Vsj2znzXZSykzHOGJu9dxw+Z6wydAWLEdxzsVTK/CaYTpa4J5lUcYL/8V5lUox2UWKe4AO9Uc2UnGaWbGixJMBIpbObyONDcI0HzDLSaXfp7+eVKlvnw1aY6t4V25J4BkRTBL8iutmkW7OCPLJKPYNWHe2OI8H8PsUwEqbuTOcLiwlqvsH4r6Pz99XySyZhux7O54pQccn0ppayRWB7BG33mhiPapw5Yog9uGA5GoxAjj7Hh2ZB6bs0b1zBasb0JT3xGfGmberv8sVU4aZve9nDGAwA2XHJvgIf7YyHMVnfM596GDz7OqAgAahxExukadvgQcULLueNme+PodJ3fh2Y8Ox/hgTsc4iG8gSDjWZ+GyO17AzQanvnng1rGN6Bsg6lbmPkpLyPztjVAOtzgSz51Wk/+15Stolrnj+QDa7iApjfbAuVnVgqnuSUr8xgZW5+keHezXmdNKNTD7LX8SsV8F1Dm2q2fiiqUetZoLgDJHzC+gcS0rB2cndzrrKaodDPWg19ntH8+GDG/3Y/YqM2P1mC6YZ58L7Jj/qSdmdjWlOyq/7Q1jTq7iBdIuCaTanuxpf85Finu0UnxXo8U/+Ceq8zFzifpS8C+oXqXNSFHLHoGAg0kq3r5lbRgwoIzLc6s4n+alFjh0tIzCgxH0GvD+ZYBc6iJb6kxTWQrff9SXHlv3yh9MGwVrdnpVbWabo77tqZkiAYDv6PTHtXf1m2AnsF78jVu75xJ21Jwa6Hbb9/6nq2lriLZTUXsWMSOGnV7JTss6tZa9lzUh1epbf8ZaEFxovXn/n+/3a3eBCAAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT INa7d62b0799e343107f4413fc57679c52,b2a3338f992743107f4413fc57679cd3,87043f8f992743107f4413fc57679c53"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Ask For Approval">f8f2e9920b10030085c083eb37673abd</action_type>
+        <action_type_parent display_value="Ask For Approval">bae0a1120b10030085c083eb37673a92</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 13:22:30</sys_created_on>
+        <sys_id>a7d62b0799e343107f4413fc57679c52</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 13:54:03</sys_updated_on>
+        <ui_id>88a4a0e5-ae53-470d-b815-f88be6aef41b</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1Y227bOBD9FUHPjpeyLpb9FsQIkGJ3WyRpX+JAoKhRwkKmVJFM4xr+9w4lynacxPWm3qYt+mKAw7mcmTlDUr5auDxzx+4wzgcwGg1I6hHiExKHjMQ+pP4wGvqUEbfnCjoD1KyBlXWG6ztaaCNYLE5qoAqyxOszXdcg1HKJ+xmXVUHnH6waStgtLzLcd8dX1z23ojV6VFC748XWlppXkBQ0hQINJyXTM3TqnE3Qx75oO+vzDu42fBMD15n1nnAjxC2Dh/RcuFcgMsBoOS0k9NwZFRlVZT13x6rWKMCks7eimK80brlQbaIzei/5F3TvD4xeDpgZs0VYLRNboK42JWfwtlK8FK1E0bToClcWeib+bTMwpYWc6kJtlFZL9AeVgWxAtAjzi9vy83kX75SLJjmLtigZLVYrqlTNU61Amm5AAU1NZrSquLhJqrq8440xQpn1bwpc9POi/IwxJb8RfcoM7j4WiPZPUT5pxB9ozU0S/6AbNF42ySeftInbpmEBJ03ObcKoJVnNK3WMPu/AIlz2LFFTtrP1bN3p1t2ap/eJFCxhdFZpmbBSJCSRSjfhMb+cN8pbpL1oFZx3K4WXcfjSYHGaBvb2zuOB8eO8LIGbZSJa15a/3m7+Wsk+BI7J6xDYIvrFGPwt8kIQ+SH+DHOfeAOPxBDFMRsRyuIoCgN/3WSMh4hpkWCTJPpe07ij5NnEuYOa55xRg9zJy9o5acjtnJRCAFOOpffztP5PPl7G/AvsirjpWL9HATrDY1sB57yrwLOlsZMgu1B2CgYHmwIv+kXHQPPLrdq0kr+3u/P/zIsJ917wTxrOTPejQRqNSJwdZTlJj4LYD48oA3IEkRdCmEUs9PzvnjHi7TpYs/gJIuUcis0XzQEfL6fG9YODfw98j0bg1AJ8DrgdgGa5dRUcbghiQl5pCn7f1wzbSQbYuBA+lroWP5qre8DrjN+0+Lapug17B1P9P0z9iZkahDupAE+cTvjGzrjBJzf42p5pII/F/P3VYiEVvjxYP4q9KB+OGCM0Jl4UEI+F1PdTIEEKQeAtl9ePif49rl42Ies3iS5AdlOyR2lWX6PWbmep7Iys3znWyM5JcKiP09cbk9/zdc928iAfrfueaSwHVZtfp4up24KcuuOpK0oBU7c3dY1WYgjRiFEDwa02Gtli2a51Ta25t7Fc22Z0LhtNyW4hQ0o10geSludWfsi/cC5sAGeCqP+65Bs3zLdrtvofSLf2T5ax+wToMmnrxjfvl/Bg90vwZ2y2HvlJd1iZ6wQPoBfP0vVXUAlvNZEUAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=a7d62b0799e343107f4413fc57679c52"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
+        <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <generation_source/>
+        <order>3</order>
+        <parent_ui_id>a74e69d3-e851-44dc-93f1-a52be00f1eab</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:18:25</sys_created_on>
+        <sys_id>b2a3338f992743107f4413fc57679cd3</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:00</sys_updated_on>
+        <ui_id>ef4ff4df-cf22-41b8-84bb-9df0508edcaa</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1UXWvbMBT9K8HPJthxGtq8jYXAHtaOduSlK0KWrhOBLHv6SJOF/PddyXKatlsXSmAMpjfdj3PPuTrofpcInkyTMfAsv8onrMiLYpRlo8txXk6KMh/xggLkSZooWgNWamCN5nhfU+l8YLf7qIFa4CQfMqc1KLvfY54L00q6XcQyjLCVkBzzyfT+IU1aqhHRgk6muxcpu22BSFqCxMZZw1yNoINPM8Q4lW3ffdvTfUnfz8A7j+hE+CCmPJ88SxPYWFAccFxFpYE0qani1DZ6m0ytdhhA1fxGye2hYiWU7ZTWdGPED8QfZ76uApTG4hYOVxI31C+nEQxuWisa1UUsLWW/uUa6Wl13EvxuoaJO2qPdOoN40HrKnkTHsLpbNY+3/by5UEFdZCsbRuXhRq3VonQWjH8OkBCWUtO2FWpJWt2sRWhGKvVwKfEyrGTziDONWKohZZ73EBdEh3OMz0J4QbXwIj4jDDbvg3jy3fm5nYxImATNQTAJD4WlhmnR2g8IvIZIc59Gu5YXbxmAXT299xHmk2U3xChGGK1bZwhrFMmIsS4QQaWVkPDav3ddweDLoeB9dv7qCQ2uO0KninnW/Btx0dDPYtHPF2fz8+Vf8nNk9I8Z+k82zkZv/mNHLx2ca44svAYtKsGoZ4nmpdaZby7LCr4ICeCvHXxKyzs9DTUOsjDoRqUnq+sB5gIkN7+Q25s6DiDrOODwUZ/N2fkkC+f/f33G//rhJ2BNKfpgCAAA</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=b2a3338f992743107f4413fc57679cd3"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
+        <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <generation_source/>
+        <order>5</order>
+        <parent_ui_id>39be2bfc-edfc-47c1-8e72-7ca44de3bd52</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:20:05</sys_created_on>
+        <sys_id>87043f8f992743107f4413fc57679c53</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:00</sys_updated_on>
+        <ui_id>f9f9f620-a3a2-41a6-bc00-d36deac154cd</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1UXWvbMBT9K8HPJthxGtq8jYXAHtaOduSlK0KWrhOBLHv6SJOF/PddyXKatlsXSmAMpjfdj3PPuTrofpcInkyTMfAsv8onrMiLYpRlo8txXk6KMh/xggLkSZooWgNWamCN5nhfU+l8YLf7qIFa4CQfMqc1KLvfY54L00q6XcQyjLCVkBzzyfT+IU1aqhHRgk6muxcpu22BSFqCxMZZw1yNoINPM8Q4lW3ffdvTfUnfz8A7j+hE+CCmPJ88SxPYWFAccFxFpYE0qani1DZ6m0ytdhhA1fxGye2hYiWU7ZTWdGPED8QfZ76uApTG4hYOVxI31C+nEQxuWisa1UUsLWW/uUa6Wl13EvxuoaJO2qPdOoN40HrKnkTHsLpbNY+3/by5UEFdZCsbRuXhRq3VonQWjH8OkBCWUtO2FWpJWt2sRWhGKvVwKfEyrGTziDONWKohZZ73EBdEh3OMz0J4QbXwIj4jDDbvg3jy3fm5nYxImATNQTAJD4WlhmnR2g8IvIZIc59Gu5YXbxmAXT299xHmk2U3xChGGK1bZwhrFMmIsS4QQaWVkPDav3ddweDLoeB9dv7qCQ2uO0KninnW/Btx0dDPYtHPF2fz8+Vf8nNk9I8Z+k82zkZv/mNHLx2ca44svAYtKsGoZ4nmpdaZby7LCr4ICeCvHXxKyzs9DTUOsjDoRqUnq+sB5gIkN7+Q25s6DiDrOODwUZ/N2fkkC+f/f33G//rhJ2BNKfpgCAAA</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=87043f8f992743107f4413fc57679c53"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT INce03f30f992743107f4413fc57679cdc,46e33f4f992743107f4413fc57679c8b"/>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">d844f3cf992743107f4413fc57679c48</block>
+        <comment/>
+        <connected_to/>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="If">af4e1945c3e232002841b63b12d3ae3e</logic_definition>
+        <order>2</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:15:38</sys_created_on>
+        <sys_id>ce03f30f992743107f4413fc57679cdc</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:00</sys_updated_on>
+        <ui_id>a74e69d3-e851-44dc-93f1-a52be00f1eab</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1Vy27bMBD8lYJnWaAky3V8C1oEKNA2QBPk0gbCilrZbClRJSk7ruF/71IP22gc1Chy7E0acndnRrPQjunWNa2z9/raWrms2eLrY8Bk7TF63jFZsAUrOZTRlYhEEs+SmPN4Po3yWZJHcZEAQsICVkOFdFPoupBO6jrrgICtQbX+gB4LaRsF24cjIlZSFQaHqQ0YqnFo2GL3x5HbNpgpyFFR4Z0zsl5S+aXcxsJ3I7k3HzvkZdZ+HuF2nKRN4WlFPGD45LAukEaXoCwGrIK6AKfN9oAYhOK2VkdgJWvXK67gycpf1DtOU3+xRNIoBjsOr9lg1eiSlgJvG0+wRxzkarRQq7aqP/c6vMlYQqvcicmtpX7YeNKexUCpvFvpzZdx4I2sO4HDodIC1OENHNmQtw6t/zCosKJGWQVNQ+ZkjdFr2RUTlypcKnoJS6U3NNQnKgThiYfkEYQ3hL/v4Acw0qv4RG2ouKeZg5Ui69JH7ZwhCfvOluxn6wn1AgcpWe8GXbDCyMZd05w1Dqz3wRDdK0jLNOLp+XhMZ2dCcJLa3W4+hylwTCeAaTKZvuXFJJ9H6aScz3OcAZbULiQN5AKozDpwuN9/azlPKL3fUThKyrPov1bb19ifCwx6tj/nTXthaeK/LI3/zBfuDOf8/9KcLo20WR/+QVs3/J935tEHv59g+9wUKKQlIvce+zD+FfzBlgIgxSm00eaHl3DE9r8BhPBKrl8GAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">6844f3cf992743107f4413fc57679c4b</block>
+        <comment/>
+        <connected_to>a74e69d3-e851-44dc-93f1-a52be00f1eab</connected_to>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="Else">1f781bf3c32232002841b63b12d3aee6</logic_definition>
+        <order>4</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:19:28</sys_created_on>
+        <sys_id>46e33f4f992743107f4413fc57679c8b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:00</sys_updated_on>
+        <ui_id>39be2bfc-edfc-47c1-8e72-7ca44de3bd52</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/6tWyi8tKSgtKQ7JdywuzkzPU7KKjtVRyswDiUHYZYlFmYlJOalQbkpqcmZxZn5eCEjME0ldSmVeYm5mMrJQeX5RdlpOfjlCrBYAD1ouqHEAAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dc8e4b7af1e743107f443f8091a1ff9a</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:58</sys_created_on>
+        <sys_id>869e0f7af1e743107f443f8091a1fffd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 16:57:58</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_dc8e4b7af1e743107f443f8091a1ff9a</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:57:58</sys_created_on>
+        <sys_id>8a9e0f7af1e743107f443f8091a1fff2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 16:57:58</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_dc8e4b7af1e743107f443f8091a1ff9a"/>
+    <sys_hub_flow_snapshot action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>true</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Notifies the admin when a student submits an ID card for verification.</description>
+        <flow_priority>MEDIUM</flow_priority>
+        <internal_name>student_id_verification_notification_flow</internal_name>
+        <label_cache>[{"name":"{{static.6816f79cc0a8016401c5a33be04be441}}","label":"System Administrator","reference":"sys_user","reference_display":"User","type":"reference","base_type":"reference","usedInstances":{"88a4a0e5-ae53-470d-b815-f88be6aef41b":["approval_conditions"]}},{"name":"Created_1.current","label":"Trigger - Record Created➛Student Profile Record","reference":"x_snc_campus_con_0_student_profile","reference_display":"Student Profile","type":"reference","base_type":"reference","usedInstances":{"b6701612-3059-4745-aa56-40e3d4967abb":["record"],"88a4a0e5-ae53-470d-b815-f88be6aef41b":["record"],"644d2ff3-f96e-44f6-bf85-8b7616d2926f":["record"],"ef4ff4df-cf22-41b8-84bb-9df0508edcaa":["record"],"f9f9f620-a3a2-41a6-bc00-d36deac154cd":["record"]},"attributes":{}},{"name":"88a4a0e5-ae53-470d-b815-f88be6aef41b.__action_status__","label":"1 - Ask For Approval➛Action Status","reference_display":"Action Status","type":"object","base_type":"object","usedInstances":{},"attributes":{"uiType":"object","co_type_name":"FD5a1eaf830c274310af0fe5e691974bd7","action_error_output":"true","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}},{"name":"88a4a0e5-ae53-470d-b815-f88be6aef41b.approval_state","label":"1 - Ask For Approval➛Approval State","reference_display":"Approval State","type":"choice","base_type":"choice","choices":[{"label":"-- None --","value":"","order":0.0},{"label":"Not Yet Requested","value":"not requested","order":1.0},{"label":"Requested","value":"requested","order":2.0},{"label":"Approved","value":"approved","order":3.0},{"label":"Rejected","value":"rejected","order":4.0},{"label":"Cancelled","value":"cancelled","order":5.0},{"label":"No Longer Required","value":"not_required","order":6.0},{"label":"Skipped","value":"skipped","order":7.0}],"usedInstances":{"a74e69d3-e851-44dc-93f1-a52be00f1eab":["condition"]},"attributes":{"element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper"}}]</label_cache>
+        <master>true</master>
+        <name>Student ID Verification Notification Flow</name>
+        <natlang/>
+        <outputs/>
+        <parent_flow display_value="Student ID Verification Notification Flow">dc8e4b7af1e743107f443f8091a1ff9a</parent_flow>
+        <remote_trigger_id/>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <status>published</status>
+        <sys_class_name>sys_hub_flow_snapshot</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:04</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b4cf073ef1e743107f443f8091a1ff46</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:02</sys_updated_on>
+        <type>flow</type>
+        <version>2</version>
+    </sys_hub_flow_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_variable_value action="delete_multiple" query="document_key=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=b4cf073ef1e743107f443f8091a1ff46^sys_idNOT INf4cf073ef1e743107f443f8091a1ff47"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>b4cf073ef1e743107f443f8091a1ff46</id>
+        <name>Student ID Verification Notification Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:04</sys_created_on>
+        <sys_id>f4cf073ef1e743107f443f8091a1ff47</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 17:03:04</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=f4cf073ef1e743107f443f8091a1ff47"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=b4cf073ef1e743107f443f8091a1ff46^sys_idNOT IN78cf073ef1e743107f443f8091a1ff48,bccf073ef1e743107f443f8091a1ff58"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</model>
+        <model_id>b4cf073ef1e743107f443f8091a1ff46</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_b4cf073ef1e743107f443f8091a1ff46</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:04</sys_created_on>
+        <sys_id>78cf073ef1e743107f443f8091a1ff48</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:01</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=78cf073ef1e743107f443f8091a1ff48"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</model>
+        <model_id>b4cf073ef1e743107f443f8091a1ff46</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_b4cf073ef1e743107f443f8091a1ff46</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:04</sys_created_on>
+        <sys_id>bccf073ef1e743107f443f8091a1ff58</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:01</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=bccf073ef1e743107f443f8091a1ff58"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=b4cf073ef1e743107f443f8091a1ff46^sys_idNOT INfccf073ef1e743107f443f8091a1ff83"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <generation_source/>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:05</sys_created_on>
+        <sys_id>fccf073ef1e743107f443f8091a1ff83</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 13:45:16</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/9VY227bOBD9FUFPu4AL6GLHcd66SYoN0G0K2919yAYCxUtMrEy6IqXULfLvO9TFlnVx7NhpnZcAImnyzOGZM8Pc/bAjFNLIvrCnKIyo3bO50DQWKJouFxSGtRkOBJqbuTkSBGkZL+0LHSe0Z7NYzqd0voiQhsUMRQoGZUxobF+4PTtFUUInS3VDYCf4fbZNsaddTMP3t0AJHGA0XyQqwFIETqB0QqjQwSKWjGeLCVdwzPLv4jeTfIH1ebUAz3hEYirsi7v7nr1AMRymDZAftSlu0GCG0cijDvZd3/Mcxzvvu+GZH7oe8RF1HNiwzkwNvW4haB06/aapIJSsWGlwF1NEbkW0XK2YAfU5T3P0TfHvsPu5Y9YxCtgxzedWn0HBSD6MZ5JjervQXIp8JMeZT8oomYtPOX7DJWUoiXTJJYwkCvajCwPZgCgQsclMPo7LAz9wkUVXTEYSo2j1hbSOeZhoqgzhcCVAfZBzo2QSZ+jH15e346vgn/fTyz+vx8H4ejId31xOr6/spyyu4GtidswRFliCPJynlQA+cBqZC1RLFcBN9myFY77Q77HmaanBp95a15dSEJ6x0tA2LqfUprbL6LeJ23E65Y0rJ5YST2nMGcfIDIO4kU7Uv4nj+OQzhMnFw976PTtDiFDUod+QVfRbZaAFom4hoxrlNiUXI7tIue84v0jMhVW9VMtzSWh0td7OhsmHB1A3F4tEG7YekdAq0DJAhAQVHs1SwPScuPPYmgp/XttxImCLYHVDTYVnRK4Y/cgVBHAH+TmhX5P8Gt6BWbGSvOwEWM4+FieME2FJuFn4Y+Ekjo3llgbIbubooaAcNowo1hWVsC+q+vUXV8rofB1EF4aMswaE1ekgPqsMOIeiDsRyf8zkb15JWuO2Vsj2znzXZSykzHOGJu9dxw+Z6wydAWLEdxzsVTK/CaYTpa4J5lUcYL/8V5lUox2UWKe4AO9Uc2UnGaWbGixJMBIpbObyONDcI0HzDLSaXfp7+eVKlvnw1aY6t4V25J4BkRTBL8iutmkW7OCPLJKPYNWHe2OI8H8PsUwEqbuTOcLiwlqvsH4r6Pz99XySyZhux7O54pQccn0ppayRWB7BG33mhiPapw5Yog9uGA5GoxAjj7Hh2ZB6bs0b1zBasb0JT3xGfGmberv8sVU4aZve9nDGAwA2XHJvgIf7YyHMVnfM596GDz7OqAgAahxExukadvgQcULLueNme+PodJ3fh2Y8Ox/hgTsc4iG8gSDjWZ+GyO17AzQanvnng1rGN6Bsg6lbmPkpLyPztjVAOtzgSz51Wk/+15Stolrnj+QDa7iApjfbAuVnVgqnuSUr8xgZW5+keHezXmdNKNTD7LX8SsV8F1Dm2q2fiiqUetZoLgDJHzC+gcS0rB2cndzrrKaodDPWg19ntH8+GDG/3Y/YqM2P1mC6YZ58L7Jj/qSdmdjWlOyq/7Q1jTq7iBdIuCaTanuxpf85Finu0UnxXo8U/+Ceq8zFzifpS8C+oXqXNSFHLHoGAg0kq3r5lbRgwoIzLc6s4n+alFjh0tIzCgxH0GvD+ZYBc6iJb6kxTWQrff9SXHlv3yh9MGwVrdnpVbWabo77tqZkiAYDv6PTHtXf1m2AnsF78jVu75xJ21Jwa6Hbb9/6nq2lriLZTUXsWMSOGnV7JTss6tZa9lzUh1epbf8ZaEFxovXn/n+/3a3eBCAAAA==</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=b4cf073ef1e743107f443f8091a1ff46^sys_idNOT IN491c6f8f99e343107f4413fc57679c5c,7044f3cf992743107f4413fc57679cca,3844f3cf992743107f4413fc57679cca"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Ask For Approval">f8f2e9920b10030085c083eb37673abd</action_type>
+        <action_type_parent display_value="Ask For Approval">bae0a1120b10030085c083eb37673a92</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>f8f2e9920b10030085c083eb37673abd</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 13:45:16</sys_created_on>
+        <sys_id>491c6f8f99e343107f4413fc57679c5c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 13:54:05</sys_updated_on>
+        <ui_id>88a4a0e5-ae53-470d-b815-f88be6aef41b</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1YTW/iOhT9K1HWlHHIB4FdBarU0XypdGZTqshxnNZPwcnETqcM4r/Pje2QDLQMvEcXfZ0Nkq/vdc49OSe2uVnZLLHH9jBMB3Q0GqDYQchFKPQJCl0au8Ng6GKC7J7N8YJCZklJXiYwfsBZVQdWq0lJsaRJ5PRJVZaUy/Ua5hMmigwvv5k0iJB7liUwb49vbnt2gUtYUdLSHq+2pg6FlOGYZpB61WDaxiiXRT1OclItAFfEmuAHUzk1M9blFGagqIaDejZ9lJQnFHCkOBO0Zy8wT7DMy6U9lmUFAeg5+cyz5SbjnnGp+1zgR8F+woPdQZ2XUmiMGA42w8jwo8PpFEs8g5WJrMoNXTkjVGhKEpriKpOTbkwnfC4ky7kukTjOmuo8qxb8kybE3izQeR2VABC0qPuskeu20tl9/uOqAXnBuGLEtJjlBGebEZayZHElazgrm2ZUUbzARcH4XVSU+QNTxQBl0b/LYNBPs/wHPFOwO97HpMbdB1Zx/wLiUxX+hktWN/ERloHidc8WSzHJsBBtK8Bh9L2qkejGTAuRYkFTUNeRkhXyHJ7yQA3mdc/IPSZ7tUVaKenlWrU/RoKTiOBFUYmI5DxCkZCVejx0nDKVvCX9mU6wvmwSjnPCAWgbJ1wbuFvojQ/UMFJzv9tAlVmf9IRxgbPfBSbS2kDr5wkXhOgVucC09ept8CcHUC9wffgZpi5yBg4KaRCGZIQwCYPA99xWQ4AAesBZBK9awNqtFxpdX06tB1qylBFc92KleWlNlEOsSc45JdIyHnneG0etcZx9Dmi1sc+56dW6anp9lgRjKQEvn99t2WnWBI2VBkda6fkdxQnekpkqdr3Fso7s8Pwyrqsf95Wz7xW9rHUUDOJghMLkLElRfOaFrn+GCUVnNHB86icB8R33BZyKnH1f/yR8QqQpo1n3iHaC09gBKHZMdGFgPAfPWEgNn9qVVP3WrnQ6K4UIvSYvvaXjGdkrNtrZnP7Jq5K/jOIPANEo/r1GsS34bXD/Ru/uX73///Xu+Xul1jnQb76hcPVIWI1YdFSvv7xUnPPl15vVSkg4S5F+EDpBOhwRgnCInMBDDvGx68YUeTH1PGe9vt21y39Z6jifHdD85p5fZVT8iQzjsvbEZoq6TmvPeWbSuM071c3/lZntrdx6yF6tpaNWW0kFBGHZvfqv5raGPbfHc5vnnM7t3tyus6JaXCoMGQBuM6Fiq7UeVyU25U5n2NYmeClUpiD3NAFlquhvkUhZwcRP8S/bAYw07ptW1JpqSnZJaq5DDU7NCtvZ42YmQa307pp19zr/ZHud99d8p7j8RM1HtN7I4Nt3Qkfe/gIeC2HSehYAAA==</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=491c6f8f99e343107f4413fc57679c5c"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
+        <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>f9d01dd2c31332002841b63b12d3aea1</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <generation_source/>
+        <order>3</order>
+        <parent_ui_id>a74e69d3-e851-44dc-93f1-a52be00f1eab</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:01</sys_created_on>
+        <sys_id>7044f3cf992743107f4413fc57679cca</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:01</sys_updated_on>
+        <ui_id>ef4ff4df-cf22-41b8-84bb-9df0508edcaa</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+VVTWvjMBD9K0HnEOykLW1uS0Ngodsu7ZJLt4iJNE4FsuzVR5psyH/fsS27ISltCr2E9W2+pPee59mPG6YkG7MzlEl6lV6IUToaDZNkeHmWzi9G83QoR4CYsj4zkCN1WhSFlRQvQYcqsdlcWwSPkqcDEaxF47dbqkvlSg3rWWyjjHhWWlKdjR+f+qwESyd6tGy82SsdC0nDHDW13reY9jH6dVnFshAhJ1xctcmbODmJld73CVVoqIKTJn2GK49GIgHJQDvssxyMBF/YNRt7GyhBpOWd0euu41kZ3xDNYeXUX7r5LKn6MiRmIorQhTwK1KSzCXh4oJOFD7bTq1ACXaOJxAyC9te7uabhrvSqMM2Ih7lupwsdcnPbKMK6A3beR3AEAsuKZ4W8oZU9PBcv9y3IqTK1JJGiLgToLgLvrZoHX8HZMNRYa5xDWSqz4KUtlqoeJij5YKEpGGS6eKE7nVqYAYgK94BUhcGU8pM6PQOrKhI/6Bga3vaZW7trDc69UiEN+Z9QIWmIRQq8VqGWgNebUA0Lq0r/ja5aYgS+7celn5+/t2Hi6nWhds58XfwVd0ZwAXkZHBeF4Ql3PtRAiHumNB664KFp6P3sGj5niiMgt6b4Va/C2xSiLw5yN7uzvdumEF1x/mWuuDwlV0QaJ2+Lj8yQDN/93O5sUr3/bscIS7QqUwIq3GQB8MH9DkkykrO6gPLQB8eMfM4ZR+BvnTFVqKV7g1BrC8wJq0feENyzRiz2ZrHY/TS+zB/pRVI/J+SS/+bf8fQP652CFDIJAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=7044f3cf992743107f4413fc57679cca"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Update Record">f9d01dd2c31332002841b63b12d3aea1</action_type>
+        <action_type_parent display_value="Update Record">baf174c8c3c232002841b63b12d3aee4</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>f9d01dd2c31332002841b63b12d3aea1</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <generation_source/>
+        <order>5</order>
+        <parent_ui_id>39be2bfc-edfc-47c1-8e72-7ca44de3bd52</parent_ui_id>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:01</sys_created_on>
+        <sys_id>3844f3cf992743107f4413fc57679cca</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:01</sys_updated_on>
+        <ui_id>f9f9f620-a3a2-41a6-bc00-d36deac154cd</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+VVTWvjMBD9K0HnEOykLW1uS0Ngodsu7ZJLt4iJNE4FsuzVR5psyH/fsS27ISltCr2E9W2+pPee59mPG6YkG7MzlEl6lV6IUToaDZNkeHmWzi9G83QoR4CYsj4zkCN1WhSFlRQvQYcqsdlcWwSPkqcDEaxF47dbqkvlSg3rWWyjjHhWWlKdjR+f+qwESyd6tGy82SsdC0nDHDW13reY9jH6dVnFshAhJ1xctcmbODmJld73CVVoqIKTJn2GK49GIgHJQDvssxyMBF/YNRt7GyhBpOWd0euu41kZ3xDNYeXUX7r5LKn6MiRmIorQhTwK1KSzCXh4oJOFD7bTq1ACXaOJxAyC9te7uabhrvSqMM2Ih7lupwsdcnPbKMK6A3beR3AEAsuKZ4W8oZU9PBcv9y3IqTK1JJGiLgToLgLvrZoHX8HZMNRYa5xDWSqz4KUtlqoeJij5YKEpGGS6eKE7nVqYAYgK94BUhcGU8pM6PQOrKhI/6Bga3vaZW7trDc69UiEN+Z9QIWmIRQq8VqGWgNebUA0Lq0r/ja5aYgS+7celn5+/t2Hi6nWhds58XfwVd0ZwAXkZHBeF4Ql3PtRAiHumNB664KFp6P3sGj5niiMgt6b4Va/C2xSiLw5yN7uzvdumEF1x/mWuuDwlV0QaJ2+Lj8yQDN/93O5sUr3/bscIS7QqUwIq3GQB8MH9DkkykrO6gPLQB8eMfM4ZR+BvnTFVqKV7g1BrC8wJq0feENyzRiz2ZrHY/TS+zB/pRVI/J+SS/+bf8fQP652CFDIJAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=3844f3cf992743107f4413fc57679cca"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=b4cf073ef1e743107f443f8091a1ff46^sys_idNOT INf444f3cf992743107f4413fc57679ccb,b044f3cf992743107f4413fc57679ccd"/>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">d844f3cf992743107f4413fc57679c48</block>
+        <comment/>
+        <connected_to/>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="If">af4e1945c3e232002841b63b12d3ae3e</logic_definition>
+        <order>2</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:01</sys_created_on>
+        <sys_id>f444f3cf992743107f4413fc57679ccb</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:02</sys_updated_on>
+        <ui_id>a74e69d3-e851-44dc-93f1-a52be00f1eab</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/+1V0W6bMBT9lcnPBBkIGc1blarSpG6V1qovW4UuxjTejM1skzSL8u+7BkKiNdNSrY97i4997z3ncI+yJbp1Tevsvb60VjwpMv/yGBChPIa/t0SUZE4qClV0wSKWxLMkpjTOplExS4ooLhPgkJCAKKg5vmRalcIJrfIOCMgKZOsv8GcpbCNh83BA2FLI0vBhagMGaxw3ZL797epcFhIKLvHpYk/j3U2H/Jmf2zQet84I9TScb4Yud3tQm9KzimhA+LPjquTIpwJpeUBqUCU4bTYjYjiUt0oegKVQrhdcw7MVP3FgnKb+YcVRIhvcGI/54FQPV1fgAKm0zLVmNE4Lxm1vTskraKVbHGP9g9vGS+1LHBRyX61lW6tPvSNkbHD0YVqLJHjjlXrqg47qbqnXn/csr4XqXBkupWYgxxM49K5oneezJVzyGhvlNTQNOpo3Rq9EV4xc6vBJ4iGspF7jUL+FITBPPERjIbxG/KqDH8AIr+IjtsHinmYBVrC821hshzZxsguI3diFBGsPItHd/EfrKfaSB3F5748vYUY07hInr/igYxcMAbiAtEojmp5evensxIId7f52m2UwBcrTCfA0mUzf03JSZFE6qbKs4DPgFbYLURX6AjK3Dhzf7b62lCaYgW+cOVy4FwF6q7avS+EZVrxI4Wl7XhO9+C/R89/9zORRSv9H75+jJ2zeB2bQ1g1/w+Q9+vj0M0evmbBI7d5jH/b/UP5ig8sl2DG01ua7F3XAdr8AYyDoEOsGAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_flow_logic_instance_v2 action="INSERT_OR_UPDATE">
+        <attributes/>
+        <block display_value="">6844f3cf992743107f4413fc57679c4b</block>
+        <comment/>
+        <connected_to>a74e69d3-e851-44dc-93f1-a52be00f1eab</connected_to>
+        <decision_table/>
+        <display_text/>
+        <flow display_value="Student ID Verification Notification Flow">b4cf073ef1e743107f443f8091a1ff46</flow>
+        <flow_variables_assigned/>
+        <generation_source/>
+        <logic_definition display_value="Else">1f781bf3c32232002841b63b12d3aee6</logic_definition>
+        <order>4</order>
+        <outputs_assigned/>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_flow_logic_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 14:21:01</sys_created_on>
+        <sys_id>b044f3cf992743107f4413fc57679ccd</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:02</sys_updated_on>
+        <ui_id>39be2bfc-edfc-47c1-8e72-7ca44de3bd52</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/6tWyi8tKSgtKQ7JdywuzkzPU7KKjtVRyswDiUHYZYlFmYlJOalQbkpqcmZxZn5eCEjME0ldSmVeYm5mMrJQeX5RdlpOfjlCrBYAD1ouqHEAAAA=</values>
+        <workflow_reference/>
+    </sys_hub_flow_logic_instance_v2>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_b4cf073ef1e743107f443f8091a1ff46</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:05</sys_created_on>
+        <sys_id>b4cf073ef1e743107f443f8091a1ff5f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 17:03:05</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_b4cf073ef1e743107f443f8091a1ff46</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:04</sys_created_on>
+        <sys_id>f4cf073ef1e743107f443f8091a1ff54</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 17:03:04</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_b4cf073ef1e743107f443f8091a1ff46"/>
+    <sys_hub_flow action="UPDATE">
+        <sys_id>dc8e4b7af1e743107f443f8091a1ff9a</sys_id>
+        <latest_snapshot>b4cf073ef1e743107f443f8091a1ff46</latest_snapshot>
+        <compiler_build/>
+        <version_record/>
+    </sys_hub_flow>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=dc8e4b7af1e743107f443f8091a1ff9a^sys_idNOT IN01cf073ef1e743107f443f8091a1ff8d"/>
+    <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
+        <binding_strategy>com.snc.process_flow.engine.binding.OncePerRecord</binding_strategy>
+        <plan/>
+        <plan_id>dc8e4b7af1e743107f443f8091a1ff9a</plan_id>
+        <snapshot>b4cf073ef1e743107f443f8091a1ff46</snapshot>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 17:03:05</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>01cf073ef1e743107f443f8091a1ff8d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 14:21:03</sys_updated_on>
+        <trigger display_value="">8d4437cf992743107f4413fc57679c69</trigger>
+    </sys_flow_trigger_plan>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=dc8e4b7af1e743107f443f8091a1ff9a"/>
+</record_update>

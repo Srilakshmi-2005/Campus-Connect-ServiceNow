@@ -1,0 +1,1752 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function(spModal, $window, $interval) {
+
+    var c = this;
+
+    c.idProofFile = null;
+    c.idProofFileName = "";
+
+
+    c.organizerSysId = "";
+
+    c.isSubmitting = false;
+    c.isCreatingAccount = false;
+
+    c.verificationStatus = "not_submitted";
+
+    c.organizerPassword = "";
+    c.confirmOrganizerPassword = "";
+	c.contactNumber = "";
+
+    var statusTimer = null;
+
+    c.idProofSelected = function(input) {
+
+        if (!input.files || input.files.length === 0) {
+            c.idProofFile = null;
+            c.idProofFileName = "";
+            return;
+        }
+
+        var file = input.files[0];
+
+        var maxSize = 5 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+            spModal.alert(
+                "ID Proof must be smaller than 5 MB."
+            );
+
+            input.value = "";
+            return;
+        }
+
+        var allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "application/pdf"
+        ];
+
+        if (allowedTypes.indexOf(file.type) === -1) {
+            spModal.alert(
+                "Please upload JPG, JPEG, PNG or PDF."
+            );
+
+            input.value = "";
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+
+            c.idProofFile = {
+                name: file.name,
+                type: file.type,
+                data: event.target.result.split(",")[1]
+            };
+
+            c.idProofFileName = file.name;
+
+            angular.element(input)
+                .scope()
+                .$apply();
+        };
+
+        reader.readAsDataURL(file);
+    };
+
+
+
+
+    c.verifyOrganizer = function() {
+
+        if (c.isSubmitting)
+            return;
+
+
+        if (
+    !c.organizerName ||
+    !c.email ||
+    !c.college ||
+    !c.contactNumber
+) {
+
+            spModal.alert(
+                "Please fill in all required organizer information."
+            );
+
+            return;
+        }
+
+
+        if (!c.idProofFile) {
+
+            spModal.alert(
+                "Please upload your ID Proof."
+            );
+
+            return;
+        }
+
+
+       
+
+
+        c.isSubmitting = true;
+
+
+        c.server.get({
+
+            action: "verify_organizer",
+
+            organizerName:
+                c.organizerName,
+
+            email:
+                c.email,
+
+            college:
+                c.college,
+			contactNumber:
+                c.contactNumber,	
+
+            idProofFileName:
+                c.idProofFile.name,
+
+            idProofFileType:
+                c.idProofFile.type,
+
+            idProofFileData:
+                c.idProofFile.data,
+
+           
+
+        }).then(function(response) {
+
+            c.isSubmitting = false;
+
+            var result =
+                response.data;
+
+
+            if (result.success) {
+
+                c.organizerSysId =
+                    result.organizerSysId;
+
+                c.verificationStatus =
+                    "pending";
+
+
+                spModal.alert(
+                    "Organizer verification request submitted successfully.\n\n" +
+                    "Please wait for administrator approval."
+                );
+
+
+                c.startApprovalCheck();
+
+            } else {
+
+                spModal.alert(
+                    result.message ||
+                    "Unable to submit organizer verification."
+                );
+            }
+
+        }, function() {
+
+            c.isSubmitting = false;
+
+            spModal.alert(
+                "Something went wrong while submitting the verification request."
+            );
+        });
+    };
+
+
+    c.checkApprovalStatus = function() {
+
+        if (!c.organizerSysId)
+            return;
+
+
+        c.server.get({
+
+            action: "check_status",
+
+            organizerSysId:
+                c.organizerSysId
+
+        }).then(function(response) {
+
+            var result =
+                response.data;
+
+
+            if (result.status === "verified") {
+
+                c.verificationStatus =
+                    "verified";
+
+                c.stopApprovalCheck();
+
+                spModal.alert(
+                    "Your organizer verification has been approved."
+                );
+            }
+
+
+            if (
+                result.status === "not-verified" ||
+                result.status === "rejected"
+            ) {
+
+                c.verificationStatus =
+                    "not-verified";
+
+                c.stopApprovalCheck();
+
+                spModal.alert(
+                    "Your organizer verification was not approved."
+                );
+            }
+
+        });
+    };
+
+
+    c.startApprovalCheck = function() {
+
+        c.stopApprovalCheck();
+
+        statusTimer =
+            $interval(function() {
+
+                c.checkApprovalStatus();
+
+            }, 5000);
+    };
+
+
+    c.stopApprovalCheck = function() {
+
+        if (statusTimer) {
+
+            $interval.cancel(statusTimer);
+
+            statusTimer = null;
+        }
+    };
+
+
+    c.createAccount = function() {
+
+        if (
+            c.verificationStatus !==
+            "verified"
+        ) {
+
+            spModal.alert(
+                "Your organizer verification must be approved first."
+            );
+
+            return;
+        }
+
+
+        if (c.isCreatingAccount)
+            return;
+
+
+        if (
+            !c.organizerPassword ||
+            !c.confirmOrganizerPassword
+        ) {
+
+            spModal.alert(
+                "Please enter and confirm your password."
+            );
+
+            return;
+        }
+
+
+        if (
+            c.organizerPassword !==
+            c.confirmOrganizerPassword
+        ) {
+
+            spModal.alert(
+                "Password and Confirm Password do not match."
+            );
+
+            return;
+        }
+
+
+        if (
+            c.organizerPassword.length < 8
+        ) {
+
+            spModal.alert(
+                "Password must contain at least 8 characters."
+            );
+
+            return;
+        }
+
+
+        c.isCreatingAccount = true;
+
+
+        c.server.get({
+
+            action:
+                "create_account",
+
+            organizerSysId:
+                c.organizerSysId,
+
+            password:
+                c.organizerPassword
+
+        }).then(function(response) {
+
+            c.isCreatingAccount = false;
+
+            var result =
+                response.data;
+
+
+            if (result.success) {
+
+                spModal.alert(
+                    "Organizer Account created successfully."
+                ).then(function() {
+
+                    $window.location.href =
+                        "?id=campus_organizer_login";
+
+                });
+
+            } else {
+
+                spModal.alert(
+                    result.message ||
+                    "Unable to create Organizer Account."
+                );
+            }
+
+        }, function() {
+
+            c.isCreatingAccount = false;
+
+            spModal.alert(
+                "Something went wrong while creating the Organizer Account."
+            );
+        });
+    };
+
+
+    c.$onDestroy = function() {
+
+        c.stopApprovalCheck();
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.organizer-signup-page {&#13;
+&#13;
+    min-height: 100vh;&#13;
+&#13;
+    padding: 40px 16px;&#13;
+&#13;
+    background:&#13;
+        linear-gradient(&#13;
+            135deg,&#13;
+            #eff6ff,&#13;
+            #ffffff&#13;
+        );&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-card {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    max-width: 620px;&#13;
+&#13;
+    padding: 36px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dbeafe;&#13;
+&#13;
+    border-radius: 16px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 12px 35px&#13;
+        rgba(15, 61, 145, 0.10);&#13;
+&#13;
+    box-sizing: border-box;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-icon {&#13;
+&#13;
+    width: 64px;&#13;
+&#13;
+    height: 64px;&#13;
+&#13;
+    margin: 0 auto 18px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    color: #2563eb;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    font-size: 30px;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-card h1 {&#13;
+&#13;
+    margin: 0 0 10px;&#13;
+&#13;
+    color: #0f3d91;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    font-size: 28px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-subtitle {&#13;
+&#13;
+    margin: 0 0 28px;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    line-height: 1.6;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.form-group {&#13;
+&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+&#13;
+.form-group label {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    color: #1e293b;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.required {&#13;
+&#13;
+    color: #dc2626;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    min-height: 46px;&#13;
+&#13;
+    padding: 11px 13px;&#13;
+&#13;
+    color: #0f172a;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #cbd5e1;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    transition:&#13;
+        border-color .2s,&#13;
+        box-shadow .2s;&#13;
+}&#13;
+&#13;
+&#13;
+.form-control:focus {&#13;
+&#13;
+    border-color: #2563eb;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px&#13;
+        rgba(37, 99, 235, .12);&#13;
+}&#13;
+&#13;
+&#13;
+.form-group input[type="file"] {&#13;
+&#13;
+    padding: 10px;&#13;
+&#13;
+    background: #f8fafc;&#13;
+}&#13;
+&#13;
+&#13;
+.file-help {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    margin-top: 7px;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    line-height: 1.5;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+.file-selected {&#13;
+&#13;
+    margin-top: 10px;&#13;
+&#13;
+    padding: 10px 12px;&#13;
+&#13;
+    overflow-wrap: anywhere;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Verification Status */&#13;
+&#13;
+.status-box {&#13;
+&#13;
+    margin: 22px 0;&#13;
+&#13;
+    padding: 14px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+&#13;
+    gap: 8px;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    border: 1px solid #e2e8f0;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    color: #334155;&#13;
+}&#13;
+&#13;
+&#13;
+.status-not-submitted {&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.status-pending {&#13;
+&#13;
+    color: #92400e;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.status-approved {&#13;
+&#13;
+    color: #15803d;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.status-rejected {&#13;
+&#13;
+    color: #b91c1c;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* Verify Button */&#13;
+&#13;
+.verify-submit {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    min-height: 48px;&#13;
+&#13;
+    padding: 12px 18px;&#13;
+&#13;
+    margin-bottom: 16px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    background: #2563eb;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition:&#13;
+        background .2s,&#13;
+        transform .2s;&#13;
+}&#13;
+&#13;
+&#13;
+.verify-submit:hover:not(:disabled) {&#13;
+&#13;
+    background: #1d4ed8;&#13;
+&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+/* Password Section */&#13;
+&#13;
+.password-section {&#13;
+&#13;
+    margin-top: 20px;&#13;
+&#13;
+    padding: 22px;&#13;
+&#13;
+    background: #f8fbff;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.approved-heading {&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+&#13;
+    color: #15803d;&#13;
+&#13;
+    font-size: 16px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    text-align: center;&#13;
+}&#13;
+&#13;
+&#13;
+/* Create Account */&#13;
+&#13;
+.signup-submit {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    min-height: 48px;&#13;
+&#13;
+    padding: 12px 18px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    background: #0f3d91;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition:&#13;
+        background .2s,&#13;
+        transform .2s;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-submit:hover:not(:disabled) {&#13;
+&#13;
+    background: #0b2f73;&#13;
+&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+&#13;
+.verify-submit:disabled,&#13;
+.signup-submit:disabled {&#13;
+&#13;
+    opacity: .55;&#13;
+&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* Verification Messages */&#13;
+&#13;
+.verification-message {&#13;
+&#13;
+    margin-top: 18px;&#13;
+&#13;
+    padding: 13px;&#13;
+&#13;
+    color: #92400e;&#13;
+&#13;
+    background: #fffbeb;&#13;
+&#13;
+    border: 1px solid #fde68a;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+.verification-message.approved {&#13;
+&#13;
+    color: #166534;&#13;
+&#13;
+    background: #f0fdf4;&#13;
+&#13;
+    border-color: #bbf7d0;&#13;
+}&#13;
+&#13;
+&#13;
+.verification-message.rejected {&#13;
+&#13;
+    color: #991b1b;&#13;
+&#13;
+    background: #fef2f2;&#13;
+&#13;
+    border-color: #fecaca;&#13;
+}&#13;
+&#13;
+&#13;
+/* Footer */&#13;
+&#13;
+.signup-footer {&#13;
+&#13;
+    margin-top: 26px;&#13;
+&#13;
+    padding-top: 20px;&#13;
+&#13;
+    border-top: 1px solid #e2e8f0;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    flex-wrap: wrap;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    gap: 6px;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-footer a {&#13;
+&#13;
+    color: #2563eb;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    text-decoration: none;&#13;
+}&#13;
+&#13;
+&#13;
+.signup-footer a:hover {&#13;
+&#13;
+    text-decoration: underline;&#13;
+}&#13;
+&#13;
+&#13;
+/* Mobile */&#13;
+&#13;
+@media (max-width: 700px) {&#13;
+&#13;
+    .organizer-signup-page {&#13;
+&#13;
+        padding: 24px 12px;&#13;
+&#13;
+    }&#13;
+&#13;
+    .signup-card {&#13;
+&#13;
+        padding: 26px 22px;&#13;
+&#13;
+    }&#13;
+&#13;
+    .signup-card h1 {&#13;
+&#13;
+        font-size: 25px;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 450px) {&#13;
+&#13;
+    .signup-card {&#13;
+&#13;
+        padding: 22px 16px;&#13;
+&#13;
+    }&#13;
+&#13;
+    .signup-card h1 {&#13;
+&#13;
+        font-size: 23px;&#13;
+&#13;
+    }&#13;
+&#13;
+    .status-box {&#13;
+&#13;
+        align-items: flex-start;&#13;
+&#13;
+        flex-direction: column;&#13;
+&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Organizer signup page for Campus Connect</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_organizer_signup</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Organizer Signup</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.success = false;
+    data.message = "";
+    data.organizerSysId = "";
+    data.userSysId = "";
+    data.status = "";
+    data.accountCreated = false;
+
+    if (!input) {
+        return;
+    }
+
+
+    /* =====================================================
+       ORGANIZER VERIFICATION SUBMISSION
+       ===================================================== */
+
+    if (input.action === "verify_organizer") {
+
+        var organizerName =
+            (input.organizerName || "").trim();
+
+        var email =
+            (input.email || "").trim();
+
+        var college =
+            (input.college || "").trim();
+
+        var contactNumber =
+            (input.contactNumber || "").trim();
+
+        var idProofFileName =
+            (input.idProofFileName || "").trim();
+
+        var idProofFileType =
+            (input.idProofFileType || "").trim();
+
+        var idProofFileData =
+            input.idProofFileData || "";
+
+
+        /* Required organizer information */
+
+        if (
+            !organizerName ||
+            !email ||
+            !college ||
+            !contactNumber
+        ) {
+
+            data.message =
+                "Please provide all required organizer information.";
+
+            return;
+        }
+
+
+        /* ID Proof is required */
+
+        if (
+            !idProofFileName ||
+            !idProofFileType ||
+            !idProofFileData
+        ) {
+
+            data.message =
+                "Please upload your ID Proof.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           CHECK EXISTING ORGANIZER
+           ===================================================== */
+
+        var existingOrganizer =
+            new GlideRecord(
+                "x_snc_campus_con_0_event_organizers"
+            );
+
+        existingOrganizer.addQuery(
+            "contact_email",
+            email
+        );
+
+        existingOrganizer.setLimit(1);
+
+        existingOrganizer.query();
+
+
+        if (existingOrganizer.next()) {
+
+            data.message =
+                "An Organizer Profile already exists for this email.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           CHECK EXISTING SERVICE NOW USER
+           ===================================================== */
+
+        var existingUser =
+            new GlideRecord("sys_user");
+
+        existingUser.addQuery(
+            "email",
+            email
+        );
+
+        existingUser.setLimit(1);
+
+        existingUser.query();
+
+
+        if (existingUser.next()) {
+
+            data.message =
+                "An account already exists for this email.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           CREATE INACTIVE SERVICE NOW USER
+           ===================================================== */
+
+        var user =
+            new GlideRecord("sys_user");
+
+        user.initialize();
+
+        user.setValue(
+            "user_name",
+            email
+        );
+
+        user.setValue(
+            "email",
+            email
+        );
+
+        user.setValue(
+            "first_name",
+            organizerName
+        );
+
+        user.setValue(
+            "active",
+            false
+        );
+
+        user.setValue(
+            "password_needs_reset",
+            true
+        );
+
+
+        var userSysId =
+            user.insert();
+
+
+        if (!userSysId) {
+
+            data.message =
+                "Unable to create Organizer Account.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           CREATE EVENT ORGANIZER PROFILE
+           ===================================================== */
+
+        var organizer =
+            new GlideRecord(
+                "x_snc_campus_con_0_event_organizers"
+            );
+
+        organizer.initialize();
+
+
+        /*
+         * Organizer Name is a reference
+         * to the sys_user table.
+         */
+
+        organizer.setValue(
+            "organizer_name",
+            userSysId
+        );
+
+        organizer.setValue(
+            "college_institution",
+            college
+        );
+
+        organizer.setValue(
+            "contact_email",
+            email
+        );
+
+        organizer.setValue(
+            "contact_number",
+            contactNumber
+        );
+
+        organizer.setValue(
+            "verification_status",
+            "pending"
+        );
+
+
+        var organizerSysId =
+            organizer.insert();
+
+
+        if (!organizerSysId) {
+
+            user.deleteRecord();
+
+            data.message =
+                "Unable to create Organizer Profile.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           UPLOAD ID PROOF
+           ===================================================== */
+
+        var attachment =
+            new GlideSysAttachment();
+
+
+        var idProofAttachmentSysId =
+            attachment.writeBase64(
+                organizer,
+                idProofFileName,
+                idProofFileType,
+                idProofFileData
+            );
+
+
+        if (!idProofAttachmentSysId) {
+
+            organizer.deleteRecord();
+
+            user.deleteRecord();
+
+            data.message =
+                "Organizer Profile was created, but ID Proof upload failed.";
+
+            return;
+        }
+
+
+        /* Store attachment in ID Proof Upload field */
+
+        organizer.setValue(
+            "id_proof_upload",
+            idProofAttachmentSysId
+        );
+
+
+        organizer.update();
+
+
+        /* =====================================================
+           SUCCESS
+           ===================================================== */
+
+        data.success = true;
+
+        data.organizerSysId =
+            organizerSysId;
+
+        data.userSysId =
+            userSysId;
+
+        data.status =
+            "pending";
+
+        data.message =
+            "Organizer verification request submitted successfully.";
+
+        return;
+    }
+
+
+    /* =====================================================
+       CHECK ORGANIZER VERIFICATION STATUS
+       ===================================================== */
+
+    if (input.action === "check_status") {
+
+        var organizerSysId =
+            input.organizerSysId || "";
+
+
+        if (!organizerSysId) {
+
+            data.status =
+                "not_found";
+
+            return;
+        }
+
+
+        var organizerCheck =
+            new GlideRecord(
+                "x_snc_campus_con_0_event_organizers"
+            );
+
+
+        if (!organizerCheck.get(
+            organizerSysId
+        )) {
+
+            data.status =
+                "not_found";
+
+            return;
+        }
+
+
+        data.status =
+            String(
+                organizerCheck.getValue(
+                    "verification_status"
+                ) || ""
+            ).toLowerCase();
+
+
+        return;
+    }
+
+
+    /* =====================================================
+       CREATE ORGANIZER ACCOUNT AFTER APPROVAL
+       ===================================================== */
+
+    if (input.action === "create_account") {
+
+        var requestedOrganizer =
+            input.organizerSysId || "";
+
+        var password =
+            input.password || "";
+
+
+        /* Check Organizer Profile */
+
+        if (!requestedOrganizer) {
+
+            data.message =
+                "Organizer Profile was not found.";
+
+            return;
+        }
+
+
+        /* Check password */
+
+        if (!password) {
+
+            data.message =
+                "Please provide a password.";
+
+            return;
+        }
+
+
+        /* Get Organizer Profile */
+
+        var approvedOrganizer =
+            new GlideRecord(
+                "x_snc_campus_con_0_event_organizers"
+            );
+
+
+        if (!approvedOrganizer.get(
+            requestedOrganizer
+        )) {
+
+            data.message =
+                "Organizer Profile could not be found.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           CHECK VERIFICATION STATUS
+           ===================================================== */
+
+        var verificationStatus =
+            String(
+                approvedOrganizer.getValue(
+                    "verification_status"
+                ) || ""
+            ).toLowerCase();
+
+
+        if (
+            verificationStatus !==
+            "verified"
+        ) {
+
+            data.message =
+                "Your Organizer verification has not been approved.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           GET LINKED SERVICE NOW USER
+           ===================================================== */
+
+        var linkedUserSysId =
+            approvedOrganizer.getValue(
+                "organizer_name"
+            );
+
+
+        if (!linkedUserSysId) {
+
+            data.message =
+                "Organizer User Account could not be found.";
+
+            return;
+        }
+
+
+        var organizerUser =
+            new GlideRecord("sys_user");
+
+
+        if (!organizerUser.get(
+            linkedUserSysId
+        )) {
+
+            data.message =
+                "Organizer User Account could not be found.";
+
+            return;
+        }
+
+
+        /* =====================================================
+           SET PASSWORD CORRECTLY
+           ===================================================== */
+
+        organizerUser.user_password
+            .setDisplayValue(password);
+
+
+        /* Activate the account */
+
+        organizerUser.setValue(
+            "active",
+            true
+        );
+
+
+        /*
+         * The organizer has just created the password,
+         * so no password reset is required.
+         */
+
+        organizerUser.setValue(
+            "password_needs_reset",
+            false
+        );
+
+
+        organizerUser.update();
+
+
+        /* =====================================================
+           SUCCESS
+           ===================================================== */
+
+        data.success = true;
+
+        data.accountCreated = true;
+
+        data.message =
+            "Organizer Account created successfully.";
+
+        return;
+    }
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 05:11:15</sys_created_on>
+        <sys_id>d0b2a3d2b4a303107f44e1aec8ca28df</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>Campus Connect Organizer Signup</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_d0b2a3d2b4a303107f44e1aec8ca28df</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-07 04:35:54</sys_updated_on>
+        <template><![CDATA[<div class="organizer-signup-page">
+
+    <div class="signup-card">
+
+        <div class="signup-icon">
+            <i class="fa fa-building"></i>
+        </div>
+
+        <h1>Organizer Registration</h1>
+
+        <p class="signup-subtitle">
+            Register as an organizer and publish verified campus opportunities
+        </p>
+
+
+        <!-- Organizer Name -->
+
+        <div class="form-group">
+
+            <label>
+                Organizer Name
+                <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Enter organizer name"
+                ng-model="c.organizerName"
+                maxlength="100">
+
+        </div>
+
+
+        <!-- Contact Email -->
+
+        <div class="form-group">
+
+            <label>
+                Contact Email
+                <span class="required">*</span>
+            </label>
+
+            <input
+                type="email"
+                class="form-control"
+                placeholder="Enter organizer email"
+                ng-model="c.email"
+                maxlength="254">
+
+        </div>
+
+
+        <!-- College / Institution -->
+
+        <div class="form-group">
+
+            <label>
+                College / Institution
+                <span class="required">*</span>
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Enter college or institution"
+                ng-model="c.college"
+                maxlength="200">
+
+        </div>
+
+
+        <!-- Contact Number -->
+
+        <div class="form-group">
+
+            <label>
+                Contact Number
+                <span class="required">*</span>
+            </label>
+
+            <input
+                type="tel"
+                class="form-control"
+                placeholder="Enter organizer contact number"
+                ng-model="c.contactNumber"
+                maxlength="20">
+
+        </div>
+
+
+        <!-- ID Proof -->
+
+        <div class="form-group">
+
+            <label>
+                ID Proof Upload
+                <span class="required">*</span>
+            </label>
+
+            <input
+                type="file"
+                id="idProofFile"
+                class="form-control"
+                accept=".jpg,.jpeg,.png,.pdf"
+                onchange="angular.element(this).scope().c.idProofSelected(this)">
+
+            <small class="file-help">
+                Upload JPG, JPEG, PNG or PDF. Maximum 5 MB.
+            </small>
+
+            <div
+                class="file-selected"
+                ng-if="c.idProofFileName">
+
+                <i class="fa fa-paperclip"></i>
+                {{c.idProofFileName}}
+
+            </div>
+
+        </div>
+
+
+      
+
+        <!-- Verification Status -->
+
+        <div class="status-box">
+
+            <strong>
+                Verification Status:
+            </strong>
+
+            <span
+                ng-if="c.verificationStatus === 'not_submitted'"
+                class="status-not-submitted">
+
+                Not Submitted
+
+            </span>
+
+            <span
+                ng-if="c.verificationStatus === 'pending'"
+                class="status-pending">
+
+                Pending Admin Verification
+
+            </span>
+
+            <span
+                ng-if="c.verificationStatus === 'verified'"
+                class="status-approved">
+
+                Verified
+
+            </span>
+
+            <span
+                ng-if="c.verificationStatus === 'not-verified'"
+                class="status-rejected">
+
+                Not-Verified
+
+            </span>
+
+        </div>
+
+
+        <!-- Verify Organizer Button -->
+
+        <button
+            type="button"
+            class="verify-submit"
+            ng-click="c.verifyOrganizer()"
+            ng-disabled="c.isSubmitting || c.verificationStatus !== 'not_submitted'">
+
+            <span ng-if="!c.isSubmitting">
+
+                <i class="fa fa-id-card"></i>
+
+                Verify Organizer
+
+            </span>
+
+            <span ng-if="c.isSubmitting">
+
+                Submitting...
+
+            </span>
+
+        </button>
+
+
+        <!-- Password Section -->
+
+        <div
+            class="password-section"
+            ng-if="c.verificationStatus === 'verified'">
+
+            <div class="approved-heading">
+
+                <i class="fa fa-check-circle"></i>
+
+                Organizer Verification Approved
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Create your organizer password"
+                    ng-model="c.organizerPassword"
+                    maxlength="100"
+                    autocomplete="new-password">
+
+            </div>
+
+
+            <!-- Confirm Password -->
+
+            <div class="form-group">
+
+                <label>
+                    Confirm Password
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Re-enter your password"
+                    ng-model="c.confirmOrganizerPassword"
+                    maxlength="100"
+                    autocomplete="new-password">
+
+            </div>
+
+
+            <!-- Create Account -->
+
+            <button
+                type="button"
+                class="signup-submit"
+                ng-click="c.createAccount()"
+                ng-disabled="c.isCreatingAccount">
+
+                <span ng-if="!c.isCreatingAccount">
+
+                    <i class="fa fa-user-plus"></i>
+
+                    Create Organizer Account
+
+                </span>
+
+                <span ng-if="c.isCreatingAccount">
+
+                    Creating Account...
+
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- Pending Message -->
+
+        <div
+            class="verification-message"
+            ng-if="c.verificationStatus === 'pending'">
+
+            <i class="fa fa-lock"></i>
+
+            Your organizer details are waiting for administrator verification.
+
+        </div>
+
+
+        <!-- Rejected Message -->
+
+        <div
+            class="verification-message rejected"
+            ng-if="c.verificationStatus === 'not-verified'">
+
+            <i class="fa fa-times-circle"></i>
+
+            Your organizer verification was not approved.
+
+        </div>
+
+
+        <!-- Approved Message -->
+
+        <div
+            class="verification-message approved"
+            ng-if="c.verificationStatus === 'verified'">
+
+            <i class="fa fa-check-circle"></i>
+
+            Your verification is approved.
+            Create your password above to complete registration.
+
+        </div>
+
+
+        <!-- Login -->
+
+        <div class="signup-footer">
+
+            <span>
+                Already have an account?
+            </span>
+
+            <a href="?id=campus_organizer_login">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

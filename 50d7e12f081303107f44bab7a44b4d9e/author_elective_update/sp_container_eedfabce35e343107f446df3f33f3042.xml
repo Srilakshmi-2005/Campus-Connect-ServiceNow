@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="DELETE">
+        <aria_label/>
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Campus Connect Home - Container 1</name>
+        <order>1</order>
+        <semantic_tag/>
+        <sp_page display_value="campus_connect_home">1f758ffd79a343107f445336e004abdf</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 11:27:50</sys_created_on>
+        <sys_id>eedfabce35e343107f446df3f33f3042</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Campus Connect Home - Container 1</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_container_eedfabce35e343107f446df3f33f3042</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 04:35:26</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_container_eedfabce35e343107f446df3f33f3042</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container"><sp_container action="INSERT_OR_UPDATE"><aria_label/><background_color/><background_image/><background_style>default</background_style><bootstrap_alt>false</bootstrap_alt><class_name/><container_class_name/><name>Campus Connect Home - Container 1</name><order>1</order><semantic_tag/><sp_page display_value="campus_connect_home">1f758ffd79a343107f445336e004abdf</sp_page><subheader>false</subheader><sys_class_name>sp_container</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-27 11:27:50</sys_created_on><sys_id>eedfabce35e343107f446df3f33f3042</sys_id><sys_mod_count>6</sys_mod_count><sys_name>Campus Connect Home - Container 1</sys_name><sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package><sys_policy/><sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope><sys_update_name>sp_container_eedfabce35e343107f446df3f33f3042</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-10-06 04:35:26</sys_updated_on><title/><width>container</width></sp_container></record_update>]]></payload>
+        <payload_hash>1328690376</payload_hash>
+        <record_name>Campus Connect Home - Container 1</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-06 04:35:26</sys_created_on>
+        <sys_id>e5c7204d7df303107f44497bb3d12c65</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a10f7ebe8f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 04:35:26</sys_updated_on>
+        <type>Container</type>
+        <update_guid>2dc7204df9f30310289828661acb1b64</update_guid>
+        <update_guid_history>2dc7204df9f30310289828661acb1b64:1328690376,a4c7ec0d25f303109ca5d0a3a421648a:-2090502009,c3b76c0d04f30310dda916c7c2249be5:-1214727098,19b7a80d6df30310dcc838c607428282:-338952187,88b7280d9af30310c065fda89d2f3db1:536822724,8a97ecc994f30310382b8160bb651002:1412597635,2adfabceb8e34310d9380e760244f544:-2006594750</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Campus Connect Home - Container 1">fac7604d7df303107f44497bb3d12cee</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-06 04:35:32</sys_created_on>
+        <sys_db_object display_value="" name="sp_container">sp_container</sys_db_object>
+        <sys_id>18b6c8d01cef480c857f161135eab069</sys_id>
+        <sys_metadata>eedfabce35e343107f446df3f33f3042</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Connect Home - Container 1</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_container_eedfabce35e343107f446df3f33f3042</sys_update_name>
+        <sys_update_version display_value="sp_container_eedfabce35e343107f446df3f33f3042">e5c7204d7df303107f44497bb3d12c65</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 04:35:32</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

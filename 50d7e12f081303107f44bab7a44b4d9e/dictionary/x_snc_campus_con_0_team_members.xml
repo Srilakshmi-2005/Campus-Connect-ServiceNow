@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="fc6471e7089303107f44bab7a44b4dd4" label="Team Members" max_length="40" name="x_snc_campus_con_0_team_members" type="collection">
+        <element label="Commitment Confirmed" max_length="40" name="commitment_confirmed" type="boolean"/>
+        <element label="Team" max_length="32" name="team" reference="x_snc_campus_con_0_teams" type="reference"/>
+        <element label="Student" max_length="32" name="student" reference="sys_user" type="reference"/>
+        <element choice="1" label="Join Status" max_length="40" name="join_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+                <element inactive_on_update="false" label="Accepted" sequence="1" value="accepted"/>
+                <element inactive_on_update="false" label="Requested" sequence="0" value="requested"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="student"/>
+        </index>
+        <index name="index2">
+            <element name="team"/>
+        </index>
+    </element>
+</database>

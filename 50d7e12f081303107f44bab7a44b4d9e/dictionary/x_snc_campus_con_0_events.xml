@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="1e9c2967085303107f44bab7a44b4d7d" label="Events" max_length="40" name="x_snc_campus_con_0_events" type="collection">
+        <element label="Location" max_length="40" name="location" type="string"/>
+        <element label="Event Date" max_length="40" name="event_date" type="glide_date_time"/>
+        <element label="Venue Authorization Document" max_length="40" name="venue_authorization_document" type="file_attachment"/>
+        <element label="Organizer" max_length="32" name="organizer" reference="x_snc_campus_con_0_event_organizers" type="reference"/>
+        <element label="Registration Deadline" max_length="40" name="registration_deadline" type="glide_date_time"/>
+        <element choice="1" label="Event Type" max_length="40" name="event_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Workshop" sequence="1" value="workshop"/>
+                <element inactive_on_update="false" label="Hackathon" sequence="0" value="hackathon"/>
+                <element inactive_on_update="false" label="Corporate Event" sequence="4" value="corporate event"/>
+                <element inactive_on_update="false" label="Webinar" sequence="3" value="webinar"/>
+                <element inactive_on_update="false" label="Competition" sequence="2" value="competition"/>
+            </choice>
+        </element>
+        <element label="Contact Number" max_length="40" name="contact_number" type="string"/>
+        <element label="Fees" max_length="20" name="fees" type="currency"/>
+        <element display="true" label="Event Name" max_length="40" name="event_name" type="string"/>
+        <element label="Technology Tags" max_length="40" name="technology_tags" type="string"/>
+        <element label="Google Maps Link" max_length="1024" name="google_maps_link" type="url"/>
+        <element choice="1" default="pending" label="Verification Status" max_length="40" name="verification_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Verified" sequence="1" value="verified"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="organizer"/>
+        </index>
+    </element>
+</database>

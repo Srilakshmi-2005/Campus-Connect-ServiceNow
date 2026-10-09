@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>false</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,timeFromCreateToActivate=404000,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Notifies the student when a team membership record is created.</description>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source/>
+        <internal_name>team_join_request_notification_flow</internal_name>
+        <label_cache>[{"name":"Created_1.current","label":"Trigger - Record Created➛Team Members Record","reference":"x_snc_campus_con_0_team_members","reference_display":"Team Members","type":"reference","base_type":"reference","usedInstances":{"9d136464-f275-4240-87c5-58a8ff78c9f1":["record"]},"attributes":{}}]</label_cache>
+        <master_snapshot>eb33d59519a743107f443733a6e8f21b</master_snapshot>
+        <master_snapshot_digest/>
+        <name>Team Join Request Notification Flow</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id>bb33d59519a743107f443733a6e8f260</remote_trigger_id>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>published</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:01:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>78b115d119a743107f443733a6e8f203</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Team Join Request Notification Flow</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_hub_flow_78b115d119a743107f443733a6e8f203</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:14:37</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record>a6b4d95919a743107f443733a6e8f2a9</version_record>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=78b115d119a743107f443733a6e8f203"/>
+    <sys_variable_value action="delete_multiple" query="document_key=78b115d119a743107f443733a6e8f203"/>
+    <sys_flow_record_trigger action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition table="x_snc_campus_con_0_team_members">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </condition>
+        <name/>
+        <on_delete>false</on_delete>
+        <on_insert>true</on_insert>
+        <on_update>false</on_update>
+        <published_version/>
+        <run_flow_in>background</run_flow_in>
+        <run_on_extended>false</run_on_extended>
+        <run_when_setting>both</run_when_setting>
+        <run_when_user_list/>
+        <run_when_user_setting>any</run_when_user_setting>
+        <sys_class_name>sys_flow_record_trigger</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>bb33d59519a743107f443733a6e8f260</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <table>x_snc_campus_con_0_team_members</table>
+        <trigger_definition/>
+    </sys_flow_record_trigger>
+    <sys_trigger_runner_mapping action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <data>{"run_on_extended":"false","run_flow_in":"background","run_when_user_list":[],"run_when_setting":"both","run_when_user_setting":"any"}</data>
+        <identifier>78b115d119a743107f443733a6e8f203</identifier>
+        <identifier_type>flow</identifier_type>
+        <runner>FDTriggerRunner</runner>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>bf33d59519a743107f443733a6e8f261</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-27 15:26:57</sys_updated_on>
+        <trigger display_value="">bb33d59519a743107f443733a6e8f260</trigger>
+    </sys_trigger_runner_mapping>
+    <sys_trigger_runner_mapping action="delete_multiple" query="identifier=78b115d119a743107f443733a6e8f203^sys_idNOT INbf33d59519a743107f443733a6e8f261"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=78b115d119a743107f443733a6e8f203"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=78b115d119a743107f443733a6e8f203^sys_idNOT IN7cb115d119a743107f443733a6e8f204"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>78b115d119a743107f443733a6e8f203</id>
+        <name>Team Join Request Notification Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:01:25</sys_created_on>
+        <sys_id>7cb115d119a743107f443733a6e8f204</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:01:25</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=7cb115d119a743107f443733a6e8f204"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=78b115d119a743107f443733a6e8f203^sys_idNOT IN7ad199d119a743107f443733a6e8f2e0,fed1d9d119a743107f443733a6e8f2ed"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id,uiTypeLabel=Document ID</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Team Join Request Notification Flow">78b115d119a743107f443733a6e8f203</model>
+        <model_id>78b115d119a743107f443733a6e8f203</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_78b115d119a743107f443733a6e8f203</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:02:05</sys_created_on>
+        <sys_id>7ad199d119a743107f443733a6e8f2e0</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=7ad199d119a743107f443733a6e8f2e0"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name,uiTypeLabel=Table Name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Team Join Request Notification Flow">78b115d119a743107f443733a6e8f203</model>
+        <model_id>78b115d119a743107f443733a6e8f203</model_id>
+        <model_table>sys_hub_flow</model_table>
+        <name>var__m_sys_hub_flow_input_78b115d119a743107f443733a6e8f203</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:02:06</sys_created_on>
+        <sys_id>fed1d9d119a743107f443733a6e8f2ed</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=fed1d9d119a743107f443733a6e8f2ed"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=78b115d119a743107f443733a6e8f203^sys_idNOT IN6ad199d119a743107f443733a6e8f2d8"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Team Join Request Notification Flow">78b115d119a743107f443733a6e8f203</flow>
+        <generation_source/>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:02:04</sys_created_on>
+        <sys_id>6ad199d119a743107f443733a6e8f2d8</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/9VYXW/iOBT9K1GediVGygeU0rdZ2tFW6rRayuw+VF3LSWyINrGZ2EnLjPrf9zpfhHxQKNChL0j4Gvvc43PPtXn4qQfYIYF+oU+xExC9p/tMkojhYLpcEBiWahgxHKpYiJmHJY+W+oWMYtLTacTDKQkXAZYwmeJAwCCPPBLpF2ZPT3AQk/uluPZgJfh9uky+pp6H4fszEsxFLg4XsUAuZ8hAkuAQhSR0SCRgpucL2GP5d/6DKUS1r2XUnfuBFxGmXzw89vQFjmAbqSD8rIUk5ITWEtZus8x8hdClLh5ZxHBt07Ysw7DO+6ZzZjum5dmYGAbMq7NVy0i2kLaigzxLwjzilUw1+IwI9u5YsCxnzOE4Mu5C/Cz8H7D6uaHmUQJZuSSLlV9RTlQ27M6575K7hfQ5y0YynFmQB3HIbjP8imJCcRzIgmIYiQWsRxYKsgKRI6L3c/40KTb84rM0uzwYcBcH5TcsZeQ7sSRCHQX1AzgUlHEjeByl6CdX47vJJfrn83T859UETa7up5Pr8fTqUn9J80LfY7VihjDHgrJ0XkpdfPFJoA5QLAWCk+zpwo38hfzsSj8pdPnSW2l9zJnnp6w09O4WIbGu9yL7TYI3jE7Ju5UdC9n/e/VXU9rZ4NsUPa5iTxV9doaxR3CHoh1aUXSVkxbQsoWeat6btJ2PbCPuvmH8InnnhvZWdYfcI8HlajkdgrMZ6N1ni1gqtp4wkwJJjrDnoQqPaipgek3uWW4vr2o7ihn8AJXn0VR4SlvJ340vAO4D1Oc9+R5npH8Cs6IFVekOMJ3e5DtMYqZxOEf40Nw4AqakVhggvQ7xLCcYFgyIKyuaoN9E9dtXXwifzSpJdGFIGWpAKHcHqWlFwhkUsSeWx0MWf/NIkhq3NRN4uwMUZ5tWv2lS6hBqGUNV+6ZhO9Q0hsYAU882DNeqVH8TYid2WZPRUVxgNw8QqYCDLfRZJz4Hb1QraCtxJevKLEhQwsmtZnwYaOaBoFkKWs0y7Z08sxRrNny5rtlNqR34JoG9BMMvvG2tc0vXpAF/Arve3zEd7P43i3jMvLpnqS00n2mrGdpvOZ2/H889KY/IZjzrM07JN1eHUsgas+XRHNOmpjMifWKAUdrgkc5gNHJcbFE6PBsSy6w55gpcK+IP4ZSvSDJp03SXa7bKKWlT4Q5+uQfAhnfuDHB/18zl2uqZWexjuOPTnDAEUCMUKP9rmOQs8D1SxA7rAY2tk1XVH8oHbvKk1O70fOQOzOHQHcKLCVyA9omDzb41wKPhmX0+qLlAA94m6LKFrXd5R6m3sQLS4RDfstBp/WVwTCkLIqVqXHt3ewbX43QJnO1ZabHqlLTUd3ik3XL26Xo1T7sn0DnTt/WR2v42oNSxa++KyuFy3riGAJI/YHwNibrcdnB2cq+7mqKS9VyP9Loj/fPBiNrtLkVHbS61gtgN/uRvLVtWVdJZn23Xl22rImktrs77xhuEXRNP9SKy4aZ0KFLMg5NiHY8Ue+/bWVGhnU/at4D9QF0wvZocsBUqCARxWnX4S65BQIM9NZ9q+f+ixNOcpSbnBBgO4FYO+2sKzL7WvqHzNJGV+v6luLJXQKMhwrCWX9hOr9fVdPMeb3PiDfFgYHfcykf1t3kbzFeyOPnOt3MlJW2FubH97bZufc3WBlgR8rpOtmxtB826vb/tl3Vrh3st6/1716Z/FlpQnGhXevwfwcl3JYQgAAA=</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=78b115d119a743107f443733a6e8f203^sys_idNOT IN7b12151519a743107f443733a6e8f22c"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Send Notification">0d8dd9f10f11101051218e8ebc767e27</action_type>
+        <action_type_parent display_value="Send Notification">7eda5d710f11101051218e8ebc767ec1</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>0d8dd9f10f11101051218e8ebc767e27</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Team Join Request Notification Flow">78b115d119a743107f443733a6e8f203</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:03:15</sys_created_on>
+        <sys_id>7b12151519a743107f443733a6e8f22c</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:09:54</sys_updated_on>
+        <ui_id>9d136464-f275-4240-87c5-58a8ff78c9f1</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/9WW227cOAyGX2Xg6/HAsj1jT+6KBAFatCmQZHtTFAItUYkA+VBZTpMO8u5L2Z5jJmnT3SywlyJFifzJz/LXVaBlcBKkMpdyqVikGGMRi+YsZjnmWIhskWGcB9OgghJpp0VRW0nrOzCdN6xWpxbBoeRsJjprsXKPj+SXum0MPHwZt5FF3GojyR+cfP02DRqwdKJDG5ysDly/m5KBAg1tvVzndJije2j8WtaiKykvrtfGj2Pk2eiZvD8jDwX5dNg0wHuHlUTKQ4FpcRqUUElwtX3YWKho+bkyW8OtrtxQaAn3rf5JNyex36eQKhOjCJslHwUazOoMHFw52wnX2Y1etRbYDppIVNAZd7prGzZ8bpyuqyHEQWHW0bXpyupiUCTYHLDTj66lJLDxhfrM6XKqQl3d1j8u10me66qXZCzR1ALMZgXOWV10zqezCjp9fUztwXxcbzTYbyyhaXR1wxtb3+n+Psq+nN0YWsyUqX9Qmq2+qWYgfKkz6gTMzsl+1pu/gNW+7k90DAX7O/+q9PcO3/s5kizKkmUkwiyeJ2EaCQiLXBYhFLGap+kiXxQseJwG7UN7aqBtt4pRq/j3zhc86DcqxXuxe6V5P3A+WFjduHeU3h2O+jxOR7Zy9tIgJ/F2bnfO3PJ1z9tKcAFl07Vc1BWPuEMoeYllgbZ9Sto1eSefNt7XUfcbya6pu+5n7XjyI3hPbB93YycXg2PELn4ldsO8HqEuj/5H1I1l/XPs9rTep25P7f8EOlEUhSpwGbJCiDDNMA/zGLIQ55FIVJxEUab+ALpfoZa+PL07z1hVO620gL6JW9hSkWLK5pItF1ma0JdDpWmSJQksMFdxgc/Q9qHW1eQSqfrWTS72j37lq/frCtb8HdxzvLARxC0O+xxe7thHDJOXMRyo+5PHj3qNd76VWII2fBirZ9g8qO1f5vS5TPbgBaVQ+N8apdFImj/ex7zJS6quEKy4Pfc3+R4OpO6DvtdYwp3ueAL6bjvfjvPrpzPVouOjLNwfwFVtS/AT0Vd4+HlIlwyzJM7D5SKmzwMm87CQSRIy+lwgAqpYvs2b/O1v5eWIkvEKAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=7b12151519a743107f443733a6e8f22c"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=78b115d119a743107f443733a6e8f203"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_78b115d119a743107f443733a6e8f203</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:02:05</sys_created_on>
+        <sys_id>3ed1d9d119a743107f443733a6e8f2e8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:02:05</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_78b115d119a743107f443733a6e8f203</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:02:06</sys_created_on>
+        <sys_id>72d11dd119a743107f443733a6e8f201</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:02:06</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_78b115d119a743107f443733a6e8f203"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_78b115d119a743107f443733a6e8f203"/>
+    <sys_hub_flow_snapshot action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>true</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes>browserActivatedIn=chrome,integrationActivatedIn=standalone,labelCacheCleanUpExecuted=true,viewActivatedIn=naturalLanguage</attributes>
+        <authored_on_release_version>29000</authored_on_release_version>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Notifies the student when a team membership record is created.</description>
+        <flow_priority>MEDIUM</flow_priority>
+        <internal_name>team_join_request_notification_flow</internal_name>
+        <label_cache>[{"name":"Created_1.current","label":"Trigger - Record Created➛Team Members Record","reference":"x_snc_campus_con_0_team_members","reference_display":"Team Members","type":"reference","base_type":"reference","usedInstances":{"9d136464-f275-4240-87c5-58a8ff78c9f1":["record"]},"attributes":{}}]</label_cache>
+        <master>true</master>
+        <name>Team Join Request Notification Flow</name>
+        <natlang/>
+        <outputs/>
+        <parent_flow display_value="Team Join Request Notification Flow">78b115d119a743107f443733a6e8f203</parent_flow>
+        <remote_trigger_id/>
+        <run_as>user</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <status>published</status>
+        <sys_class_name>sys_hub_flow_snapshot</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>eb33d59519a743107f443733a6e8f21b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+        <type>flow</type>
+        <version>2</version>
+    </sys_hub_flow_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_variable_value action="delete_multiple" query="document_key=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=eb33d59519a743107f443733a6e8f21b^sys_idNOT IN3333d59519a743107f443733a6e8f21d"/>
+    <sys_flow_cat_variable_model action="INSERT_OR_UPDATE">
+        <id>eb33d59519a743107f443733a6e8f21b</id>
+        <name>Team Join Request Notification Flow</name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:09</sys_created_on>
+        <sys_id>3333d59519a743107f443733a6e8f21d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+    </sys_flow_cat_variable_model>
+    <sys_flow_cat_variable action="delete_multiple" query="flow_catalog_model=3333d59519a743107f443733a6e8f21d"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=eb33d59519a743107f443733a6e8f21b^sys_idNOT IN3733d59519a743107f443733a6e8f21e,3b33d59519a743107f443733a6e8f247"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=document_id,uiTypeLabel=Document ID</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent>table_name</dependent>
+        <dependent_on_field>table_name</dependent_on_field>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>current</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">document_id</internal_type>
+        <label>Record</label>
+        <mandatory>true</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Team Join Request Notification Flow">eb33d59519a743107f443733a6e8f21b</model>
+        <model_id>eb33d59519a743107f443733a6e8f21b</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_eb33d59519a743107f443733a6e8f21b</name>
+        <next_element/>
+        <order>100</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:09</sys_created_on>
+        <sys_id>3733d59519a743107f443733a6e8f21e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:09</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>true</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=3733d59519a743107f443733a6e8f21e"/>
+    <sys_hub_flow_input action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,test_input_hidden=true,uiType=table_name,uiTypeLabel=Table Name</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>table_name</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_type display_value="">table_name</internal_type>
+        <label>Table Name</label>
+        <mandatory>false</mandatory>
+        <max_length>200</max_length>
+        <model display_value="Team Join Request Notification Flow">eb33d59519a743107f443733a6e8f21b</model>
+        <model_id>eb33d59519a743107f443733a6e8f21b</model_id>
+        <model_table>sys_hub_flow_snapshot</model_table>
+        <name>var__m_sys_hub_flow_input_eb33d59519a743107f443733a6e8f21b</name>
+        <next_element/>
+        <order>101</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_only_option/>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_flow_input</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>3b33d59519a743107f443733a6e8f247</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_flow_input>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=3b33d59519a743107f443733a6e8f247"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=eb33d59519a743107f443733a6e8f21b^sys_idNOT INbb33d59519a743107f443733a6e8f259"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Team Join Request Notification Flow">eb33d59519a743107f443733a6e8f21b</flow>
+        <generation_source/>
+        <name>Created</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>bb33d59519a743107f443733a6e8f259</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <trigger_definition display_value="Created">798916a0c31322002841b63b12d3ae7c</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAA/9VYXW/iOBT9K1GediVGygeU0rdZ2tFW6rRayuw+VF3LSWyINrGZ2EnLjPrf9zpfhHxQKNChL0j4Gvvc43PPtXn4qQfYIYF+oU+xExC9p/tMkojhYLpcEBiWahgxHKpYiJmHJY+W+oWMYtLTacTDKQkXAZYwmeJAwCCPPBLpF2ZPT3AQk/uluPZgJfh9uky+pp6H4fszEsxFLg4XsUAuZ8hAkuAQhSR0SCRgpucL2GP5d/6DKUS1r2XUnfuBFxGmXzw89vQFjmAbqSD8rIUk5ITWEtZus8x8hdClLh5ZxHBt07Ysw7DO+6ZzZjum5dmYGAbMq7NVy0i2kLaigzxLwjzilUw1+IwI9u5YsCxnzOE4Mu5C/Cz8H7D6uaHmUQJZuSSLlV9RTlQ27M6575K7hfQ5y0YynFmQB3HIbjP8imJCcRzIgmIYiQWsRxYKsgKRI6L3c/40KTb84rM0uzwYcBcH5TcsZeQ7sSRCHQX1AzgUlHEjeByl6CdX47vJJfrn83T859UETa7up5Pr8fTqUn9J80LfY7VihjDHgrJ0XkpdfPFJoA5QLAWCk+zpwo38hfzsSj8pdPnSW2l9zJnnp6w09O4WIbGu9yL7TYI3jE7Ju5UdC9n/e/VXU9rZ4NsUPa5iTxV9doaxR3CHoh1aUXSVkxbQsoWeat6btJ2PbCPuvmH8InnnhvZWdYfcI8HlajkdgrMZ6N1ni1gqtp4wkwJJjrDnoQqPaipgek3uWW4vr2o7ihn8AJXn0VR4SlvJ340vAO4D1Oc9+R5npH8Cs6IFVekOMJ3e5DtMYqZxOEf40Nw4AqakVhggvQ7xLCcYFgyIKyuaoN9E9dtXXwifzSpJdGFIGWpAKHcHqWlFwhkUsSeWx0MWf/NIkhq3NRN4uwMUZ5tWv2lS6hBqGUNV+6ZhO9Q0hsYAU882DNeqVH8TYid2WZPRUVxgNw8QqYCDLfRZJz4Hb1QraCtxJevKLEhQwsmtZnwYaOaBoFkKWs0y7Z08sxRrNny5rtlNqR34JoG9BMMvvG2tc0vXpAF/Arve3zEd7P43i3jMvLpnqS00n2mrGdpvOZ2/H889KY/IZjzrM07JN1eHUsgas+XRHNOmpjMifWKAUdrgkc5gNHJcbFE6PBsSy6w55gpcK+IP4ZSvSDJp03SXa7bKKWlT4Q5+uQfAhnfuDHB/18zl2uqZWexjuOPTnDAEUCMUKP9rmOQs8D1SxA7rAY2tk1XVH8oHbvKk1O70fOQOzOHQHcKLCVyA9omDzb41wKPhmX0+qLlAA94m6LKFrXd5R6m3sQLS4RDfstBp/WVwTCkLIqVqXHt3ewbX43QJnO1ZabHqlLTUd3ik3XL26Xo1T7sn0DnTt/WR2v42oNSxa++KyuFy3riGAJI/YHwNibrcdnB2cq+7mqKS9VyP9Loj/fPBiNrtLkVHbS61gtgN/uRvLVtWVdJZn23Xl22rImktrs77xhuEXRNP9SKy4aZ0KFLMg5NiHY8Ue+/bWVGhnU/at4D9QF0wvZocsBUqCARxWnX4S65BQIM9NZ9q+f+ixNOcpSbnBBgO4FYO+2sKzL7WvqHzNJGV+v6luLJXQKMhwrCWX9hOr9fVdPMeb3PiDfFgYHfcykf1t3kbzFeyOPnOt3MlJW2FubH97bZufc3WBlgR8rpOtmxtB826vb/tl3Vrh3st6/1716Z/FlpQnGhXevwfwcl3JYQgAAA=</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_create</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=eb33d59519a743107f443733a6e8f21b^sys_idNOT IN7733d59519a743107f443733a6e8f258"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Send Notification">0d8dd9f10f11101051218e8ebc767e27</action_type>
+        <action_type_parent display_value="Send Notification">7eda5d710f11101051218e8ebc767ec1</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot>0d8dd9f10f11101051218e8ebc767e27</compiled_snapshot>
+        <display_text/>
+        <flow display_value="Team Join Request Notification Flow">eb33d59519a743107f443733a6e8f21b</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>7733d59519a743107f443733a6e8f258</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <ui_id>9d136464-f275-4240-87c5-58a8ff78c9f1</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAA/9WW227cOAyGX2Xg6/HAsj1jT+6KBAFatCmQZHtTFAItUYkA+VBZTpMO8u5L2Z5jJmnT3SywlyJFifzJz/LXVaBlcBKkMpdyqVikGGMRi+YsZjnmWIhskWGcB9OgghJpp0VRW0nrOzCdN6xWpxbBoeRsJjprsXKPj+SXum0MPHwZt5FF3GojyR+cfP02DRqwdKJDG5ysDly/m5KBAg1tvVzndJije2j8WtaiKykvrtfGj2Pk2eiZvD8jDwX5dNg0wHuHlUTKQ4FpcRqUUElwtX3YWKho+bkyW8OtrtxQaAn3rf5JNyex36eQKhOjCJslHwUazOoMHFw52wnX2Y1etRbYDppIVNAZd7prGzZ8bpyuqyHEQWHW0bXpyupiUCTYHLDTj66lJLDxhfrM6XKqQl3d1j8u10me66qXZCzR1ALMZgXOWV10zqezCjp9fUztwXxcbzTYbyyhaXR1wxtb3+n+Psq+nN0YWsyUqX9Qmq2+qWYgfKkz6gTMzsl+1pu/gNW+7k90DAX7O/+q9PcO3/s5kizKkmUkwiyeJ2EaCQiLXBYhFLGap+kiXxQseJwG7UN7aqBtt4pRq/j3zhc86DcqxXuxe6V5P3A+WFjduHeU3h2O+jxOR7Zy9tIgJ/F2bnfO3PJ1z9tKcAFl07Vc1BWPuEMoeYllgbZ9Sto1eSefNt7XUfcbya6pu+5n7XjyI3hPbB93YycXg2PELn4ldsO8HqEuj/5H1I1l/XPs9rTep25P7f8EOlEUhSpwGbJCiDDNMA/zGLIQ55FIVJxEUab+ALpfoZa+PL07z1hVO620gL6JW9hSkWLK5pItF1ma0JdDpWmSJQksMFdxgc/Q9qHW1eQSqfrWTS72j37lq/frCtb8HdxzvLARxC0O+xxe7thHDJOXMRyo+5PHj3qNd76VWII2fBirZ9g8qO1f5vS5TPbgBaVQ+N8apdFImj/ex7zJS6quEKy4Pfc3+R4OpO6DvtdYwp3ueAL6bjvfjvPrpzPVouOjLNwfwFVtS/AT0Vd4+HlIlwyzJM7D5SKmzwMm87CQSRIy+lwgAqpYvs2b/O1v5eWIkvEKAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=7733d59519a743107f443733a6e8f258"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=eb33d59519a743107f443733a6e8f21b"/>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>current</element>
+        <help/>
+        <hint/>
+        <label>Record</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_eb33d59519a743107f443733a6e8f21b</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>7333d59519a743107f443733a6e8f243</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>table_name</element>
+        <help/>
+        <hint/>
+        <label>Table Name</label>
+        <language>en</language>
+        <name>var__m_sys_hub_flow_input_eb33d59519a743107f443733a6e8f21b</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_id>ff33d59519a743107f443733a6e8f24d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_eb33d59519a743107f443733a6e8f21b"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_eb33d59519a743107f443733a6e8f21b"/>
+    <sys_hub_flow action="UPDATE">
+        <sys_id>78b115d119a743107f443733a6e8f203</sys_id>
+        <latest_snapshot>eb33d59519a743107f443733a6e8f21b</latest_snapshot>
+        <compiler_build>glide-australia-02-11-2026__patch3-hotfix1-06-18-2026_06-19-2026_0938.zip</compiler_build>
+        <version_record/>
+    </sys_hub_flow>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=78b115d119a743107f443733a6e8f203^sys_idNOT INbf33d59519a743107f443733a6e8f262"/>
+    <sys_flow_trigger_plan action="INSERT_OR_UPDATE">
+        <binding_strategy>com.snc.process_flow.engine.binding.OncePerRecord</binding_strategy>
+        <plan>{"@class":"com.snc.process_flow.engine.serialization.plan_data.ChunkingPlanData","chunk_data":{"table":"sys_flow_trigger_plan","id":"bf33d59519a743107f443733a6e8f262","name":"plan","plan_signature":null},"plan_data":"CHUNKING_PLAN"}</plan>
+        <plan_id>78b115d119a743107f443733a6e8f203</plan_id>
+        <snapshot>dda3d1d519a743107f443733a6e8f2a9</snapshot>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 16:08:10</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>bf33d59519a743107f443733a6e8f262</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_overrides/>
+        <sys_scope/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 16:08:10</sys_updated_on>
+        <trigger display_value="">bb33d59519a743107f443733a6e8f260</trigger>
+    </sys_flow_trigger_plan>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=78b115d119a743107f443733a6e8f203"/>
+</record_update>

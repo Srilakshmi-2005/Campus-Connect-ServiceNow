@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="DELETE">
+        <inactive>false</inactive>
+        <order>100</order>
+        <published_ref/>
+        <question display_value="What do you want to post?">7cbc78e814e303107f4482b2cd24831e</question>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:49:06</sys_created_on>
+        <sys_id>86bd4d6c146703107f4482b2cd2483ab</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Share a Tip</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>question_choice_86bd4d6c146703107f4482b2cd2483ab</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:54:24</sys_updated_on>
+        <text>Share a Tip</text>
+        <value>Share a Tip</value>
+    </question_choice>
+    <fx_price action="DELETE" query="id=86bd4d6c146703107f4482b2cd2483ab"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>question_choice_86bd4d6c146703107f4482b2cd2483ab</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice"><question_choice action="INSERT_OR_UPDATE"><inactive>false</inactive><order>100</order><published_ref/><question display_value="What do you want to post?">7cbc78e814e303107f4482b2cd24831e</question><sys_class_name>question_choice</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-09-22 07:49:06</sys_created_on><sys_id>86bd4d6c146703107f4482b2cd2483ab</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Share a Tip</sys_name><sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package><sys_policy/><sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope><sys_update_name>question_choice_86bd4d6c146703107f4482b2cd2483ab</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-09-22 07:54:24</sys_updated_on><text>Share a Tip</text><value>Share a Tip</value></question_choice><fx_price action="delete_multiple" query="id=86bd4d6c146703107f4482b2cd2483ab"/></record_update>]]></payload>
+        <payload_hash>376998503</payload_hash>
+        <record_name>Share a Tip</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:54:25</sys_created_on>
+        <sys_id>eb0f852014a703107f4482b2cd2483d5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0c81bdf6a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:54:25</sys_updated_on>
+        <type>Question Choice</type>
+        <update_guid>670f452058a70310bed1d4a0b42ea7c3</update_guid>
+        <update_guid_history>670f452058a70310bed1d4a0b42ea7c3:376998503,b1dd41ac0c670310b09b9b08aae528c5:201034073</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Share a Tip">be7ac42ab4e703107f44e1aec8ca28ff</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 08:02:40</sys_created_on>
+        <sys_db_object display_value="" name="question_choice">question_choice</sys_db_object>
+        <sys_id>507a601439c742ca9cbcc536f4f26e64</sys_id>
+        <sys_metadata>86bd4d6c146703107f4482b2cd2483ab</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Share a Tip</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>question_choice_86bd4d6c146703107f4482b2cd2483ab</sys_update_name>
+        <sys_update_version display_value="question_choice_86bd4d6c146703107f4482b2cd2483ab">eb0f852014a703107f4482b2cd2483d5</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-28 08:02:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

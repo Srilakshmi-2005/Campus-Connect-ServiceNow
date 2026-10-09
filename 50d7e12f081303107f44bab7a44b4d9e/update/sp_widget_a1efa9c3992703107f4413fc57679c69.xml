@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    /*
+     * =========================================
+     * INITIALIZE
+     * =========================================
+     */
+
+    c.selectedStudent =
+        c.data.studentId || '';
+
+    c.selectedEvent = '';
+
+    c.loading = false;
+
+
+    /*
+     * =========================================
+     * ANALYZE WITH NASK
+     * =========================================
+     */
+
+    c.analyze = function() {
+
+        if (!c.selectedStudent || !c.selectedEvent) {
+
+            c.data.message =
+                'Please select an event.';
+
+            c.data.matchResult = '';
+
+            return;
+        }
+
+
+        c.loading = true;
+
+        c.data.message =
+            'Connecting to Campus Connect NASK...';
+
+        c.data.matchResult = '';
+
+
+        var ga = new GlideAjax(
+            'x_snc_campus_con_0.CampusConnectAISkillMatcher'
+        );
+
+
+        ga.addParam(
+            'sysparm_name',
+            'analyze'
+        );
+
+
+        ga.addParam(
+            'sysparm_student',
+            c.selectedStudent
+        );
+
+
+        ga.addParam(
+            'sysparm_event',
+            c.selectedEvent
+        );
+
+
+        ga.getXMLAnswer(function(answer) {
+
+            console.log(
+                'Campus Connect NASK Response:',
+                answer
+            );
+
+
+            c.loading = false;
+
+
+            if (!answer) {
+
+                c.data.message =
+                    'NASK returned an empty response.';
+
+                c.data.matchResult = '';
+
+                return;
+            }
+
+
+            try {
+
+                var result =
+                    JSON.parse(answer);
+
+
+                console.log(
+                    'Parsed NASK Response:',
+                    result
+                );
+
+
+                if (result.success === true) {
+
+                    c.data.message =
+                        result.message ||
+                        'NASK analysis completed successfully.';
+
+                    c.data.matchResult =
+                        result.matchResult || '';
+
+                } else {
+
+                    c.data.message =
+                        result.message ||
+                        'NASK execution failed.';
+
+                    c.data.matchResult = '';
+
+                }
+
+
+            } catch (e) {
+
+                c.data.message =
+                    'Unable to parse NASK response.';
+
+                c.data.matchResult =
+                    answer;
+
+
+                console.log(
+                    'NASK Parse Error:',
+                    e
+                );
+
+            }
+
+        });
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cc-ai-matcher {&#13;
+    max-width: 1200px;&#13;
+    margin: 30px auto;&#13;
+    padding: 0 20px 50px 200px;&#13;
+    font-family: Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   HEADER&#13;
+   ========================= */&#13;
+&#13;
+.matcher-header {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 18px;&#13;
+&#13;
+    padding: 26px 28px;&#13;
+    margin-bottom: 22px;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    background: linear-gradient(&#13;
+        135deg,&#13;
+        #17365d,&#13;
+        #245b8f&#13;
+    );&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.12);&#13;
+}&#13;
+&#13;
+.header-icon {&#13;
+    width: 58px;&#13;
+    height: 58px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    background: rgba(255,255,255,0.16);&#13;
+&#13;
+    font-size: 25px;&#13;
+}&#13;
+&#13;
+.header-content h2 {&#13;
+    margin: 0 0 6px;&#13;
+&#13;
+    font-size: 26px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.header-content p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    opacity: 0.9;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   SELECTION CARD&#13;
+   ========================= */&#13;
+&#13;
+.matcher-form {&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #e1e7ef;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    padding: 26px;&#13;
+&#13;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);&#13;
+}&#13;
+&#13;
+.section-title {&#13;
+    font-size: 17px;&#13;
+    font-weight: 600;&#13;
+&#13;
+    color: #17365d;&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+&#13;
+    padding-bottom: 12px;&#13;
+&#13;
+    border-bottom: 1px solid #edf1f5;&#13;
+}&#13;
+&#13;
+.section-title i {&#13;
+    margin-right: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   FORM&#13;
+   ========================= */&#13;
+&#13;
+.form-group {&#13;
+    margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+.form-group label {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 8px;&#13;
+&#13;
+    color: #26364a;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.form-group label i {&#13;
+    margin-right: 6px;&#13;
+&#13;
+    color: #245b8f;&#13;
+}&#13;
+&#13;
+.form-control {&#13;
+    width: 100%;&#13;
+&#13;
+    height: 46px;&#13;
+&#13;
+    padding: 8px 13px;&#13;
+&#13;
+    border: 1px solid #cbd5e1;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    color: #26364a;&#13;
+&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.form-control:focus {&#13;
+    border-color: #245b8f;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    box-shadow:&#13;
+        0 0 0 3px rgba(36,91,143,0.10);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   ANALYZE BUTTON&#13;
+   ========================= */&#13;
+&#13;
+.analyze-btn {&#13;
+    width: 100%;&#13;
+&#13;
+    height: 48px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    background: #245b8f;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.analyze-btn:hover:not(:disabled) {&#13;
+    background: #17365d;&#13;
+&#13;
+    transform: translateY(-1px);&#13;
+&#13;
+    box-shadow: 0 4px 12px rgba(23,54,93,0.20);&#13;
+}&#13;
+&#13;
+.analyze-btn:disabled {&#13;
+    opacity: 0.55;&#13;
+&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+.analyze-btn i {&#13;
+    margin-right: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   LOADING&#13;
+   ========================= */&#13;
+&#13;
+.matcher-loading {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 15px;&#13;
+&#13;
+    margin-top: 20px;&#13;
+&#13;
+    padding: 18px 20px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #f4f7fa;&#13;
+&#13;
+    border: 1px solid #dce5ee;&#13;
+&#13;
+    color: #334155;&#13;
+}&#13;
+&#13;
+.loading-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e4edf6;&#13;
+&#13;
+    color: #245b8f;&#13;
+&#13;
+    font-size: 19px;&#13;
+}&#13;
+&#13;
+.matcher-loading strong {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+.matcher-loading p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   MESSAGE&#13;
+   ========================= */&#13;
+&#13;
+.matcher-message {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    margin-top: 18px;&#13;
+&#13;
+    padding: 15px 18px;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    border: 1px solid #dbe4ee;&#13;
+&#13;
+    color: #475569;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.matcher-message i {&#13;
+    color: #245b8f;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   AI RESULT&#13;
+   ========================= */&#13;
+&#13;
+.ai-result {&#13;
+    margin-top: 24px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #d9e3ec;&#13;
+&#13;
+    border-radius: 14px;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);&#13;
+}&#13;
+&#13;
+&#13;
+/* Result Header */&#13;
+&#13;
+.result-header {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding: 20px 22px;&#13;
+&#13;
+    background: #f4f7fa;&#13;
+&#13;
+    border-bottom: 1px solid #dfe7ef;&#13;
+}&#13;
+&#13;
+.result-title {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 13px;&#13;
+}&#13;
+&#13;
+.result-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e3f3e9;&#13;
+&#13;
+    color: #21854a;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+.result-title h3 {&#13;
+    margin: 0 0 4px;&#13;
+&#13;
+    font-size: 18px;&#13;
+&#13;
+    color: #17365d;&#13;
+}&#13;
+&#13;
+.result-title p {&#13;
+    margin: 0;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    color: #64748b;&#13;
+}&#13;
+&#13;
+&#13;
+/* AI Badge */&#13;
+&#13;
+.ai-badge {&#13;
+    padding: 7px 11px;&#13;
+&#13;
+    border-radius: 20px;&#13;
+&#13;
+    background: #e8f0f8;&#13;
+&#13;
+    color: #245b8f;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+.ai-badge i {&#13;
+    margin-right: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Result Body */&#13;
+&#13;
+.result-body {&#13;
+    padding: 22px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Explanation Box */&#13;
+&#13;
+.result-intro {&#13;
+    display: flex;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    padding: 16px;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+&#13;
+    border-radius: 9px;&#13;
+&#13;
+    background: #f8fafc;&#13;
+&#13;
+    border: 1px solid #e5ebf1;&#13;
+}&#13;
+&#13;
+.result-intro &gt; i {&#13;
+    font-size: 20px;&#13;
+&#13;
+    color: #245b8f;&#13;
+&#13;
+    margin-top: 2px;&#13;
+}&#13;
+&#13;
+.result-intro strong {&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+    color: #26364a;&#13;
+}&#13;
+&#13;
+.result-intro p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* NASK Response */&#13;
+&#13;
+.nask-response {&#13;
+    border: 1px solid #dce5ee;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+.response-title {&#13;
+    padding: 13px 16px;&#13;
+&#13;
+    background: #f1f5f9;&#13;
+&#13;
+    border-bottom: 1px solid #dce5ee;&#13;
+&#13;
+    color: #17365d;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.response-title i {&#13;
+    margin-right: 7px;&#13;
+}&#13;
+&#13;
+.response-content {&#13;
+    padding: 20px;&#13;
+&#13;
+    background: #ffffff;&#13;
+}&#13;
+&#13;
+.response-content pre {&#13;
+    margin: 0;&#13;
+&#13;
+    padding: 0;&#13;
+&#13;
+    white-space: pre-wrap;&#13;
+&#13;
+    word-wrap: break-word;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    font-family: Arial, sans-serif;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.7;&#13;
+&#13;
+    color: #26364a;&#13;
+}&#13;
+&#13;
+&#13;
+/* Footer */&#13;
+&#13;
+.result-footer {&#13;
+    padding: 13px 20px;&#13;
+&#13;
+    background: #fafbfd;&#13;
+&#13;
+    border-top: 1px solid #e5ebf1;&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+.result-footer i {&#13;
+    margin-right: 6px;&#13;
+&#13;
+    color: #245b8f;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   MOBILE&#13;
+   ========================= */&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-ai-matcher {&#13;
+        margin: 15px auto;&#13;
+&#13;
+        padding: 0 12px 30px;&#13;
+    }&#13;
+&#13;
+    .matcher-header {&#13;
+        padding: 20px;&#13;
+&#13;
+        gap: 13px;&#13;
+    }&#13;
+&#13;
+    .header-icon {&#13;
+        width: 48px;&#13;
+        height: 48px;&#13;
+&#13;
+        font-size: 20px;&#13;
+    }&#13;
+&#13;
+    .header-content h2 {&#13;
+        font-size: 21px;&#13;
+    }&#13;
+&#13;
+    .matcher-form {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .result-header {&#13;
+        align-items: flex-start;&#13;
+&#13;
+        gap: 12px;&#13;
+&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .ai-badge {&#13;
+        align-self: flex-start;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>ai_skill_matcher</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AI Skill Matcher</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.studentId = '';
+    data.studentName = '';
+    data.events = [];
+    data.matchResult = '';
+    data.message = '';
+
+    /*
+     * =========================================
+     * CURRENT LOGGED-IN USER
+     * =========================================
+     */
+
+    var currentUser = gs.getUserID();
+
+    if (!currentUser) {
+
+        data.message =
+            'Unable to identify the logged-in student.';
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * LOAD ONLY CURRENT USER STUDENT PROFILE
+     * =========================================
+     */
+
+    var studentProfile = new GlideRecord(
+        'x_snc_campus_con_0_student_profile'
+    );
+
+    studentProfile.addQuery(
+        'student',
+        currentUser
+    );
+
+    studentProfile.setLimit(1);
+    studentProfile.query();
+
+
+    if (studentProfile.next()) {
+
+        data.studentId =
+            studentProfile.getValue('student');
+
+        data.studentName =
+            studentProfile.getDisplayValue('student');
+
+    } else {
+
+        data.message =
+            'Student Profile not found for the logged-in user.';
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * LOAD VERIFIED EVENTS
+     * =========================================
+     */
+
+    var eventGr = new GlideRecord(
+        'x_snc_campus_con_0_events'
+    );
+
+    eventGr.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+    eventGr.orderBy('event_date');
+    eventGr.query();
+
+
+    while (eventGr.next()) {
+
+        data.events.push({
+
+            sys_id:
+                eventGr.getUniqueValue(),
+
+            name:
+                eventGr.getValue('event_name')
+
+        });
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 04:43:03</sys_created_on>
+        <sys_id>a1efa9c3992703107f4413fc57679c69</sys_id>
+        <sys_mod_count>32</sys_mod_count>
+        <sys_name>AI Skill Matcher</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_a1efa9c3992703107f4413fc57679c69</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-07 15:35:53</sys_updated_on>
+        <template><![CDATA[<div class="cc-ai-matcher">
+
+  <!-- Header -->
+  <div class="matcher-header">
+    <div class="header-icon">
+      <i class="fa fa-magic"></i>
+    </div>
+
+    <div class="header-content">
+      <h2>AI Skill Matcher</h2>
+      <p>
+        Discover how your skills match an opportunity using Now Assist.
+      </p>
+    </div>
+  </div>
+
+
+  <!-- Selection Card -->
+  <div class="matcher-form">
+
+    <div class="section-title">
+      <i class="fa fa-sliders"></i>
+      Select Details
+    </div>
+
+
+    <!-- Student Profile -->
+    <div class="form-group">
+      <label>
+        <i class="fa fa-user"></i>
+        Student Profile
+      </label>
+
+      <input
+        type="text"
+        class="form-control"
+        ng-model="c.data.studentName"
+        readonly>
+    </div>
+
+
+    <!-- Event -->
+    <div class="form-group">
+      <label>
+        <i class="fa fa-calendar"></i>
+        Event
+      </label>
+
+      <select class="form-control"
+              ng-model="c.selectedEvent"
+              ng-options="event.sys_id as event.name for event in c.data.events">
+
+        <option value="">
+          Select an event
+        </option>
+
+      </select>
+    </div>
+
+
+    <!-- Analyze Button -->
+    <button class="analyze-btn"
+            ng-click="c.analyze()"
+            ng-disabled="c.loading || !c.selectedStudent || !c.selectedEvent">
+
+      <span ng-if="!c.loading">
+        <i class="fa fa-magic"></i>
+        Analyze with AI
+      </span>
+
+      <span ng-if="c.loading">
+        <i class="fa fa-spinner fa-spin"></i>
+        Analyzing...
+      </span>
+
+    </button>
+
+  </div>
+
+
+  <!-- Loading -->
+  <div class="matcher-loading" ng-if="c.loading">
+
+    <div class="loading-icon">
+      <i class="fa fa-cog fa-spin"></i>
+    </div>
+
+    <div>
+      <strong>Now Assist is analyzing...</strong>
+      <p>
+        Comparing the student's skills with the event requirements.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- Error / Information Message -->
+  <div class="matcher-message"
+       ng-if="c.data.message && !c.data.matchResult && !c.loading">
+
+    <i class="fa fa-info-circle"></i>
+
+    <span>{{c.data.message}}</span>
+
+  </div>
+
+
+  <!-- AI RESULT -->
+  <div class="ai-result"
+       ng-if="c.data.matchResult && !c.loading">
+
+
+    <!-- Result Header -->
+    <div class="result-header">
+
+      <div class="result-title">
+        <div class="result-icon">
+          <i class="fa fa-check"></i>
+        </div>
+
+        <div>
+          <h3>AI Skill Match Analysis</h3>
+          <p>Powered by Campus Connect NASK</p>
+        </div>
+      </div>
+
+      <div class="ai-badge">
+        <i class="fa fa-bolt"></i>
+        AI Analysis
+      </div>
+
+    </div>
+
+
+    <!-- Result Body -->
+    <div class="result-body">
+
+      <div class="result-intro">
+        <i class="fa fa-lightbulb-o"></i>
+
+        <div>
+          <strong>What does this mean?</strong>
+
+          <p>
+            NASK compared the student's skills with the selected
+            opportunity requirements and generated the explanation below.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- Actual NASK Response -->
+      <div class="nask-response">
+
+        <div class="response-title">
+          <i class="fa fa-robot"></i>
+          NASK Recommendation
+        </div>
+
+        <div class="response-content">
+          <pre>{{c.data.matchResult}}</pre>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Result Footer -->
+    <div class="result-footer">
+
+      <i class="fa fa-info-circle"></i>
+
+      This analysis is based only on the student profile and
+      opportunity requirements provided to the AI.
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

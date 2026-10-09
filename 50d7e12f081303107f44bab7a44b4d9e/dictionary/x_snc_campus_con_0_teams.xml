@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="3914bd67089303107f44bab7a44b4da9" label="Teams" max_length="40" name="x_snc_campus_con_0_teams" type="collection">
+        <element choice="1" label="Formation Type" max_length="40" name="formation_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Skill-Matched" sequence="1" value="skill-matched"/>
+                <element inactive_on_update="false" label="By Own" sequence="0" value="by own"/>
+            </choice>
+        </element>
+        <element display="true" label="Team Name" max_length="40" name="team_name" type="string"/>
+        <element choice="1" label="Status" max_length="40" name="status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Open" sequence="0" value="open"/>
+                <element inactive_on_update="false" label="Closed" sequence="1" value="closed"/>
+            </choice>
+        </element>
+        <element label="Event" max_length="32" name="event" reference="x_snc_campus_con_0_events" type="reference"/>
+        <element label="Team Lead" max_length="32" name="team_lead" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="team_lead"/>
+        </index>
+        <index name="index2">
+            <element name="event"/>
+        </index>
+    </element>
+</database>

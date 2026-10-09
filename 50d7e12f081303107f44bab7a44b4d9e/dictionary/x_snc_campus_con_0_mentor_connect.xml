@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="4f4671eb089303107f44bab7a44b4d47" label="Mentor Connect" max_length="40" name="x_snc_campus_con_0_mentor_connect" type="collection">
+        <element label="Is Winner Verified" max_length="40" name="is_winner_verified" type="boolean"/>
+        <element label="Related Event" max_length="32" name="related_event" reference="x_snc_campus_con_0_events" type="reference"/>
+        <element label="Content" max_length="400" name="content" type="string"/>
+        <element label="Resolved / Clarified" max_length="40" name="resolved_clarified" type="boolean"/>
+        <element label="Author" max_length="32" name="author" reference="sys_user" type="reference"/>
+        <element display="true" label="Parent Post" max_length="32" name="parent_post" reference="x_snc_campus_con_0_mentor_connect" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Clarification" max_length="100" name="clarification" type="string"/>
+        <element choice="1" label="Post Type" max_length="40" name="post_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Senior Answer" sequence="1" value="Senior Answer"/>
+                <element inactive_on_update="false" label="Newcomer Doubt" sequence="0" value="Newcomer Doubt"/>
+                <element inactive="true" inactive_on_update="true" label=": Winner Tip" sequence="0" value=": Winner Tip"/>
+                <element inactive_on_update="false" label="Winner Tip" sequence="2" value="Winner Tip"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="From" max_length="40" name="from" type="string"/>
+        <element label="Domain Tag" max_length="40" name="domain_tag" type="string"/>
+        <index name="index">
+            <element name="author"/>
+        </index>
+        <index name="index2">
+            <element name="parent_post"/>
+        </index>
+        <index name="index3">
+            <element name="related_event"/>
+        </index>
+    </element>
+</database>

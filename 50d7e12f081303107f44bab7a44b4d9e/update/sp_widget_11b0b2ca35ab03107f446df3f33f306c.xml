@@ -1,0 +1,1607 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($window) {
+
+    var c = this;
+
+    c.userInitials = "U";
+
+
+    /*
+     * --------------------------------------------------
+     * INITIAL VALUES
+     * --------------------------------------------------
+     */
+
+    c.showRoleMenu = false;
+
+    c.showProfileMenu = false;
+
+    /*
+     * Default value remains Student.
+     * Server will automatically replace this with
+     * Organizer when the logged-in user is an organizer.
+     */
+
+    c.selectedRole = "Student";
+
+    c.studentEmail = "";
+
+    c.reliabilityScore = 0;
+
+
+    /*
+     * --------------------------------------------------
+     * LOCAL STORAGE KEYS
+     * --------------------------------------------------
+     */
+
+    var LAST_OPENED_KEY =
+        "campus_connect_notifications_last_opened";
+
+    var DELETED_KEY =
+        "campus_connect_notifications_deleted";
+
+
+    /*
+     * --------------------------------------------------
+     * GET LAST OPENED
+     * --------------------------------------------------
+     */
+
+    function getLastOpened() {
+
+        return $window.localStorage.getItem(
+            LAST_OPENED_KEY
+        ) || "";
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * GET DELETED NOTIFICATIONS
+     * --------------------------------------------------
+     */
+
+    function getDeletedIds() {
+
+        try {
+
+            return JSON.parse(
+                $window.localStorage.getItem(
+                    DELETED_KEY
+                ) || "[]"
+            );
+
+        } catch (e) {
+
+            return [];
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * LOAD STUDENT PROFILE
+     * --------------------------------------------------
+     */
+
+    function loadStudentProfile() {
+
+        c.server.get({
+
+            action: "load_profile",
+
+            lastOpened: getLastOpened(),
+
+            deletedIds: getDeletedIds()
+
+        }).then(
+            function(response) {
+
+                var result =
+                    response.data;
+
+
+                /*
+                 * Email
+                 */
+
+                c.studentEmail =
+                    result.student_email ||
+                    "";
+
+
+                /*
+                 * Reliability Score
+                 */
+
+                c.reliabilityScore =
+                    result.reliability_score ||
+                    0;
+
+
+                /*
+                 * Notification count
+                 */
+
+                c.data.notification_count =
+                    result.notification_count ||
+                    0;
+
+
+                /*
+                 * Current User Initials
+                 */
+
+                c.userInitials =
+                    result.user_initials ||
+                    "U";
+
+
+                /*
+                 * --------------------------------------------------
+                 * AUTOMATIC ROLE
+                 * --------------------------------------------------
+                 *
+                 * Student login  -> Student
+                 * Organizer login -> Organizer
+                 */
+
+                c.selectedRole =
+                    result.user_role ||
+                    "Student";
+
+            }
+        );
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * ROLE MENU
+     * --------------------------------------------------
+     */
+
+    c.toggleRoleMenu = function() {
+
+        c.showRoleMenu =
+            !c.showRoleMenu;
+
+
+        /*
+         * Close profile menu
+         */
+
+        c.showProfileMenu =
+            false;
+
+    };
+
+
+    c.selectRole = function(role) {
+
+        c.selectedRole =
+            role;
+
+        c.showRoleMenu =
+            false;
+
+    };
+
+
+    /*
+     * --------------------------------------------------
+     * PROFILE MENU
+     * --------------------------------------------------
+     */
+
+    c.toggleProfileMenu = function() {
+
+        c.showProfileMenu =
+            !c.showProfileMenu;
+
+
+        /*
+         * Close role menu
+         */
+
+        c.showRoleMenu =
+            false;
+
+    };
+
+
+    /*
+     * --------------------------------------------------
+     * NOTIFICATIONS
+     * --------------------------------------------------
+     */
+
+    c.openNotifications = function() {
+
+        /*
+         * Save current time
+         */
+
+        $window.localStorage.setItem(
+            LAST_OPENED_KEY,
+            new Date().toISOString()
+        );
+
+
+        /*
+         * Clear notification badge
+         */
+
+        c.data.notification_count =
+            0;
+
+
+        /*
+         * Open notification page
+         */
+
+        $window.location.href =
+            "?id=campus_notifications";
+
+    };
+
+
+    /*
+     * --------------------------------------------------
+     * LOGOUT
+     * --------------------------------------------------
+     */
+
+    c.logout = function() {
+
+        /*
+         * Only navigate to the Campus Connect
+         * Landing Page.
+         *
+         * This does NOT log out from ServiceNow.
+         */
+
+        $window.location.href =
+            "?id=campus_connect_landing_page";
+
+    };
+
+
+    /*
+     * --------------------------------------------------
+     * LOAD DATA
+     * --------------------------------------------------
+     */
+
+    loadStudentProfile();
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cc-header {&#13;
+&#13;
+    width: 107%;&#13;
+&#13;
+    min-height: 64px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border-bottom: 1px solid #dbeafe;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    padding: 0 24px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    font-family:&#13;
+        "Segoe UI",&#13;
+        Arial,&#13;
+        sans-serif;&#13;
+  margin-left: 100px;&#13;
+  margin-right:50px;&#13;
+&#13;
+}&#13;
+.cc-logout-icon {&#13;
+    width: 8px;&#13;
+    height: 8px;&#13;
+    border-radius: 50%;&#13;
+    background: #1976d2;&#13;
+    display: inline-block;&#13;
+    margin-right: 8px;&#13;
+}.cc-logout-btn {&#13;
+    color: #1976d2;&#13;
+}&#13;
+&#13;
+/* -----------------------------------&#13;
+   SEARCH&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-header-search {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    width: 420px;&#13;
+&#13;
+    height: 40px;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    padding: 0 20px 0 5px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-search-icon {&#13;
+&#13;
+    font-size: 22px;&#13;
+&#13;
+    color: #2563eb;&#13;
+&#13;
+    margin-right: 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-header-search input {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    outline: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-header-search input::placeholder {&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   RIGHT SIDE&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-header-right {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 16px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   NOTIFICATION&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-notification-btn {&#13;
+&#13;
+    position: relative;&#13;
+&#13;
+    width: 42px;&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-size: 20px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-notification-btn:hover {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-notification-count {&#13;
+&#13;
+    position: absolute;&#13;
+&#13;
+    top: 1px;&#13;
+&#13;
+    right: 0;&#13;
+&#13;
+    min-width: 19px;&#13;
+&#13;
+    height: 19px;&#13;
+&#13;
+    padding: 0 5px;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #dc2626;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   ROLE SELECTOR&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-role-selector {&#13;
+&#13;
+    position: relative;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role {&#13;
+&#13;
+    height: 42px;&#13;
+&#13;
+    padding: 0 12px;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role:hover {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-chevron {&#13;
+&#13;
+    margin-left: 6px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-menu {&#13;
+&#13;
+    position: absolute;&#13;
+&#13;
+    top: 48px;&#13;
+&#13;
+    right: 0;&#13;
+&#13;
+    width: 180px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 8px 25px rgba(&#13;
+            30,&#13;
+            64,&#13;
+            175,&#13;
+            0.15&#13;
+        );&#13;
+&#13;
+    z-index: 1000;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-option {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 12px 14px;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    text-decoration: none;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-option:hover {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-role-icon {&#13;
+&#13;
+    font-size: 18px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   PROFILE&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-profile {&#13;
+&#13;
+    position: relative;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-btn {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 8px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    padding: 4px 6px;&#13;
+&#13;
+    border-radius: 8px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-btn:hover {&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-avatar {&#13;
+&#13;
+    width: 40px;&#13;
+&#13;
+    height: 40px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #2563eb;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-name {&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-chevron {&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 16px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   PROFILE DROPDOWN&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-profile-menu {&#13;
+&#13;
+    position: absolute;&#13;
+&#13;
+    top: 52px;&#13;
+&#13;
+    right: 0;&#13;
+&#13;
+    width: 280px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #bfdbfe;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    box-shadow:&#13;
+        0 10px 30px rgba(&#13;
+            30,&#13;
+            64,&#13;
+            175,&#13;
+            0.18&#13;
+        );&#13;
+&#13;
+    z-index: 2000;&#13;
+&#13;
+    overflow: hidden;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-title {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 8px;&#13;
+&#13;
+    padding: 16px;&#13;
+&#13;
+    background: #eff6ff;&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    font-size: 16px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-title-icon {&#13;
+&#13;
+    font-size: 20px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   PROFILE ITEMS&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-profile-item {&#13;
+&#13;
+    padding: 14px 16px;&#13;
+&#13;
+    border-bottom: 1px solid #eff6ff;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-label {&#13;
+&#13;
+    color: #64748b;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-profile-value {&#13;
+&#13;
+    color: #1e3a8a;&#13;
+&#13;
+    font-size: 13px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    word-break: break-word;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   SCORE&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-score {&#13;
+&#13;
+    display: inline-flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    min-width: 42px;&#13;
+&#13;
+    height: 32px;&#13;
+&#13;
+    padding: 0 10px;&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+    color: #1d4ed8;&#13;
+&#13;
+    border-radius: 16px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    font-size: 15px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   DIVIDER&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-profile-divider {&#13;
+&#13;
+    height: 1px;&#13;
+&#13;
+    background: #dbeafe;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   LOGOUT&#13;
+----------------------------------- */&#13;
+&#13;
+.cc-logout-btn {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    padding: 13px 16px;&#13;
+&#13;
+    border: none;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #dc2626;&#13;
+&#13;
+    text-align: left;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+.cc-logout-btn:hover {&#13;
+&#13;
+    background: #fef2f2;&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* -----------------------------------&#13;
+   MOBILE&#13;
+----------------------------------- */&#13;
+&#13;
+@media (max-width: 768px) {&#13;
+&#13;
+    .cc-header {&#13;
+&#13;
+        padding: 0 12px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-header-search {&#13;
+&#13;
+        width: 220px;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-profile-name {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-profile-chevron {&#13;
+&#13;
+        display: none;&#13;
+&#13;
+    }&#13;
+&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_header</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Header</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.notification_count = 0;
+
+    data.student_email = "";
+    data.reliability_score = 0;
+    data.user_initials = "U";
+
+
+    /*
+     * --------------------------------------------------
+     * 1. CURRENT LOGGED-IN USER
+     * --------------------------------------------------
+     */
+
+    var userSysId = gs.getUserID();
+
+    if (!userSysId) {
+        return;
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 2. DETERMINE CURRENT USER ROLE
+     * --------------------------------------------------
+     */
+
+    data.user_role = "Student";
+
+    var organizerGR = new GlideRecord(
+        "x_snc_campus_con_0_event_organizers"
+    );
+
+    organizerGR.addQuery(
+        "organizer_name",
+        userSysId
+    );
+
+    organizerGR.setLimit(1);
+    organizerGR.query();
+
+    if (organizerGR.next()) {
+
+        data.user_role = "Organizer";
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 3. GET CURRENT USER DETAILS
+     * --------------------------------------------------
+     */
+
+    var currentUser = new GlideRecord("sys_user");
+
+    if (currentUser.get(userSysId)) {
+
+        var firstName = String(
+            currentUser.getValue("first_name") || ""
+        ).trim();
+
+        var lastName = String(
+            currentUser.getValue("last_name") || ""
+        ).trim();
+
+        var initials = "";
+
+        if (firstName) {
+
+            initials +=
+                firstName.charAt(0).toUpperCase();
+
+        }
+
+        if (lastName) {
+
+            initials +=
+                lastName.charAt(0).toUpperCase();
+
+        }
+
+        if (!initials && firstName) {
+
+            initials =
+                firstName.substring(
+                    0,
+                    2
+                ).toUpperCase();
+
+        }
+
+        if (!initials) {
+
+            initials = "U";
+
+        }
+
+        data.user_initials = initials;
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 4. FIND STUDENT PROFILE
+     * --------------------------------------------------
+     */
+
+    var profile = new GlideRecord(
+        "x_snc_campus_con_0_student_profile"
+    );
+
+    profile.addQuery(
+        "student",
+        userSysId
+    );
+
+    profile.setLimit(1);
+    profile.query();
+
+    if (profile.next()) {
+
+        data.student_email =
+            profile.getValue(
+                "college_email"
+            ) || "";
+
+        var score =
+            profile.getValue(
+                "reliability_score"
+            );
+
+        if (
+            score !== null &&
+            score !== ""
+        ) {
+
+            data.reliability_score =
+                parseInt(
+                    score,
+                    10
+                );
+
+        } else {
+
+            data.reliability_score = 0;
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 5. NOTIFICATION BADGE
+     * --------------------------------------------------
+     */
+
+    if (!input) {
+        return;
+    }
+
+
+    var lastOpened =
+        input.lastOpened || "";
+
+
+    var deletedIds =
+        input.deletedIds || [];
+
+
+    /*
+     * Deleted notification lookup
+     */
+
+    var deletedMap = {};
+
+    for (
+        var d = 0;
+        d < deletedIds.length;
+        d++
+    ) {
+
+        deletedMap[
+            String(
+                deletedIds[d]
+            )
+        ] = true;
+
+    }
+
+
+    /*
+     * Convert last opened time
+     */
+
+    var lastOpenedDate = null;
+
+    if (lastOpened) {
+
+        try {
+
+            lastOpenedDate =
+                new GlideDateTime(
+                    lastOpened
+                );
+
+        } catch (e) {
+
+            lastOpenedDate = null;
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 6. TEAM JOIN REQUESTS
+     * --------------------------------------------------
+     *
+     * Only Team Lead receives the pending request badge.
+     */
+
+    var teamRequests =
+        new GlideRecord(
+            "x_snc_campus_con_0_team_members"
+        );
+
+    teamRequests.addQuery(
+        "join_status",
+        "requested"
+    );
+
+    /*
+     * Team -> Team Lead -> Current User
+     */
+
+    teamRequests.addQuery(
+        "team.team_lead",
+        userSysId
+    );
+
+    if (lastOpenedDate) {
+
+        teamRequests.addQuery(
+            "sys_created_on",
+            ">",
+            lastOpenedDate
+        );
+
+    }
+
+    teamRequests.query();
+
+    while (
+        teamRequests.next()
+    ) {
+
+        var requestId =
+            "team_request_" +
+            teamRequests.getUniqueValue();
+
+        if (
+            !deletedMap[requestId]
+        ) {
+
+            data.notification_count++;
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 7. TEAM REQUEST RESPONSES
+     * --------------------------------------------------
+     *
+     * Only the student who originally requested
+     * to join receives this badge.
+     */
+
+    var teamResponses =
+        new GlideRecord(
+            "x_snc_campus_con_0_team_members"
+        );
+
+    teamResponses.addQuery(
+        "student",
+        userSysId
+    );
+
+    teamResponses.addQuery(
+        "join_status",
+        "IN",
+        "accepted,rejected"
+    );
+
+    if (lastOpenedDate) {
+
+        teamResponses.addQuery(
+            "sys_updated_on",
+            ">",
+            lastOpenedDate
+        );
+
+    }
+
+    teamResponses.query();
+
+    while (
+        teamResponses.next()
+    ) {
+
+        var responseId =
+            "team_response_" +
+            teamResponses.getUniqueValue();
+
+        if (
+            !deletedMap[responseId]
+        ) {
+
+            data.notification_count++;
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 8. EVENT REGISTRATION SUCCESS
+     * --------------------------------------------------
+     *
+     * Only the student who registered receives
+     * the notification badge.
+     */
+
+    var registrations =
+        new GlideRecord(
+            "x_snc_campus_con_0_registrations"
+        );
+
+    registrations.addQuery(
+        "student",
+        userSysId
+    );
+
+    if (lastOpenedDate) {
+
+        registrations.addQuery(
+            "sys_created_on",
+            ">",
+            lastOpenedDate
+        );
+
+    }
+
+    registrations.query();
+
+    while (
+        registrations.next()
+    ) {
+
+        var registrationId =
+            "registration_success_" +
+            registrations.getUniqueValue();
+
+        if (
+            !deletedMap[
+                registrationId
+            ]
+        ) {
+
+            data.notification_count++;
+
+        }
+
+    }
+
+
+    /*
+     * --------------------------------------------------
+     * 9. EVENT DEADLINE REMINDERS
+     * --------------------------------------------------
+     */
+
+    var events =
+        new GlideRecord(
+            "x_snc_campus_con_0_events"
+        );
+
+    events.addQuery(
+        "verification_status",
+        "verified"
+    );
+
+    events.addNotNullQuery(
+        "registration_deadline"
+    );
+
+    events.query();
+
+
+    var now =
+        new GlideDateTime();
+
+
+    while (
+        events.next()
+    ) {
+
+        var deadline =
+            new GlideDateTime(
+                events.getValue(
+                    "registration_deadline"
+                )
+            );
+
+
+        if (
+            !deadline.after(now)
+        ) {
+
+            continue;
+
+        }
+
+
+        var difference =
+            GlideDateTime.subtract(
+                now,
+                deadline
+            );
+
+
+        var milliseconds =
+            Math.abs(
+                difference.getNumericValue()
+            );
+
+
+        var days =
+            Math.floor(
+                milliseconds /
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                )
+            );
+
+
+        if (days <= 7) {
+
+            /*
+             * Use event creation time as the
+             * notification timestamp.
+             */
+
+            var eventCreated =
+                new GlideDateTime(
+                    events.getValue(
+                        "sys_created_on"
+                    )
+                );
+
+
+            if (
+                !lastOpenedDate ||
+                eventCreated.after(
+                    lastOpenedDate
+                )
+            ) {
+
+                var deadlineId =
+                    "deadline_" +
+                    events.getUniqueValue();
+
+
+                if (
+                    !deletedMap[
+                        deadlineId
+                    ]
+                ) {
+
+                    data.notification_count++;
+
+                }
+
+            }
+
+        }
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 06:53:10</sys_created_on>
+        <sys_id>11b0b2ca35ab03107f446df3f33f306c</sys_id>
+        <sys_mod_count>70</sys_mod_count>
+        <sys_name>Campus Connect Header</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_11b0b2ca35ab03107f446df3f33f306c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 07:51:49</sys_updated_on>
+        <template><![CDATA[<div class="cc-header"> 
+ 
+    <!-- Search --> 
+    <div class="cc-header-search"> 
+ 
+        <span class="cc-search-icon"> 
+            ⌕ 
+        </span> 
+ 
+        <input 
+            type="text" 
+            placeholder="Search events, teams, mentors..." /> 
+ 
+    </div> 
+ 
+ 
+    <!-- Right Side --> 
+    <div class="cc-header-right"> 
+ 
+ 
+        <!-- Notifications --> 
+        <button 
+            class="cc-notification-btn" 
+            title="Notifications" 
+            type="button" 
+            ng-click="c.openNotifications()"> 
+ 
+            <i class="fa fa-bell-o"></i> 
+ 
+            <span 
+                class="cc-notification-count" 
+                ng-if="data.notification_count > 0"> 
+ 
+                {{data.notification_count}} 
+ 
+            </span> 
+ 
+        </button> 
+ 
+ 
+        <!-- Role Selector --> 
+        <div class="cc-role-selector"> 
+ 
+            <button 
+                type="button" 
+                class="cc-role" 
+                ng-click="c.toggleRoleMenu()"> 
+ 
+                <span> 
+                    {{c.selectedRole}} 
+                </span> 
+ 
+                <span class="cc-chevron"> 
+                     
+                </span> 
+ 
+            </button> 
+ 
+ 
+            <div 
+                class="cc-role-menu" 
+                ng-if="c.showRoleMenu"> 
+ 
+                <!-- Student --> 
+                <a 
+                    href="?id=campus_connect_home" 
+                    class="cc-role-option" 
+                    ng-click="c.selectRole('Student')"> 
+ 
+                    <span class="cc-role-icon"> 
+                        ]]>🎓<![CDATA[ 
+                    </span> 
+ 
+                    <span> 
+                        Student 
+                    </span> 
+ 
+                </a> 
+ 
+ 
+                <!-- Organizer --> 
+                <a 
+                    href="?id=event_organizer_dashboard" 
+                    class="cc-role-option" 
+                    ng-click="c.selectRole('Organizer')"> 
+ 
+                    <span class="cc-role-icon"> 
+                        ]]>📋<![CDATA[ 
+                    </span> 
+ 
+                    <span> 
+                        Organizer 
+                    </span> 
+ 
+                </a> 
+ 
+            </div> 
+ 
+        </div> 
+ 
+ 
+        <!-- Current User Profile --> 
+        <div class="cc-profile"> 
+ 
+            <button 
+                type="button" 
+                class="cc-profile-btn" 
+                ng-click="c.toggleProfileMenu()"> 
+ 
+                <div class="cc-avatar"> 
+                    {{c.userInitials}} 
+                </div> 
+ 
+                <span class="cc-profile-name"> 
+                    {{c.selectedRole}} 
+                </span> 
+ 
+                <span class="cc-profile-chevron"> 
+                     
+                </span> 
+ 
+            </button> 
+ 
+ 
+            <!-- Profile Dropdown --> 
+            <div 
+                class="cc-profile-menu" 
+                ng-if="c.showProfileMenu"> 
+ 
+ 
+                <div class="cc-profile-title"> 
+ 
+                    <span class="cc-profile-title-icon"> 
+                        ]]>👤<![CDATA[ 
+                    </span> 
+ 
+                    <span> 
+                        {{c.selectedRole}} Profile 
+                    </span> 
+ 
+                </div> 
+ 
+ 
+                <!-- Email --> 
+                <div class="cc-profile-item"> 
+ 
+                    <div class="cc-profile-label"> 
+                        ]]>📧<![CDATA[ Email 
+                    </div> 
+ 
+                    <div class="cc-profile-value"> 
+                        {{c.studentEmail}} 
+                    </div> 
+ 
+                </div> 
+ 
+ 
+                <!-- Reliability Score --> 
+                <div 
+                    class="cc-profile-item"
+                    ng-if="c.selectedRole == 'Student'"> 
+ 
+                    <div class="cc-profile-label"> 
+                        ⭐ Reliability Score 
+                    </div> 
+ 
+                    <div class="cc-score"> 
+ 
+                        {{c.reliabilityScore}} 
+ 
+                    </div> 
+ 
+                </div> 
+ 
+ 
+                <div class="cc-profile-divider"></div> 
+ 
+ 
+                <!-- Logout --> 
+                <button 
+                    type="button" 
+                    class="cc-logout-btn" 
+                    ng-click="c.logout()"> 
+ 
+                    <span class="cc-logout-icon"></span> 
+ 
+                    <span> 
+                        Logout 
+                    </span> 
+ 
+                </button> 
+ 
+            </div> 
+ 
+        </div> 
+ 
+ 
+    </div> 
+ 
+</div>]]></template>
+    </sp_widget>
+</record_update>

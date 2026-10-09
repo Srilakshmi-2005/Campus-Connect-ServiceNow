@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-19 08:02:54</sys_created_on>
+        <sys_id>aa343da7089303107f44bab7a44b4dad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_campus_con_0_teams.x_snc_campus_con_0.teams_user</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_security_acl display_value="x_snc_campus_con_0_teams">e6343da7089303107f44bab7a44b4da4</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_aa343da7089303107f44bab7a44b4dad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-19 08:02:54</sys_updated_on>
+        <sys_user_role display_value="x_snc_campus_con_0.teams_user" name="x_snc_campus_con_0.teams_user">d63479a7089303107f44bab7a44b4d2e</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

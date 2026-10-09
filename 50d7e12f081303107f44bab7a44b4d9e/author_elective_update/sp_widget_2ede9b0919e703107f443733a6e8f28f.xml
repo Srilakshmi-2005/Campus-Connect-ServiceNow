@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Connect Admin Dashboard</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>admin_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Admin Dashboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    data.total_events = 0;
+    data.verified_events = 0;
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.query();
+    data.total_events = gr.getRowCount();
+
+    var verified = new GlideRecord('x_snc_campus_con_0_events');
+    verified.addQuery('verification_status', 'verified');
+    verified.query();
+    data.verified_events = verified.getRowCount();
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 07:43:10</sys_created_on>
+        <sys_id>2ede9b0919e703107f443733a6e8f28f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Admin Dashboard</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_2ede9b0919e703107f443733a6e8f28f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 07:50:09</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Campus Connect Admin Dashboard</h4>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="dashboard-card">
+            <h3>Total Events</h3>
+            <h2>{{data.total_events}}</h2>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Verified Events</h3>
+            <h2>{{data.verified_events}}</h2>
+        </div>
+
+    </div>
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_widget_2ede9b0919e703107f443733a6e8f28f</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;Campus Connect Admin Dashboard&lt;/description&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;admin_dashboard&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Admin Dashboard&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    data.total_events = 0;
+    data.verified_events = 0;
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.query();
+    data.total_events = gr.getRowCount();
+
+    var verified = new GlideRecord('x_snc_campus_con_0_events');
+    verified.addQuery('verification_status', 'verified');
+    verified.query();
+    data.verified_events = verified.getRowCount();
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-24 07:43:10&lt;/sys_created_on&gt;&lt;sys_id&gt;2ede9b0919e703107f443733a6e8f28f&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Admin Dashboard&lt;/sys_name&gt;&lt;sys_package display_value="Campus Connect" source="x_snc_campus_con_0"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Connect"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_2ede9b0919e703107f443733a6e8f28f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-24 07:50:09&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="panel panel-default"&gt;
+    &lt;div class="panel-heading"&gt;
+        &lt;h4&gt;Campus Connect Admin Dashboard&lt;/h4&gt;
+    &lt;/div&gt;
+
+    &lt;div class="panel-body"&gt;
+
+        &lt;div class="dashboard-card"&gt;
+            &lt;h3&gt;Total Events&lt;/h3&gt;
+            &lt;h2&gt;{{data.total_events}}&lt;/h2&gt;
+        &lt;/div&gt;
+
+        &lt;div class="dashboard-card"&gt;
+            &lt;h3&gt;Verified Events&lt;/h3&gt;
+            &lt;h2&gt;{{data.verified_events}}&lt;/h2&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-925722353</payload_hash>
+        <record_name>Admin Dashboard</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 07:50:10</sys_created_on>
+        <sys_id>3041634d19e703107f443733a6e8f21d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0d264b3530000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 07:50:10</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>7041634da9e703101a40313aa978131c</update_guid>
+        <update_guid_history>7041634da9e703101a40313aa978131c:-925722353,25ffdb899de70310ccf0d2e618595957:792322933,deaf93897ee7031055eccab1f6ae0e76:1930502877</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Admin Dashboard">1e2de09d196343107f443733a6e8f2de</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:21:46</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>3f2619056c384b60aca81002927afea4</sys_id>
+        <sys_metadata>2ede9b0919e703107f443733a6e8f28f</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Admin Dashboard</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_widget_2ede9b0919e703107f443733a6e8f28f</sys_update_name>
+        <sys_update_version display_value="sp_widget_2ede9b0919e703107f443733a6e8f28f">3041634d19e703107f443733a6e8f21d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:21:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

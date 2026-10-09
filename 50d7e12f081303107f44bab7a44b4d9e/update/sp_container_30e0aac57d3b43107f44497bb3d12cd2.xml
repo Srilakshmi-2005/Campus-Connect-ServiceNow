@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="INSERT_OR_UPDATE">
+        <aria_label/>
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>My Registrations - Container 3</name>
+        <order>3</order>
+        <semantic_tag/>
+        <sp_page display_value="my_registrations">22d93efef12743107f443f8091a1ff65</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-06 13:24:35</sys_created_on>
+        <sys_id>30e0aac57d3b43107f44497bb3d12cd2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>My Registrations - Container 3</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_container_30e0aac57d3b43107f44497bb3d12cd2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 13:24:35</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+</record_update>

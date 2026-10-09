@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>&lt;div class="panel panel-default"&gt;&#13;
+  &lt;div class="panel-heading"&gt;&#13;
+    &lt;h3&gt;Upcoming Verified Events&lt;/h3&gt;&#13;
+  &lt;/div&gt;&#13;
+  &lt;div class="panel-body"&gt;&#13;
+    &lt;div ng-repeat="event in data.events" class="event-card"&gt;&#13;
+      &lt;h4&gt;{{event.name}} &lt;small&gt;({{event.type}})&lt;/small&gt;&lt;/h4&gt;&#13;
+      &lt;p&gt;&lt;strong&gt;Tags:&lt;/strong&gt; {{event.tags}}&lt;/p&gt;&#13;
+      &lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; {{event.date}} &amp;nbsp; | &amp;nbsp; &lt;strong&gt;Deadline:&lt;/strong&gt; {{event.deadline}}&lt;/p&gt;&#13;
+      &lt;p&gt;&lt;strong&gt;Location:&lt;/strong&gt; {{event.location}}&#13;
+        &lt;a href="{{event.maps_link}}" target="_blank"&gt;(View on Map)&lt;/a&gt;&#13;
+      &lt;/p&gt;&#13;
+      &lt;p&gt;&lt;strong&gt;Fees:&lt;/strong&gt; {{event.fees}}&lt;/p&gt;&#13;
+      &lt;hr&gt;&#13;
+    &lt;/div&gt;&#13;
+    &lt;div ng-if="data.events.length == 0"&gt;&#13;
+      &lt;p&gt;No verified events available right now.&lt;/p&gt;&#13;
+    &lt;/div&gt;&#13;
+  &lt;/div&gt;&#13;
+&lt;/div&gt;</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Browse Events</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    data.events = [];
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.addQuery('verification_status', 'verified');
+    gr.orderBy('event_date');
+    gr.query();
+
+    while (gr.next()) {
+        data.events.push({
+            sys_id: gr.getUniqueValue(),
+            name: gr.event_name.toString(),
+            type: gr.event_type.toString(),
+            tags: gr.technology_tags.toString(),
+            date: gr.event_date.getDisplayValue(),
+            deadline: gr.registration_deadline.getDisplayValue(),
+            location: gr.location.toString(),
+            maps_link: gr.google_maps_link.toString(),
+            fees: gr.fees.toString()
+        });
+    }
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 05:58:48</sys_created_on>
+        <sys_id>0422f86414a303107f4482b2cd248357</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Browse Events</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_0422f86414a303107f4482b2cd248357</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 06:00:22</sys_updated_on>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_widget_0422f86414a303107f4482b2cd248357</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;&amp;lt;div class="panel panel-default"&amp;gt;&amp;#13;
+  &amp;lt;div class="panel-heading"&amp;gt;&amp;#13;
+    &amp;lt;h3&amp;gt;Upcoming Verified Events&amp;lt;/h3&amp;gt;&amp;#13;
+  &amp;lt;/div&amp;gt;&amp;#13;
+  &amp;lt;div class="panel-body"&amp;gt;&amp;#13;
+    &amp;lt;div ng-repeat="event in data.events" class="event-card"&amp;gt;&amp;#13;
+      &amp;lt;h4&amp;gt;{{event.name}} &amp;lt;small&amp;gt;({{event.type}})&amp;lt;/small&amp;gt;&amp;lt;/h4&amp;gt;&amp;#13;
+      &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Tags:&amp;lt;/strong&amp;gt; {{event.tags}}&amp;lt;/p&amp;gt;&amp;#13;
+      &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Date:&amp;lt;/strong&amp;gt; {{event.date}} &amp;amp;nbsp; | &amp;amp;nbsp; &amp;lt;strong&amp;gt;Deadline:&amp;lt;/strong&amp;gt; {{event.deadline}}&amp;lt;/p&amp;gt;&amp;#13;
+      &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Location:&amp;lt;/strong&amp;gt; {{event.location}}&amp;#13;
+        &amp;lt;a href="{{event.maps_link}}" target="_blank"&amp;gt;(View on Map)&amp;lt;/a&amp;gt;&amp;#13;
+      &amp;lt;/p&amp;gt;&amp;#13;
+      &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Fees:&amp;lt;/strong&amp;gt; {{event.fees}}&amp;lt;/p&amp;gt;&amp;#13;
+      &amp;lt;hr&amp;gt;&amp;#13;
+    &amp;lt;/div&amp;gt;&amp;#13;
+    &amp;lt;div ng-if="data.events.length == 0"&amp;gt;&amp;#13;
+      &amp;lt;p&amp;gt;No verified events available right now.&amp;lt;/p&amp;gt;&amp;#13;
+    &amp;lt;/div&amp;gt;&amp;#13;
+  &amp;lt;/div&amp;gt;&amp;#13;
+&amp;lt;/div&amp;gt;&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Browse Events&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    data.events = [];
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.addQuery('verification_status', 'verified');
+    gr.orderBy('event_date');
+    gr.query();
+
+    while (gr.next()) {
+        data.events.push({
+            sys_id: gr.getUniqueValue(),
+            name: gr.event_name.toString(),
+            type: gr.event_type.toString(),
+            tags: gr.technology_tags.toString(),
+            date: gr.event_date.getDisplayValue(),
+            deadline: gr.registration_deadline.getDisplayValue(),
+            location: gr.location.toString(),
+            maps_link: gr.google_maps_link.toString(),
+            fees: gr.fees.toString()
+        });
+    }
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-22 05:58:48&lt;/sys_created_on&gt;&lt;sys_id&gt;0422f86414a303107f4482b2cd248357&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Browse Events&lt;/sys_name&gt;&lt;sys_package display_value="Campus Connect" source="x_snc_campus_con_0"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Connect"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_0422f86414a303107f4482b2cd248357&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-22 06:00:22&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div&gt;
+&lt;!-- your widget template --&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1781138053</payload_hash>
+        <record_name>Browse Events</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 06:00:22</sys_created_on>
+        <sys_id>38f4f8e814a303107f4482b2cd24831d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0c7b376460000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 06:00:22</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>78f4f8e8b9a30310ebe7baa35edfe01c</update_guid>
+        <update_guid_history>78f4f8e8b9a30310ebe7baa35edfe01c:1781138053,c294bca8dba30310fe12f05ffc9a3c06:-1792418188</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Browse Events">11323cd519a343107f443733a6e8f246</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:43:49</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>11a6f548b75248718fb02039e4f1f949</sys_id>
+        <sys_metadata>0422f86414a303107f4482b2cd248357</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Browse Events</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_widget_0422f86414a303107f4482b2cd248357</sys_update_name>
+        <sys_update_version display_value="sp_widget_0422f86414a303107f4482b2cd248357">38f4f8e814a303107f4482b2cd24831d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:43:49</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="INSERT_OR_UPDATE">
+        <catalog_item display_value="Create or Join Team">3334c7f334db03107f44aa83be5b9ada</catalog_item>
+        <catalog_variable>IO:d66825b5f8bb43107f44fbd421462be8</catalog_variable>
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>true</mandatory>
+        <order>100</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-08 17:22:51</sys_created_on>
+        <sys_id>607a65b9f8bb43107f44fbd421462b10</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>join_status</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_607a65b9f8bb43107f44fbd421462b10</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 17:22:51</sys_updated_on>
+        <table/>
+        <ui_policy display_value="When Student Selects the Create new team option">702aa979f8bb43107f44fbd421462b64</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <variable>join_status</variable>
+        <variable_set/>
+        <visible>true</visible>
+    </catalog_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=607a65b9f8bb43107f44fbd421462b10"/>
+</record_update>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="e34a2163085303107f44bab7a44b4da8" label="Event Organizers" max_length="40" name="x_snc_campus_con_0_event_organizers" type="collection">
+        <element label="Contact Email" max_length="40" name="contact_email" type="string"/>
+        <element label="ID Proof Upload" mandatory="true" max_length="40" name="id_proof_upload" type="file_attachment"/>
+        <element label="Contact Number" max_length="40" name="contact_number" type="string"/>
+        <element label="Venue Authorization Doc" max_length="40" name="venue_authorization_doc" type="file_attachment"/>
+        <element display="true" label="Organizer Name" max_length="32" name="organizer_name" reference="sys_user" type="reference"/>
+        <element choice="1" default="Pending" label="&#9;Verification Status" max_length="40" name="verification_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Verified" sequence="1" value="verified"/>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+            </choice>
+        </element>
+        <element label="&#9;College/Institution" max_length="40" name="college_institution" type="string"/>
+    </element>
+</database>

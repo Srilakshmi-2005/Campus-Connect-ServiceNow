@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   CAMPUS CONNECT SIDEBAR&#13;
+   PROFESSIONAL UI SIZING &amp; SPACING&#13;
+   ---------------------------------------------------------&#13;
+   IMPORTANT:&#13;
+   - Existing colors preserved&#13;
+   - Existing icons/images preserved&#13;
+   - Existing functionality preserved&#13;
+   - Only sizing, spacing, alignment and responsiveness&#13;
+     are improved&#13;
+   ========================================================= */&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SIDEBAR&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-sidebar {&#13;
+    width: 220px;&#13;
+    height: 100vh;&#13;
+    min-height: 100vh;&#13;
+&#13;
+    position: fixed;&#13;
+    top: 0;&#13;
+    left: 0;&#13;
+&#13;
+    z-index: 1000;&#13;
+&#13;
+    background: #06264a;&#13;
+    color: #ffffff;&#13;
+&#13;
+    padding: 16px 12px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    font-family: "Segoe UI", Arial, sans-serif;&#13;
+&#13;
+    overflow-y: auto;&#13;
+&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   BRAND&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-brand {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 5px 8px 20px 8px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-logo {&#13;
+    width: 34px;&#13;
+    height: 34px;&#13;
+&#13;
+    background: #1597e5;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    font-size: 18px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+&#13;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);&#13;
+}&#13;
+&#13;
+&#13;
+.cc-brand-name {&#13;
+    font-size: 15px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 0.1px;&#13;
+&#13;
+    line-height: 1.2;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-brand-subtitle {&#13;
+    font-size: 8px;&#13;
+&#13;
+    color: #a9c1dc;&#13;
+&#13;
+    margin-top: 3px;&#13;
+&#13;
+    line-height: 1.35;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NAVIGATION&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-navigation {&#13;
+    margin-top: 4px;&#13;
+&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+&#13;
+/*&#13;
+ * Both &lt;div&gt; and &lt;a&gt; navigation items&#13;
+ * must look identical.&#13;
+ */&#13;
+&#13;
+.cc-nav-item {&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    min-height: 42px;&#13;
+&#13;
+    padding: 9px 10px;&#13;
+&#13;
+    margin-bottom: 4px;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    color: #d4e2f1 !important;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    font-weight: 400;&#13;
+&#13;
+    line-height: 1.2;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+&#13;
+    transition:&#13;
+        background 0.18s ease,&#13;
+        color 0.18s ease,&#13;
+        transform 0.18s ease;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   REMOVE BROWSER LINK STYLING&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-nav-item:link,&#13;
+.cc-nav-item:visited,&#13;
+.cc-nav-item:active {&#13;
+    color: #d4e2f1 !important;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HOVER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-nav-item:hover {&#13;
+    background: #123c67;&#13;
+&#13;
+    color: #ffffff !important;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+&#13;
+    transform: translateX(2px);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ACTIVE&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-nav-item.active {&#13;
+    background: #123c67;&#13;
+&#13;
+    color: #ffffff !important;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    box-shadow: inset 3px 0 0 #1597e5;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NAVIGATION ICON&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-nav-icon {&#13;
+    width: 20px;&#13;
+&#13;
+    min-width: 20px;&#13;
+&#13;
+    height: 20px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    color: #a9ccef;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* Active icon */&#13;
+&#13;
+.cc-nav-item.active .cc-nav-icon {&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+/* Hover icon */&#13;
+&#13;
+.cc-nav-item:hover .cc-nav-icon {&#13;
+    color: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   DIVIDER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-divider {&#13;
+    height: 1px;&#13;
+&#13;
+    background: #214466;&#13;
+&#13;
+    margin: 14px 4px;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SMART MATCHING&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-matching {&#13;
+    margin-top: 2px;&#13;
+&#13;
+    width: 100%;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   VERIFIED NETWORK&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-verified-box {&#13;
+    margin-top: auto;&#13;
+&#13;
+    margin-bottom: 4px;&#13;
+&#13;
+    padding: 11px;&#13;
+&#13;
+    border: 1px solid #315477;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    background: #0b3157;&#13;
+&#13;
+    box-shadow:&#13;
+        0 4px 12px rgba(0, 0, 0, 0.12);&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    flex-shrink: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-verified-title {&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    line-height: 1.3;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-verified-text {&#13;
+    font-size: 8px;&#13;
+&#13;
+    line-height: 1.45;&#13;
+&#13;
+    color: #b5c9dd;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SCROLLBAR&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-sidebar::-webkit-scrollbar {&#13;
+    width: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-sidebar::-webkit-scrollbar-track {&#13;
+    background: #06264a;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-sidebar::-webkit-scrollbar-thumb {&#13;
+    background: #315477;&#13;
+&#13;
+    border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   TABLET / SMALL DESKTOP&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 1100px) {&#13;
+&#13;
+    .cc-sidebar {&#13;
+        width: 210px;&#13;
+&#13;
+        padding-left: 10px;&#13;
+        padding-right: 10px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-nav-item {&#13;
+        min-height: 41px;&#13;
+&#13;
+        padding-left: 9px;&#13;
+        padding-right: 9px;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   SMALL SCREEN&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .cc-sidebar {&#13;
+        position: relative;&#13;
+&#13;
+        width: 100%;&#13;
+&#13;
+        height: auto;&#13;
+&#13;
+        min-height: auto;&#13;
+&#13;
+        overflow-y: visible;&#13;
+&#13;
+        display: block;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-verified-box {&#13;
+        margin-top: 20px;&#13;
+&#13;
+        margin-bottom: 0;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-navigation {&#13;
+        margin-top: 6px;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   VERY SMALL SCREEN&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-sidebar {&#13;
+        padding: 12px 8px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-brand {&#13;
+        padding: 4px 7px 16px 7px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-logo {&#13;
+        width: 32px;&#13;
+        height: 32px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-nav-item {&#13;
+        min-height: 42px;&#13;
+&#13;
+        padding: 10px 8px;&#13;
+&#13;
+        font-size: 12px;&#13;
+    }&#13;
+&#13;
+&#13;
+    .cc-nav-icon {&#13;
+        width: 20px;&#13;
+        min-width: 20px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Connect left navigation sidebar</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_sidebar</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Sidebar</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-27 00:51:25</sys_created_on>
+        <sys_id>060e99ca352303107f446df3f33f3003</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>Campus Connect Sidebar</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_060e99ca352303107f446df3f33f3003</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 14:52:19</sys_updated_on>
+        <template><![CDATA[<div class="cc-sidebar">
+
+  <!-- Logo / Brand -->
+  <div class="cc-brand">
+
+    <div class="cc-logo">
+      <i class="fa fa-graduation-cap"></i>
+    </div>
+
+    <div>
+      <div class="cc-brand-name">
+        Campus Connect
+      </div>
+
+      <div class="cc-brand-subtitle">
+        Opportunity & Collaboration Hub
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Main Navigation -->
+  <div class="cc-navigation">
+
+
+    <!-- Dashboard -->
+    <a
+      href="?id=campus_connect_home"
+      class="cc-nav-item active">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-th-large"></i>
+      </span>
+
+      <span>
+        Dashboard
+      </span>
+
+    </a>
+
+
+    <!-- Browse Events -->
+    <a
+      class="cc-nav-item"
+      href="?id=browse_events">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-calendar"></i>
+      </span>
+
+      <span>
+        Browse Events
+      </span>
+
+    </a>
+
+
+    <!-- Register for Event -->
+    <a
+      class="cc-nav-item"
+      href="?id=sc_cat_item&sys_id=4324467734d303107f44aa83be5b9a10">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-calendar-plus-o"></i>
+      </span>
+
+      <span>
+        Register for Event
+      </span>
+
+    </a>
+
+
+    <!-- Create / Join Team -->
+    <a
+      class="cc-nav-item"
+      href="?id=sc_cat_item&sys_id=3334c7f334db03107f44aa83be5b9ada">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-user-plus"></i>
+      </span>
+
+      <span>
+        Create / Join Team
+      </span>
+
+    </a>
+
+
+    <!-- My Registrations -->
+    <a
+      href="?id=my_registrations"
+      class="cc-nav-item"
+      ng-class="{'active': c.isActive('my_registrations')}">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-calendar-check-o"></i>
+      </span>
+
+      <span>
+        My Registrations
+      </span>
+
+    </a>
+
+
+    <!-- My Teams -->
+    <a
+      href="?id=my_teams"
+      class="cc-nav-item"
+      ng-class="{'active': c.isActive('my_teams')}">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-users"></i>
+      </span>
+
+      <span>
+        My Teams
+      </span>
+
+    </a>
+
+
+    <!-- Mentor Connect -->
+    <a
+      class="cc-nav-item"
+      href="?id=mentor_connect">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-comments-o"></i>
+      </span>
+
+      <span>
+        Mentor Connect
+      </span>
+
+    </a>
+
+
+    <!-- Find Teammates -->
+    <a
+      class="cc-nav-item cc-matching"
+      href="?id=find_teammates">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-search"></i>
+      </span>
+
+      <span>
+        Find Teammates
+      </span>
+
+    </a>
+
+
+    <!-- My Team Requests -->
+    <a
+      class="cc-nav-item cc-matching"
+      href="?id=my_team_requests">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-handshake-o"></i>
+      </span>
+
+      <span>
+        My Team Requests
+      </span>
+
+    </a>
+
+
+    <!-- Divider -->
+    <div class="cc-divider"></div>
+
+
+    <!-- AI Skill Matching -->
+    <a
+      class="cc-nav-item cc-matching"
+      href="?id=ai_skill_matcher">
+
+      <span class="cc-nav-icon">
+        <i class="fa fa-magic"></i>
+      </span>
+
+      <span>
+        AI Skill Matching
+      </span>
+
+    </a>
+
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

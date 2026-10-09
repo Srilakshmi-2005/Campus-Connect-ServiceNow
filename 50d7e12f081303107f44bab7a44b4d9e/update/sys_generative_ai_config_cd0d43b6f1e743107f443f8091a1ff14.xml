@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_generative_ai_config">
+    <sys_generative_ai_config action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <additional_configurations>{"skill_config_id":"550d43b6f1e743107f443f8091a1ff41"}</additional_configurations>
+        <ai_suggested>false</ai_suggested>
+        <definition>c50d03b6f1e743107f443f8091a1ffeb</definition>
+        <definition_table>sys_one_extend_capability_definition</definition_table>
+        <documentation/>
+        <max_tokens>500</max_tokens>
+        <min_word_count>-1</min_word_count>
+        <model>llm_generic_small</model>
+        <name>Incident Summarization</name>
+        <parent/>
+        <prompt>You are the Campus Connect Skill Matcher.
+
+Your task is to analyze a student's skills against the requirements of a campus event or team opportunity.
+
+Student Profile:  {{student_profile}} 
+
+Event Requirements:
+ {{event_requirements}} 
+
+Compare the student's stated skills with the technologies, skills, and requirements mentioned in the event requirements.
+
+Identify:
+1. Skills that directly match.
+2. Relevant skills that partially match or are closely related.
+3. Important event requirements for which the student has no stated matching skill.
+
+Then provide:
+- Match level: Strong Match, Moderate Match, or Limited Match.
+- Matching skills.
+- Missing or additional skills to consider.
+- A short explanation of why the student matches the opportunity.
+
+Use only the information provided in the Student Profile and Event Requirements.
+
+Do not use or infer marks, grades, reliability scores, rankings, performance history, certifications, personal attributes, or any other information that is not explicitly provided in the inputs.
+
+Do not invent student skills or event requirements.
+
+Keep the response concise, clear, and useful for a student.</prompt>
+        <prompt_template_role>user</prompt_template_role>
+        <provider_company/>
+        <request_tokens>32018</request_tokens>
+        <show_in_prompt_library>false</show_in_prompt_library>
+        <state>finalized</state>
+        <structured_output_enabled>false</structured_output_enabled>
+        <structured_output_schema/>
+        <sys_class_name>sys_generative_ai_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-29 16:51:05</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>cd0d43b6f1e743107f443f8091a1ff14</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>c50d03b6f1e743107f443f8091a1ffeb</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_generative_ai_config_cd0d43b6f1e743107f443f8091a1ff14</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-29 18:01:24</sys_updated_on>
+        <temperature>0.2</temperature>
+        <thinking_tokens>0</thinking_tokens>
+        <version>1</version>
+    </sys_generative_ai_config>
+</record_update>

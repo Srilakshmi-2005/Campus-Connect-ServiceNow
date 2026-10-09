@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cc-dashboard {&#13;
+    width: 120%;&#13;
+    padding: 26px 100px;&#13;
+    box-sizing: border-box;&#13;
+    font-family: "Segoe UI", Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   WELCOME BANNER&#13;
+   ========================= */&#13;
+&#13;
+.cc-welcome {&#13;
+    min-height: 126px;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    padding: 26px 34px;&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    background: linear-gradient(135deg, #172a63 0%, #1769d5 100%);&#13;
+    border-radius: 14px;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    box-shadow: 0 8px 22px rgba(12, 45, 95, 0.16);&#13;
+}&#13;
+&#13;
+.cc-welcome h1 {&#13;
+    margin: 0;&#13;
+    font-size: 27px;&#13;
+    font-weight: 700;&#13;
+    line-height: 1.25;&#13;
+    letter-spacing: -0.3px;&#13;
+}&#13;
+&#13;
+.cc-welcome p {&#13;
+    margin: 9px 0 0 0;&#13;
+    font-size: 14px;&#13;
+    line-height: 2.0;&#13;
+    color: #e1ecff;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   STATISTICS AREA&#13;
+   ========================= */&#13;
+&#13;
+.cc-stats {&#13;
+    margin-top: 24px;&#13;
+    margin-left: -7px;&#13;
+    margin-right: -7px;&#13;
+}&#13;
+&#13;
+&#13;
+/* Remove Bootstrap column spacing issues */&#13;
+&#13;
+.cc-stats &gt; div {&#13;
+    padding-left: 7px;&#13;
+    padding-right: 7px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   STAT CARD&#13;
+   ========================= */&#13;
+&#13;
+.cc-stat-card {&#13;
+    min-height: 158px;&#13;
+    padding: 22px 18px;&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e4e9f0;&#13;
+    border-radius: 12px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    box-shadow: 0 4px 14px rgba(20, 45, 80, 0.07);&#13;
+&#13;
+    transition:&#13;
+        transform 0.18s ease,&#13;
+        box-shadow 0.18s ease,&#13;
+        border-color 0.18s ease;&#13;
+}&#13;
+&#13;
+.cc-stat-card:hover {&#13;
+    transform: translateY(-3px);&#13;
+    border-color: #cdd9e8;&#13;
+    box-shadow: 0 9px 22px rgba(20, 45, 80, 0.11);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   STAT ICON&#13;
+   ========================= */&#13;
+&#13;
+.cc-stat-icon {&#13;
+    width: 42px;&#13;
+    height: 42px;&#13;
+&#13;
+    margin: 0 auto 12px auto;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    background: #e8f2ff;&#13;
+&#13;
+    font-size: 21px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   NUMBER&#13;
+   ========================= */&#13;
+&#13;
+.cc-stat-card h3 {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #172a4d;&#13;
+&#13;
+    font-size: 26px;&#13;
+    font-weight: 700;&#13;
+    line-height: 1.2;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   LABEL&#13;
+   ========================= */&#13;
+&#13;
+.cc-stat-card p {&#13;
+    margin: 7px 0 0 0;&#13;
+&#13;
+    color: #6d7d91;&#13;
+&#13;
+    font-size: 12px;&#13;
+    font-weight: 500;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================&#13;
+   RESPONSIVE&#13;
+   ========================= */&#13;
+&#13;
+@media (max-width: 992px) {&#13;
+&#13;
+    .cc-dashboard {&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .cc-welcome {&#13;
+        padding: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-welcome h1 {&#13;
+        font-size: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-stat-card {&#13;
+        margin-bottom: 14px;&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-dashboard {&#13;
+        padding: 15px;&#13;
+    }&#13;
+&#13;
+    .cc-welcome {&#13;
+        min-height: 110px;&#13;
+        padding: 20px;&#13;
+    }&#13;
+&#13;
+    .cc-welcome h1 {&#13;
+        font-size: 21px;&#13;
+    }&#13;
+&#13;
+    .cc-welcome p {&#13;
+        font-size: 12px;&#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Campus Connect student homepage dashboard</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>campus_connect_home_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Campus Connect Home Dashboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    /*
+     * =========================================
+     * CAMPUS CONNECT HOME
+     * DYNAMIC DASHBOARD COUNTS
+     * =========================================
+     *
+     * 1. Upcoming Events
+     * 2. My Registrations
+     * 3. My Teams
+     * 4. Mentor Posts
+     *
+     * All counts are fetched from ServiceNow
+     * database records.
+     */
+
+
+    /*
+     * =========================================
+     * INITIALIZE COUNTS
+     * =========================================
+     */
+
+    data.upcomingEvents = 0;
+    data.myRegistrations = 0;
+    data.myTeams = 0;
+    data.mentorPosts = 0;
+
+
+    /*
+     * =========================================
+     * CURRENT LOGGED-IN USER
+     * =========================================
+     */
+
+    var currentUser = gs.getUserID();
+
+
+    /*
+     * =========================================
+     * CURRENT DATE/TIME
+     * =========================================
+     *
+     * IMPORTANT:
+     * gs.nowDateTime() is not allowed in
+     * scoped application x_snc_campus_con_0.
+     *
+     * Therefore we use GlideDateTime.
+     */
+
+    var currentDateTime =
+        new GlideDateTime();
+
+    var currentDateTimeValue =
+        currentDateTime.getDisplayValue();
+
+
+    /*
+     * =========================================
+     * 1. UPCOMING EVENTS
+     * =========================================
+     *
+     * Count only:
+     *
+     * Verification Status = Verified
+     * AND
+     * Event Date >= Current Date/Time
+     *
+     * This prevents rejected/pending/past events
+     * from being counted.
+     */
+
+    var events =
+        new GlideAggregate(
+            'x_snc_campus_con_0_events'
+        );
+
+
+    events.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+
+    events.addQuery(
+        'event_date',
+        '>=',
+        currentDateTimeValue
+    );
+
+
+    events.addAggregate(
+        'COUNT'
+    );
+
+
+    events.query();
+
+
+    if (events.next()) {
+
+        data.upcomingEvents =
+            parseInt(
+                events.getAggregate(
+                    'COUNT'
+                ),
+                10
+            ) || 0;
+
+    }
+
+
+    /*
+     * =========================================
+     * 2. MY REGISTRATIONS
+     * =========================================
+     *
+     * Count registrations belonging to
+     * the currently logged-in student.
+     */
+
+    if (currentUser) {
+
+        var registrations =
+            new GlideAggregate(
+                'x_snc_campus_con_0_registrations'
+            );
+
+
+        registrations.addQuery(
+            'student',
+            currentUser
+        );
+
+
+        registrations.addAggregate(
+            'COUNT'
+        );
+
+
+        registrations.query();
+
+
+        if (registrations.next()) {
+
+            data.myRegistrations =
+                parseInt(
+                    registrations.getAggregate(
+                        'COUNT'
+                    ),
+                    10
+                ) || 0;
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * 3. MY TEAMS
+     * =========================================
+     *
+     * A team is counted for the current user
+     * when:
+     *
+     * A. Current user is Team Lead
+     *
+     * OR
+     *
+     * B. Current user is an Accepted Team Member
+     *
+     * Duplicate teams are counted only once.
+     */
+
+    var myTeamIds = {};
+
+
+    /*
+     * -----------------------------------------
+     * A. TEAMS WHERE USER IS TEAM LEAD
+     * -----------------------------------------
+     */
+
+    if (currentUser) {
+
+        var leadTeams =
+            new GlideRecord(
+                'x_snc_campus_con_0_teams'
+            );
+
+
+        leadTeams.addQuery(
+            'team_lead',
+            currentUser
+        );
+
+
+        leadTeams.query();
+
+
+        while (
+            leadTeams.next()
+        ) {
+
+            myTeamIds[
+                leadTeams.getUniqueValue()
+            ] = true;
+
+        }
+
+    }
+
+
+    /*
+     * -----------------------------------------
+     * B. TEAMS WHERE USER IS ACCEPTED MEMBER
+     * -----------------------------------------
+     */
+
+    if (currentUser) {
+
+        var teamMembers =
+            new GlideRecord(
+                'x_snc_campus_con_0_team_members'
+            );
+
+
+        teamMembers.addQuery(
+            'student',
+            currentUser
+        );
+
+
+        teamMembers.addQuery(
+            'join_status',
+            'Accepted'
+        );
+
+
+        teamMembers.query();
+
+
+        while (
+            teamMembers.next()
+        ) {
+
+            var memberTeamId =
+                teamMembers.getValue(
+                    'team'
+                );
+
+
+            if (memberTeamId) {
+
+                myTeamIds[
+                    memberTeamId
+                ] = true;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+     * -----------------------------------------
+     * COUNT UNIQUE TEAMS
+     * -----------------------------------------
+     */
+
+    for (
+        var teamId in myTeamIds
+    ) {
+
+        if (
+            myTeamIds[teamId] === true
+        ) {
+
+            data.myTeams++;
+
+        }
+
+    }
+
+
+    /*
+     * =========================================
+     * 4. MENTOR POSTS
+     * =========================================
+     *
+     * Count all records in Mentor Connect.
+     */
+
+    var mentorPosts =
+        new GlideAggregate(
+            'x_snc_campus_con_0_mentor_connect'
+        );
+
+
+    mentorPosts.addAggregate(
+        'COUNT'
+    );
+
+
+    mentorPosts.query();
+
+
+    if (mentorPosts.next()) {
+
+        data.mentorPosts =
+            parseInt(
+                mentorPosts.getAggregate(
+                    'COUNT'
+                ),
+                10
+            ) || 0;
+
+    }
+
+
+    /*
+     * =========================================
+     * OPTIONAL DEBUG INFORMATION
+     * =========================================
+     *
+     * These values can help us verify the
+     * dashboard during testing.
+     */
+
+    data.debug = {
+
+        currentUser:
+            currentUser,
+
+        upcomingEvents:
+            data.upcomingEvents,
+
+        myRegistrations:
+            data.myRegistrations,
+
+        myTeams:
+            data.myTeams,
+
+        mentorPosts:
+            data.mentorPosts
+
+    };
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-26 17:18:23</sys_created_on>
+        <sys_id>d066bb3d792b43107f445336e004abd2</sys_id>
+        <sys_mod_count>46</sys_mod_count>
+        <sys_name>Campus Connect Home Dashboard</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_d066bb3d792b43107f445336e004abd2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 07:43:32</sys_updated_on>
+        <template><![CDATA[<div class="cc-dashboard">
+
+  <!-- Welcome Section -->
+  <div class="cc-welcome">
+    <div>
+      <h1>Welcome to Campus Connect ]]>👋<![CDATA[</h1>
+      <p>Discover events, build teams, connect with mentors and grow together.</p>
+    </div>
+  </div>
+
+
+  <!-- Statistics Cards -->
+  <div class="row cc-stats">
+
+
+    <!-- Upcoming Events -->
+    <div class="col-md-3">
+      <div class="cc-stat-card">
+
+        <div class="cc-stat-icon">
+          ]]>📅
+<![CDATA[        </div>
+
+        <h3>
+          {{data.upcomingEvents}}
+        </h3>
+
+        <p>
+          Upcoming Events
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- My Registrations -->
+    <div class="col-md-3">
+      <div class="cc-stat-card">
+
+        <div class="cc-stat-icon">
+          ]]>📝
+<![CDATA[        </div>
+
+        <h3>
+          {{data.myRegistrations}}
+        </h3>
+
+        <p>
+          My Registrations
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- My Teams -->
+    <div class="col-md-3">
+      <div class="cc-stat-card">
+
+        <div class="cc-stat-icon">
+          ]]>👥
+<![CDATA[        </div>
+
+        <h3>
+          {{data.myTeams}}
+        </h3>
+
+        <p>
+          My Teams
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- Mentor Posts -->
+    <div class="col-md-3">
+      <div class="cc-stat-card">
+
+        <div class="cc-stat-icon">
+          ]]>💬
+<![CDATA[        </div>
+
+        <h3>
+          {{data.mentorPosts}}
+        </h3>
+
+        <p>
+          Mentor Posts
+        </p>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="c6a6fdeb089303107f44bab7a44b4dc5" label="Registrations" max_length="40" name="x_snc_campus_con_0_registrations" type="collection">
+        <element label="Student" max_length="32" name="student" reference="sys_user" type="reference"/>
+        <element label="College Mail" max_length="40" name="college_mail" type="string"/>
+        <element label="Registration Date" max_length="40" name="registration_date" type="glide_date_time"/>
+        <element choice="1" label="Registration Status" max_length="40" name="registration_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Registered" sequence="0" value="registered"/>
+                <element inactive="true" inactive_on_update="true" label="Not-Atteneded" sequence="0" value="Not-Atteneded"/>
+                <element inactive_on_update="false" label="Not-Attended" sequence="2" value="Not-Attended"/>
+                <element inactive="true" inactive_on_update="true" label="No-Show" sequence="1" value="no-show"/>
+                <element inactive_on_update="false" label="Attended" sequence="1" value="attended"/>
+            </choice>
+        </element>
+        <element label="Team" max_length="32" name="team" reference="x_snc_campus_con_0_teams" type="reference"/>
+        <element label="Event" max_length="32" name="event" reference="x_snc_campus_con_0_events" type="reference"/>
+        <element label="Contact Number" max_length="40" name="contact_number" type="string"/>
+        <index name="index">
+            <element name="student"/>
+        </index>
+        <index name="index2">
+            <element name="team"/>
+        </index>
+        <index name="index3">
+            <element name="event"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_campus_con_0.CampusConnectAISkillMatcher</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CampusConnectAISkillMatcher</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CampusConnectAISkillMatcher = Class.create();
+
+CampusConnectAISkillMatcher.prototype = Object.extendsObject(
+    global.AbstractAjaxProcessor,
+    {
+
+        analyze: function() {
+
+            var response = {
+                success: false,
+                message: '',
+                matchResult: ''
+            };
+
+            try {
+
+                // --------------------------------------------------
+                // 1. Get Student and Event from Portal
+                // --------------------------------------------------
+
+                var studentId =
+                    this.getParameter('sysparm_student');
+
+                var eventId =
+                    this.getParameter('sysparm_event');
+
+
+                if (!studentId || !eventId) {
+
+                    response.message =
+                        'Student and event are required.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 2. Get Student Profile
+                // --------------------------------------------------
+
+                var studentGr = new GlideRecord(
+                    'x_snc_campus_con_0_student_profile'
+                );
+
+                studentGr.addQuery(
+                    'student',
+                    studentId
+                );
+
+                studentGr.setLimit(1);
+                studentGr.query();
+
+
+                if (!studentGr.next()) {
+
+                    response.message =
+                        'Student profile not found.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 3. Build Student Profile
+                // --------------------------------------------------
+
+                var studentProfileText =
+                    'Student Skills: ' +
+                    (studentGr.getValue('skills') || '') +
+
+                    '\nStudent Interests: ' +
+                    (studentGr.getValue('interests') || '') +
+
+                    '\nCareer Aspirations: ' +
+                    (studentGr.getValue('career_aspirations') || '');
+
+
+                // --------------------------------------------------
+                // 4. Get Event
+                // --------------------------------------------------
+
+                var eventGr = new GlideRecord(
+                    'x_snc_campus_con_0_events'
+                );
+
+                if (!eventGr.get(eventId)) {
+
+                    response.message =
+                        'Selected event could not be found.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 5. Build Event Requirements
+                // --------------------------------------------------
+
+                var eventRequirements =
+                    'Event Name: ' +
+                    (eventGr.getValue('event_name') || '') +
+
+                    '\nEvent Type: ' +
+                    (eventGr.getValue('event_type') || '') +
+
+                    '\nTechnology Tags: ' +
+                    (eventGr.getValue('technology_tags') || '') +
+
+                    '\nLocation: ' +
+                    (eventGr.getValue('location') || '') +
+
+                    '\nEvent Date: ' +
+                    (eventGr.getValue('event_date') || '') +
+
+                    '\nRegistration Deadline: ' +
+                    (eventGr.getValue('registration_deadline') || '');
+
+
+                // --------------------------------------------------
+                // 6. NASK Capability
+                // --------------------------------------------------
+
+                var capabilityId =
+                    '3c0d03b6f1e743107f443f8091a1ffd0';
+
+
+                // --------------------------------------------------
+                // 7. Build OneExtend Request
+                // --------------------------------------------------
+
+                var request = {
+
+                    executionRequests: [
+
+                        {
+
+                            capabilityId:
+                                capabilityId,
+
+                            payload: {
+
+                                student_profile:
+                                    studentProfileText,
+
+                                event_requirements:
+                                    eventRequirements
+
+                            }
+
+                        }
+
+                    ]
+
+                };
+
+
+                // --------------------------------------------------
+                // 8. Execute REAL NASK through OneExtend
+                // --------------------------------------------------
+
+                var result =
+                    sn_one_extend.OneExtendUtil.execute(
+                        request
+                    );
+
+
+                if (!result) {
+
+                    response.message =
+                        'NASK returned no response.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 9. Get Capability Response
+                // --------------------------------------------------
+
+                var capability =
+                    result.capabilities &&
+                    result.capabilities[capabilityId];
+
+
+                if (!capability) {
+
+                    response.message =
+                        'NASK capability response not found.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 10. Get Raw NASK Response
+                // --------------------------------------------------
+
+                var rawResponse =
+                    capability.response;
+
+
+                if (!rawResponse) {
+
+                    response.message =
+                        'NASK returned an empty response.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 11. Parse NASK Response
+                // --------------------------------------------------
+
+                var parsedResponse;
+
+                if (typeof rawResponse === 'string') {
+
+                    parsedResponse =
+                        JSON.parse(rawResponse);
+
+                } else {
+
+                    parsedResponse =
+                        rawResponse;
+
+                }
+
+
+                // --------------------------------------------------
+                // 12. Extract model_output
+                // --------------------------------------------------
+
+                var modelOutput =
+                    parsedResponse.model_output;
+
+
+                if (!modelOutput) {
+
+                    response.message =
+                        'NASK model output was empty.';
+
+                    return JSON.stringify(response);
+                }
+
+
+                // --------------------------------------------------
+                // 13. SUCCESS
+                // --------------------------------------------------
+
+                response.success = true;
+
+                response.message =
+                    'AI analysis completed successfully.';
+
+                response.matchResult =
+                    String(modelOutput);
+
+
+                return JSON.stringify(response);
+
+
+            } catch (e) {
+
+                // --------------------------------------------------
+                // 14. Error Handling
+                // --------------------------------------------------
+
+                response.success = false;
+
+                response.message =
+                    'NASK execution failed: ' +
+                    e.message;
+
+                return JSON.stringify(response);
+            }
+
+        },
+
+
+        type: 'CampusConnectAISkillMatcher'
+
+    }
+);]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-30 08:43:33</sys_created_on>
+        <sys_id>3f76e6c399eb03107f4413fc57679cc9</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>CampusConnectAISkillMatcher</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sys_script_include_3f76e6c399eb03107f4413fc57679cc9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-30 16:42:59</sys_updated_on>
+    </sys_script_include>
+</record_update>

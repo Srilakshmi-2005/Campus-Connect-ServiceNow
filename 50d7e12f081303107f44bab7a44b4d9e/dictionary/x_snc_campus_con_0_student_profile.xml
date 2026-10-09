@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="ecf13923089303107f44bab7a44b4dc7" label="Student Profile" max_length="40" name="x_snc_campus_con_0_student_profile" type="collection">
+        <element label="Reliability Score" max_length="40" name="reliability_score" type="integer"/>
+        <element label="College Email" max_length="40" name="college_email" type="string"/>
+        <element label="Location" max_length="40" name="location" type="string"/>
+        <element label="Unique Registration Number" max_length="40" name="unique_registration_number" type="string"/>
+        <element choice="3" default="pending" label="Verification Status" max_length="255" name="verification_statu0" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Verified" sequence="1" value="verified"/>
+            </choice>
+        </element>
+        <element label="Certifications" max_length="40" name="certifications" type="string"/>
+        <element display="true" label="Student" max_length="40" name="student" reference="sys_user" type="reference"/>
+        <element label="Interests" max_length="40" name="interests" type="string"/>
+        <element choice="1" label="Verification Status" max_length="40" name="verification_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Verified" sequence="1" value="Verified"/>
+                <element inactive_on_update="false" label="Not-Verified" sequence="2" value="Not-Verified"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="Pending"/>
+            </choice>
+        </element>
+        <element label="Skills" max_length="40" name="skills" type="string"/>
+        <element label="Career Aspirations" max_length="40" name="career_aspirations" type="string"/>
+        <element label="College Name" max_length="80" name="college_name" type="string"/>
+        <element label="Signup Password" max_length="255" name="signup_password" type="password2"/>
+        <element label="ID Card Photo" max_length="40" name="id_card_photo" type="file_attachment"/>
+        <element label="Projects" max_length="40" name="projects" type="string"/>
+        <element label="Student Name" max_length="40" name="student_name" type="string"/>
+        <index name="index">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

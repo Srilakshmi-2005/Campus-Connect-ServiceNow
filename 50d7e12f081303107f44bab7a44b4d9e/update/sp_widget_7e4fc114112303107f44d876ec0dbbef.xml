@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.filters = {
+        technology: '',
+        location: '',
+        eventType: ''
+    };
+
+
+    c.applyFilters = function() {
+
+        c.server.get({
+
+            technology: c.filters.technology,
+
+            location: c.filters.location,
+
+            eventType: c.filters.eventType
+
+        }).then(function(response) {
+
+            c.data = response.data;
+
+        });
+
+    };
+
+
+    c.clearFilters = function() {
+
+        c.filters = {
+            technology: '',
+            location: '',
+            eventType: ''
+        };
+
+        c.applyFilters();
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* =========================================================&#13;
+   CAMPUS CONNECT — BROWSE VERIFIED EVENTS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-browse-events {&#13;
+&#13;
+    width: 115%;&#13;
+&#13;
+    padding: 26px 50px 35px 145px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    font-family: "Segoe UI", Arial, sans-serif;&#13;
+&#13;
+    background:transparent;&#13;
+  &#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-browse-header {&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.cc-browse-header h1 {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #102a43;&#13;
+&#13;
+    font-size: 26px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-browse-header p {&#13;
+&#13;
+    margin: 6px 0 0 0;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   FILTER PANEL&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-filter-panel {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: flex-end;&#13;
+&#13;
+    gap: 12px;&#13;
+&#13;
+    padding: 18px;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dce5ef;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    box-shadow: 50px 3px 50px rgba(20, 45, 80, 0.05);&#13;
+}&#13;
+&#13;
+&#13;
+.cc-filter-item {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+    min-width: 0;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-filter-item label {&#13;
+&#13;
+    display: block;&#13;
+&#13;
+    margin-bottom: 6px;&#13;
+&#13;
+    color: #34495e;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-filter-control {&#13;
+&#13;
+    width: 100%;&#13;
+&#13;
+    height: 36px;&#13;
+&#13;
+    padding: 0 10px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #cbd8e8;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    color: #243b53;&#13;
+&#13;
+    font-size: 12px;&#13;
+&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-filter-control:focus {&#13;
+&#13;
+    border-color: #0879e8;&#13;
+&#13;
+    box-shadow: 0 0 0 2px rgba(8, 121, 232, 0.08);&#13;
+}&#13;
+&#13;
+&#13;
+/* Clear */&#13;
+&#13;
+.cc-clear-filter {&#13;
+&#13;
+    height: 36px;&#13;
+&#13;
+    padding: 0 15px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #cbd8e8;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    color: #23415f;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-clear-filter:hover {&#13;
+&#13;
+    background: #f4f8fc;&#13;
+&#13;
+    border-color: #9fb7d0;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESULT HEADER&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-result-header {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    margin-bottom: 14px;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 11px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-verified-label {&#13;
+&#13;
+    padding: 5px 9px;&#13;
+&#13;
+    background: #e9f8f0;&#13;
+&#13;
+    border: 1px solid #c9ead8;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    color: #217a4b;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EVENT GRID&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-browse-row {&#13;
+&#13;
+    margin-left: -7px;&#13;
+&#13;
+    margin-right: -7px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-browse-row &gt; div {&#13;
+&#13;
+    padding-left: 7px;&#13;
+&#13;
+    padding-right: 7px;&#13;
+&#13;
+    margin-bottom: 14px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EVENT CARD&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-event-card {&#13;
+&#13;
+    min-height: 300px;&#13;
+&#13;
+    padding: 18px;&#13;
+&#13;
+    box-sizing: border-box;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dce5ef;&#13;
+&#13;
+    border-radius: 10px;&#13;
+&#13;
+    box-shadow: 0 4px 14px rgba(20, 45, 80, 0.06);&#13;
+&#13;
+    transition:&#13;
+        transform 0.18s ease,&#13;
+        box-shadow 0.18s ease,&#13;
+        border-color 0.18s ease;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-event-card:hover {&#13;
+&#13;
+    transform: translateY(-3px);&#13;
+&#13;
+    border-color: #b9cde3;&#13;
+&#13;
+    box-shadow:&#13;
+        0 9px 22px rgba(20, 45, 80, 0.11);&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EVENT TOP&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-event-top {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: space-between;&#13;
+&#13;
+    margin-bottom: 13px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-event-type {&#13;
+&#13;
+    display: inline-flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    padding: 5px 9px;&#13;
+&#13;
+    background: #eaf3ff;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    color: #0866c6;&#13;
+&#13;
+    font-size: 10px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    text-transform: capitalize;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-event-fee {&#13;
+&#13;
+    color: #1f7a4d;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EVENT TITLE&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-event-card h3 {&#13;
+&#13;
+    margin: 0 0 8px 0;&#13;
+&#13;
+    color: #102a43;&#13;
+&#13;
+    font-size: 17px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    line-height: 1.35;&#13;
+&#13;
+    min-height: 45px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   TECHNOLOGY TAGS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-tags {&#13;
+&#13;
+    margin: 0 0 13px 0;&#13;
+&#13;
+    color: #0879e8;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   EVENT INFORMATION&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-event-info {&#13;
+&#13;
+    margin: 6px 0;&#13;
+&#13;
+    color: #52677d;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    line-height: 1.4;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-info-icon {&#13;
+&#13;
+    display: inline-block;&#13;
+&#13;
+    width: 20px;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   MAP&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-map-btn {&#13;
+&#13;
+    display: inline-block;&#13;
+&#13;
+    margin-top: 3px;&#13;
+&#13;
+    margin-bottom: 10px;&#13;
+&#13;
+    color: #0879e8 !important;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-map-btn:hover {&#13;
+&#13;
+    color: #005bb5 !important;&#13;
+&#13;
+    text-decoration: underline !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   VERIFICATION&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-verification {&#13;
+&#13;
+    display: inline-block;&#13;
+&#13;
+    margin-bottom: 11px;&#13;
+&#13;
+    padding: 4px 8px;&#13;
+&#13;
+    background: #e9f8f0;&#13;
+&#13;
+    border: 1px solid #c9ead8;&#13;
+&#13;
+    border-radius: 4px;&#13;
+&#13;
+    color: #217a4b;&#13;
+&#13;
+    font-size: 9px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   ACTIONS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-event-actions {&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    gap: 8px;&#13;
+&#13;
+    margin-top: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-details-btn,&#13;
+.cc-register-btn {&#13;
+&#13;
+    flex: 1;&#13;
+&#13;
+    height: 34px;&#13;
+&#13;
+    display: flex;&#13;
+&#13;
+    align-items: center;&#13;
+&#13;
+    justify-content: center;&#13;
+&#13;
+    border-radius: 5px;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    text-decoration: none !important;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+/* Details */&#13;
+&#13;
+.cc-details-btn {&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #cbd8e8;&#13;
+&#13;
+    color: #23415f !important;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-details-btn:hover {&#13;
+&#13;
+    background: #f5f9fd;&#13;
+&#13;
+    border-color: #9fb7d0;&#13;
+&#13;
+    color: #102a43 !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* Register */&#13;
+&#13;
+.cc-register-btn {&#13;
+&#13;
+    background: #0879e8;&#13;
+&#13;
+    border: 1px solid #0879e8;&#13;
+&#13;
+    color: #ffffff !important;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-register-btn:hover {&#13;
+&#13;
+    background: #0668c7;&#13;
+&#13;
+    border-color: #0668c7;&#13;
+&#13;
+    color: #ffffff !important;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   NO EVENTS&#13;
+   ========================================================= */&#13;
+&#13;
+.cc-no-events {&#13;
+&#13;
+    padding: 50px 20px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border: 1px solid #dce5ef;&#13;
+&#13;
+    border-radius: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-no-events-icon {&#13;
+&#13;
+    font-size: 32px;&#13;
+&#13;
+    margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-no-events h3 {&#13;
+&#13;
+    margin: 0 0 6px 0;&#13;
+&#13;
+    color: #102a43;&#13;
+&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+&#13;
+.cc-no-events p {&#13;
+&#13;
+    margin: 0;&#13;
+&#13;
+    color: #718096;&#13;
+&#13;
+    font-size: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* =========================================================&#13;
+   RESPONSIVE&#13;
+   ========================================================= */&#13;
+&#13;
+@media (max-width: 992px) {&#13;
+&#13;
+    .cc-browse-events {&#13;
+&#13;
+        padding: 22px 20px 30px 20px;&#13;
+    }&#13;
+&#13;
+    .cc-filter-panel {&#13;
+&#13;
+        flex-wrap: wrap;&#13;
+    }&#13;
+&#13;
+    .cc-filter-item {&#13;
+&#13;
+        flex: 1 1 30%;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-browse-events {&#13;
+&#13;
+        padding: 18px 15px 25px 15px;&#13;
+    }&#13;
+&#13;
+    .cc-filter-panel {&#13;
+&#13;
+        flex-direction: column;&#13;
+&#13;
+        align-items: stretch;&#13;
+    }&#13;
+&#13;
+    .cc-filter-item {&#13;
+&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .cc-clear-filter {&#13;
+&#13;
+        width: 100%;&#13;
+    }&#13;
+&#13;
+    .cc-result-header {&#13;
+&#13;
+        align-items: flex-start;&#13;
+&#13;
+        flex-direction: column;&#13;
+&#13;
+        gap: 8px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>browse_events</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Browse Events</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.events = [];
+    data.technologies = [];
+    data.locations = [];
+    data.eventTypes = [];
+
+
+    /*
+     * ----------------------------------------------------
+     * FILTER VALUES
+     * ----------------------------------------------------
+     */
+
+    var selectedTechnology =
+        input && input.technology
+            ? input.technology
+            : '';
+
+    var selectedLocation =
+        input && input.location
+            ? input.location
+            : '';
+
+    var selectedEventType =
+        input && input.eventType
+            ? input.eventType
+            : '';
+
+
+    /*
+     * ----------------------------------------------------
+     * EVENTS
+     * ONLY VERIFIED EVENTS ARE ALLOWED
+     * ----------------------------------------------------
+     */
+
+    var eventGR =
+        new GlideRecord('x_snc_campus_con_0_events');
+
+
+    // IMPORTANT:
+    // Only Verified events are visible
+    eventGR.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+
+    /*
+     * Technology filter
+     */
+
+    if (selectedTechnology) {
+
+        eventGR.addQuery(
+            'technology_tags',
+            'CONTAINS',
+            selectedTechnology
+        );
+
+    }
+
+
+    /*
+     * Location filter
+     */
+
+    if (selectedLocation) {
+
+        eventGR.addQuery(
+            'location',
+            selectedLocation
+        );
+
+    }
+
+
+    /*
+     * Event Type filter
+     */
+
+    if (selectedEventType) {
+
+        eventGR.addQuery(
+            'event_type',
+            selectedEventType
+        );
+
+    }
+
+
+    /*
+     * Nearest events first
+     */
+
+    eventGR.orderBy('event_date');
+
+    eventGR.query();
+
+
+    /*
+     * ----------------------------------------------------
+     * BUILD EVENT DATA
+     * ----------------------------------------------------
+     */
+
+    while (eventGR.next()) {
+
+        var feeDisplay =
+            eventGR.getDisplayValue('fees');
+
+
+        if (!feeDisplay || feeDisplay == '0') {
+
+            feeDisplay = 'Free';
+
+        }
+
+
+        data.events.push({
+
+            sys_id:
+                eventGR.getUniqueValue(),
+
+            event_name:
+                eventGR.getDisplayValue('event_name'),
+
+            organizer:
+                eventGR.getDisplayValue('organizer'),
+
+            event_date:
+                eventGR.getDisplayValue('event_date'),
+
+            location:
+                eventGR.getDisplayValue('location'),
+
+            event_type:
+                eventGR.getDisplayValue('event_type'),
+
+            technology_tags:
+                eventGR.getDisplayValue('technology_tags'),
+
+            fees:
+                feeDisplay,
+
+            verification_status:
+                eventGR.getDisplayValue(
+                    'verification_status'
+                ),
+
+            google_maps_link:
+                eventGR.getValue(
+                    'google_maps_link'
+                )
+
+        });
+
+    }
+
+
+    /*
+     * ----------------------------------------------------
+     * TECHNOLOGY FILTER OPTIONS
+     * ----------------------------------------------------
+     */
+
+    var technologyMap = {};
+
+    var techGR =
+        new GlideRecord(
+            'x_snc_campus_con_0_events'
+        );
+
+
+    techGR.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+    techGR.query();
+
+
+    while (techGR.next()) {
+
+        var technologyText =
+            techGR.getValue(
+                'technology_tags'
+            ) || '';
+
+
+        var technologies =
+            technologyText.split(/[,;•]/);
+
+
+        for (var i = 0;
+             i < technologies.length;
+             i++) {
+
+            var technology =
+                technologies[i].trim();
+
+
+            if (technology) {
+
+                technologyMap[
+                    technology.toLowerCase()
+                ] = technology;
+
+            }
+
+        }
+
+    }
+
+
+    for (var technologyKey in technologyMap) {
+
+        data.technologies.push(
+            technologyMap[technologyKey]
+        );
+
+    }
+
+
+    data.technologies.sort();
+
+
+    /*
+     * ----------------------------------------------------
+     * LOCATION FILTER OPTIONS
+     * ----------------------------------------------------
+     */
+
+    var locationMap = {};
+
+    var locationGR =
+        new GlideRecord(
+            'x_snc_campus_con_0_events'
+        );
+
+
+    locationGR.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+    locationGR.addNotNullQuery(
+        'location'
+    );
+
+    locationGR.query();
+
+
+    while (locationGR.next()) {
+
+        var location =
+            locationGR.getDisplayValue(
+                'location'
+            );
+
+
+        if (location) {
+
+            locationMap[
+                location.toLowerCase()
+            ] = location;
+
+        }
+
+    }
+
+
+    for (var locationKey in locationMap) {
+
+        data.locations.push(
+            locationMap[locationKey]
+        );
+
+    }
+
+
+    data.locations.sort();
+
+
+    /*
+     * ----------------------------------------------------
+     * EVENT TYPE FILTER OPTIONS
+     * ----------------------------------------------------
+     */
+
+    var eventTypeMap = {};
+
+    var typeGR =
+        new GlideRecord(
+            'x_snc_campus_con_0_events'
+        );
+
+
+    typeGR.addQuery(
+        'verification_status',
+        'verified'
+    );
+
+    typeGR.query();
+
+
+    while (typeGR.next()) {
+
+        var eventType =
+            typeGR.getDisplayValue(
+                'event_type'
+            );
+
+
+        if (eventType) {
+
+            eventTypeMap[
+                eventType.toLowerCase()
+            ] = eventType;
+
+        }
+
+    }
+
+
+    for (var typeKey in eventTypeMap) {
+
+        data.eventTypes.push(
+            eventTypeMap[typeKey]
+        );
+
+    }
+
+
+    data.eventTypes.sort();
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-21 13:19:59</sys_created_on>
+        <sys_id>7e4fc114112303107f44d876ec0dbbef</sys_id>
+        <sys_mod_count>35</sys_mod_count>
+        <sys_name>Browse Events</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_7e4fc114112303107f44d876ec0dbbef</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-06 09:11:55</sys_updated_on>
+        <template><![CDATA[<div class="cc-browse-events">
+
+  <!-- Header -->
+  <div class="cc-browse-header">
+
+    <div>
+      <h1>Browse Verified Events</h1>
+      <p>Discover trusted campus events and opportunities.</p>
+    </div>
+
+  </div>
+
+
+  <!-- Filters -->
+  <div class="cc-filter-panel">
+
+    <div class="cc-filter-item">
+
+      <label>Technology</label>
+
+      <select ng-model="c.filters.technology"
+              ng-change="c.applyFilters()"
+              class="cc-filter-control">
+
+        <option value="">All Technologies</option>
+
+        <option ng-repeat="technology in data.technologies"
+                value="{{technology}}">
+          {{technology}}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="cc-filter-item">
+
+      <label>Location</label>
+
+      <select ng-model="c.filters.location"
+              ng-change="c.applyFilters()"
+              class="cc-filter-control">
+
+        <option value="">All Locations</option>
+
+        <option ng-repeat="location in data.locations"
+                value="{{location}}">
+          {{location}}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="cc-filter-item">
+
+      <label>Event Type</label>
+
+      <select ng-model="c.filters.eventType"
+              ng-change="c.applyFilters()"
+              class="cc-filter-control">
+
+        <option value="">All Event Types</option>
+
+        <option ng-repeat="type in data.eventTypes"
+                value="{{type}}">
+          {{type}}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button class="cc-clear-filter"
+            ng-click="c.clearFilters()">
+
+      Clear Filters
+
+    </button>
+
+  </div>
+
+
+  <!-- Event Count -->
+  <div class="cc-result-header">
+
+    <span>
+      {{data.events.length}} verified event(s) found
+    </span>
+
+    <span class="cc-verified-label">
+      ✓ Verified Events Only
+    </span>
+
+  </div>
+
+
+  <!-- No Events -->
+  <div class="cc-no-events"
+       ng-if="!data.events || data.events.length === 0">
+
+    <div class="cc-no-events-icon">]]>📅<![CDATA[</div>
+
+    <h3>No Verified Events Found</h3>
+
+    <p>
+      No verified events match the selected filters.
+    </p>
+
+  </div>
+
+
+  <!-- Event Cards -->
+  <div class="row cc-browse-row"
+       ng-if="data.events && data.events.length > 0">
+
+    <div class="col-md-4"
+         ng-repeat="event in data.events">
+
+      <div class="cc-event-card">
+
+        <!-- Event Type + Fee -->
+        <div class="cc-event-top">
+
+          <span class="cc-event-type">
+            {{event.event_type || 'Event'}}
+          </span>
+
+          <span class="cc-event-fee">
+            {{event.fees}}
+          </span>
+
+        </div>
+
+
+        <!-- Event Name -->
+        <h3>
+          {{event.event_name}}
+        </h3>
+
+
+        <!-- Technology -->
+        <p class="cc-tags"
+           ng-if="event.technology_tags">
+
+          {{event.technology_tags}}
+
+        </p>
+
+
+        <!-- Date -->
+        <p class="cc-event-info">
+
+          <span class="cc-info-icon">]]>📅<![CDATA[</span>
+
+          {{event.event_date}}
+
+        </p>
+
+
+        <!-- Location -->
+        <p class="cc-event-info"
+           ng-if="event.location">
+
+          <span class="cc-info-icon">]]>📍<![CDATA[</span>
+
+          {{event.location}}
+
+        </p>
+
+
+        <!-- Map -->
+        <a class="cc-map-btn"
+           ng-if="event.google_maps_link"
+           href="{{event.google_maps_link}}"
+           target="_blank">
+
+          ]]>📍<![CDATA[ View on Map
+
+        </a>
+
+
+        <!-- Verification -->
+        <div class="cc-verification">
+
+          ✓ Verified Event
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="cc-event-actions">
+			<a class="cc-details-btn"
+                 href="?id=event_details&sys_id={{event.sys_id}}">
+
+                 View Details
+
+          </a>
+          
+
+          <a class="cc-register-btn"
+             href="?id=sc_cat_item&sys_id=4324467734d303107f44aa83be5b9a10&event={{event.sys_id}}">
+
+            Register
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

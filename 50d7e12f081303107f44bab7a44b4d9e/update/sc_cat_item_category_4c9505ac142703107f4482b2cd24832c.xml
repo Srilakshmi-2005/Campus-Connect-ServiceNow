@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="INSERT_OR_UPDATE">
+        <sc_cat_item display_value="Post a Mentor Tip or Doubt">816c7ca814e303107f4482b2cd248332</sc_cat_item>
+        <sc_category display_value="Campus Connect">bedd9327b4d303107f44121bcaf323c0</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 07:12:56</sys_created_on>
+        <sys_id>4c9505ac142703107f4482b2cd24832c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Campus Connect.Post a Mentor Tip or Doubt</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sc_cat_item_category_4c9505ac142703107f4482b2cd24832c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 07:12:56</sys_updated_on>
+    </sc_cat_item_category>
+</record_update>

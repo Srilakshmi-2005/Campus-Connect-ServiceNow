@@ -1,0 +1,1575 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+
+    var c = this;
+
+    c.showClarificationBox = false;
+    c.clarifyingPost = null;
+    c.clarificationText = '';
+    c.submitting = false;
+
+
+    /*
+     * ==========================================
+     * OPEN MENTOR CONNECT RECORD PRODUCER
+     * ==========================================
+     */
+
+    c.openPostProducer = function() {
+
+        window.location.href =
+            '?id=sc_cat_item&sys_id=816c7ca814e303107f4482b2cd248332';
+
+    };
+
+
+    /*
+     * ==========================================
+     * OPEN CLARIFICATION MODAL
+     * ==========================================
+     */
+
+    c.clarifyDoubt = function(post) {
+
+        if (!post) {
+            return;
+        }
+
+        /*
+         * Do not allow clarification of an
+         * already resolved doubt.
+         */
+
+        if (post.resolved_clarified) {
+            return;
+        }
+
+        c.clarifyingPost = post;
+        c.clarificationText = '';
+        c.showClarificationBox = true;
+
+    };
+
+
+    /*
+     * ==========================================
+     * CANCEL CLARIFICATION
+     * ==========================================
+     */
+
+    c.cancelClarification = function() {
+
+        if (c.submitting) {
+            return;
+        }
+
+        c.showClarificationBox = false;
+        c.clarifyingPost = null;
+        c.clarificationText = '';
+        c.submitting = false;
+
+    };
+
+
+    /*
+     * ==========================================
+     * SUBMIT CLARIFICATION
+     * ==========================================
+     */
+
+    c.submitClarification = function() {
+
+        if (c.submitting) {
+            return;
+        }
+
+
+        /*
+         * Check selected doubt
+         */
+
+        if (!c.clarifyingPost) {
+
+            alert(
+                'Unable to identify the selected doubt.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Check clarification text
+         */
+
+        if (
+            !c.clarificationText ||
+            !c.clarificationText.trim()
+        ) {
+
+            alert(
+                'Please enter a clarification.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Check minimum length
+         */
+
+        if (c.clarificationText.trim().length < 5) {
+
+            alert(
+                'Please provide a meaningful clarification.'
+            );
+
+            return;
+        }
+
+
+        /*
+         * Check record ID
+         */
+
+        if (!c.clarifyingPost.sys_id) {
+
+            alert(
+                'Doubt record ID is missing.'
+            );
+
+            return;
+        }
+
+
+        c.submitting = true;
+
+
+        /*
+         * Send clarification to Server Script
+         */
+
+        c.server.get({
+
+            action: 'clarify_doubt',
+
+            postId:
+                c.clarifyingPost.sys_id,
+
+            clarification:
+                c.clarificationText.trim()
+
+        }).then(function(response) {
+
+            var result =
+                response.data || {};
+
+
+            /*
+             * Stop submitting state
+             */
+
+            c.submitting = false;
+
+
+            /*
+             * ======================================
+             * SUCCESS
+             * ======================================
+             */
+
+            if (result.success === true) {
+
+                alert(
+                    'Doubt clarified successfully.'
+                );
+
+
+                /*
+                 * Remove the old unresolved copy
+                 * from the current list.
+                 *
+                 * The server refresh below will then
+                 * bring it back as a resolved doubt
+                 * with clarification information.
+                 */
+
+                if (
+                    c.data &&
+                    c.data.posts &&
+                    c.clarifyingPost &&
+                    c.clarifyingPost.sys_id
+                ) {
+
+                    for (
+                        var i = 0;
+                        i < c.data.posts.length;
+                        i++
+                    ) {
+
+                        if (
+                            c.data.posts[i].sys_id ===
+                            c.clarifyingPost.sys_id
+                        ) {
+
+                            c.data.posts.splice(i, 1);
+
+                            break;
+                        }
+                    }
+                }
+
+
+                /*
+                 * Close clarification modal
+                 */
+
+                c.showClarificationBox = false;
+
+                c.clarifyingPost = null;
+
+                c.clarificationText = '';
+
+
+                /*
+                 * Refresh server data.
+                 *
+                 * The resolved doubt will now appear
+                 * with:
+                 *
+                 * Question
+                 * Answer
+                 * Clarified By
+                 * College
+                 */
+
+                c.server.update();
+
+
+            } else {
+
+                alert(
+                    result.message ||
+                    'Unable to clarify the doubt.'
+                );
+
+            }
+
+        }, function(error) {
+
+            c.submitting = false;
+
+            console.log(
+                'Clarification server error:',
+                error
+            );
+
+            alert(
+                'Unable to submit the clarification. Please try again.'
+            );
+
+        });
+
+    };
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* ==========================================&#13;
+   POST MENTOR TIP / DOUBT BUTTON&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-post-button {&#13;
+    margin-top: 18px;&#13;
+    padding: 11px 20px;&#13;
+    border: none;&#13;
+    border-radius: 8px;&#13;
+    background: #0b63ce;&#13;
+    color: #ffffff;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    cursor: pointer;&#13;
+    transition: all 0.2s ease;&#13;
+}&#13;
+&#13;
+.mentor-post-button:hover {&#13;
+    background: #084f9f;&#13;
+    transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+.mentor-post-button:focus {&#13;
+    outline: none;&#13;
+    box-shadow: 0 0 0 3px rgba(11, 99, 206, 0.18);&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CAMPUS CONNECT - MENTOR CONNECT&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-connect-page {&#13;
+    width: 140%;&#13;
+    max-width: 1500px;&#13;
+    margin: 0 auto;&#13;
+    padding: 10px 40px 40px 200px;&#13;
+    font-family: "Source Sans Pro", Arial, sans-serif;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   HEADER&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-header {&#13;
+    margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+.mentor-eyebrow {&#13;
+    color: #0066d6;&#13;
+    font-size: 13px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 1.4px;&#13;
+    text-transform: uppercase;&#13;
+    margin-bottom: 6px;&#13;
+}&#13;
+&#13;
+.mentor-title {&#13;
+    margin: 0 0 8px 0;&#13;
+    color: #07152f;&#13;
+    font-size: 38px;&#13;
+    font-weight: 700;&#13;
+    line-height: 1.15;&#13;
+}&#13;
+&#13;
+.mentor-subtitle {&#13;
+    margin: 0;&#13;
+    color: #536987;&#13;
+    font-size: 17px;&#13;
+    line-height: 1.5;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CARD GRID&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-grid {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(4, minmax(0, 1fr));&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   MENTOR CARD&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-card {&#13;
+    position: relative;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #d4dfed;&#13;
+    border-radius: 10px;&#13;
+    padding: 24px 18px 20px;&#13;
+    min-height: 390px;&#13;
+&#13;
+    box-shadow: 0 2px 8px rgba(7, 21, 47, 0.06);&#13;
+&#13;
+    transition:&#13;
+        transform 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.mentor-card:hover {&#13;
+    transform: translateY(-2px);&#13;
+    box-shadow: 0 7px 18px rgba(7, 21, 47, 0.12);&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   AVATAR&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-avatar {&#13;
+    width: 72px;&#13;
+    height: 72px;&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+&#13;
+    border-radius: 50%;&#13;
+&#13;
+    background: #e1efff;&#13;
+    color: #0066d6;&#13;
+&#13;
+    font-size: 24px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   AUTHOR&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-author {&#13;
+    color: #07152f;&#13;
+    font-size: 19px;&#13;
+    font-weight: 700;&#13;
+    margin-bottom: 7px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   POST TYPE&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-post-type {&#13;
+    color: #0066d6;&#13;
+    font-size: 13px;&#13;
+    font-weight: 700;&#13;
+    margin-bottom: 12px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   DOMAIN TAG&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-domain {&#13;
+    display: inline-block;&#13;
+&#13;
+    background: #edf4fb;&#13;
+    color: #536987;&#13;
+&#13;
+    border-radius: 18px;&#13;
+&#13;
+    padding: 5px 11px;&#13;
+&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+&#13;
+    margin-bottom: 16px;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CONTENT&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-content {&#13;
+    color: #536987;&#13;
+    font-size: 14px;&#13;
+    line-height: 1.6;&#13;
+&#13;
+    margin-bottom: 16px;&#13;
+&#13;
+    min-height: 70px;&#13;
+&#13;
+    white-space: pre-line;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   RELATED EVENT&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-event {&#13;
+    color: #07152f;&#13;
+    font-size: 12px;&#13;
+    line-height: 1.5;&#13;
+&#13;
+    margin-bottom: 18px;&#13;
+}&#13;
+&#13;
+.mentor-event strong {&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CLARIFY BUTTON&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-clarify-button {&#13;
+    width: 100%;&#13;
+&#13;
+    border: none;&#13;
+    border-radius: 7px;&#13;
+&#13;
+    padding: 11px 14px;&#13;
+&#13;
+    background: #0066d6;&#13;
+    color: #ffffff;&#13;
+&#13;
+    font-size: 14px;&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    transition:&#13;
+        background 0.2s ease,&#13;
+        box-shadow 0.2s ease;&#13;
+}&#13;
+&#13;
+.mentor-clarify-button:hover {&#13;
+    background: #0057b8;&#13;
+    box-shadow: 0 4px 10px rgba(0, 102, 214, 0.22);&#13;
+}&#13;
+&#13;
+.mentor-clarify-button:focus {&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+.mentor-clarify-button:disabled {&#13;
+    opacity: 0.6;&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   EMPTY STATE&#13;
+   ========================================== */&#13;
+&#13;
+.mentor-empty {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #d4dfed;&#13;
+    border-radius: 10px;&#13;
+&#13;
+    padding: 50px 25px;&#13;
+&#13;
+    text-align: center;&#13;
+&#13;
+    box-shadow: 0 2px 8px rgba(7, 21, 47, 0.05);&#13;
+}&#13;
+&#13;
+.mentor-empty-icon {&#13;
+    font-size: 40px;&#13;
+    margin-bottom: 12px;&#13;
+}&#13;
+&#13;
+.mentor-empty h3 {&#13;
+    color: #07152f;&#13;
+    font-size: 20px;&#13;
+    font-weight: 700;&#13;
+    margin: 0 0 7px;&#13;
+}&#13;
+&#13;
+.mentor-empty p {&#13;
+    color: #536987;&#13;
+    font-size: 14px;&#13;
+    margin: 0;&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   RESPONSIVE&#13;
+   ========================================== */&#13;
+&#13;
+@media (max-width: 1200px) {&#13;
+&#13;
+    .mentor-grid {&#13;
+        grid-template-columns: repeat(3, minmax(0, 1fr));&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .mentor-grid {&#13;
+        grid-template-columns: repeat(2, minmax(0, 1fr));&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .mentor-connect-page {&#13;
+        padding: 5px 10px 30px;&#13;
+    }&#13;
+&#13;
+    .mentor-title {&#13;
+        font-size: 30px;&#13;
+    }&#13;
+&#13;
+    .mentor-grid {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .mentor-card {&#13;
+        min-height: auto;&#13;
+    }&#13;
+&#13;
+}&#13;
+&#13;
+&#13;
+/* ==========================================&#13;
+   CLARIFICATION MODAL&#13;
+   ========================================== */&#13;
+&#13;
+.clarification-overlay {&#13;
+    position: fixed;&#13;
+    top: 0;&#13;
+    left: 0;&#13;
+&#13;
+    width: 100%;&#13;
+    height: 100%;&#13;
+&#13;
+    background: rgba(7, 21, 47, 0.55);&#13;
+&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+&#13;
+    padding: 20px;&#13;
+&#13;
+    z-index: 9999;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-modal {&#13;
+    width: 100%;&#13;
+    max-width: 620px;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    border-radius: 12px;&#13;
+&#13;
+    box-shadow: 0 15px 45px rgba(7, 21, 47, 0.25);&#13;
+&#13;
+    overflow: hidden;&#13;
+}&#13;
+&#13;
+&#13;
+/* ---------- Header ---------- */&#13;
+&#13;
+.clarification-modal-header {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: space-between;&#13;
+    align-items: flex-start;&#13;
+&#13;
+    padding: 22px 24px;&#13;
+&#13;
+    border-bottom: 1px solid #e1e8f0;&#13;
+&#13;
+    background: #f8fbff;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-label {&#13;
+    color: #0066d6;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    letter-spacing: 1.3px;&#13;
+&#13;
+    text-transform: uppercase;&#13;
+&#13;
+    margin-bottom: 5px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-modal-header h3 {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 23px;&#13;
+&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-close {&#13;
+    border: none;&#13;
+&#13;
+    background: transparent;&#13;
+&#13;
+    color: #536987;&#13;
+&#13;
+    font-size: 28px;&#13;
+&#13;
+    line-height: 1;&#13;
+&#13;
+    cursor: pointer;&#13;
+&#13;
+    padding: 0 4px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-close:hover {&#13;
+    color: #07152f;&#13;
+}&#13;
+&#13;
+&#13;
+/* ---------- Body ---------- */&#13;
+&#13;
+.clarification-modal-body {&#13;
+    padding: 24px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-doubt {&#13;
+    background: #f4f8fd;&#13;
+&#13;
+    border-left: 4px solid #0066d6;&#13;
+&#13;
+    border-radius: 6px;&#13;
+&#13;
+    padding: 15px 17px;&#13;
+&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-doubt-label {&#13;
+    color: #0066d6;&#13;
+&#13;
+    font-size: 11px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    text-transform: uppercase;&#13;
+&#13;
+    letter-spacing: 0.7px;&#13;
+&#13;
+    margin-bottom: 7px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-doubt strong {&#13;
+    display: block;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    margin-bottom: 6px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-doubt p {&#13;
+    margin: 0;&#13;
+&#13;
+    color: #536987;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+}&#13;
+&#13;
+&#13;
+/* ---------- Input ---------- */&#13;
+&#13;
+.clarification-input-label {&#13;
+    display: block;&#13;
+&#13;
+    color: #07152f;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    margin-bottom: 8px;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-textarea {&#13;
+    width: 100%;&#13;
+&#13;
+    min-height: 130px;&#13;
+&#13;
+    resize: vertical;&#13;
+&#13;
+    border: 1px solid #cbd7e5;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    padding: 12px 14px;&#13;
+&#13;
+    color: #34465d;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    line-height: 1.6;&#13;
+&#13;
+    outline: none;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-textarea:focus {&#13;
+    border-color: #0066d6;&#13;
+&#13;
+    box-shadow: 0 0 0 2px rgba(0, 102, 214, 0.10);&#13;
+}&#13;
+&#13;
+&#13;
+/* ---------- Footer ---------- */&#13;
+&#13;
+.clarification-modal-footer {&#13;
+    display: flex;&#13;
+&#13;
+    justify-content: flex-end;&#13;
+&#13;
+    gap: 10px;&#13;
+&#13;
+    padding: 16px 24px;&#13;
+&#13;
+    border-top: 1px solid #e1e8f0;&#13;
+&#13;
+    background: #ffffff;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-cancel {&#13;
+    border: 1px solid #cbd7e5;&#13;
+&#13;
+    background: #ffffff;&#13;
+&#13;
+    color: #536987;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    padding: 9px 18px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 600;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-cancel:hover {&#13;
+    background: #f4f7fa;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-submit {&#13;
+    border: none;&#13;
+&#13;
+    background: #0066d6;&#13;
+&#13;
+    color: #ffffff;&#13;
+&#13;
+    border-radius: 7px;&#13;
+&#13;
+    padding: 9px 18px;&#13;
+&#13;
+    font-size: 14px;&#13;
+&#13;
+    font-weight: 700;&#13;
+&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-submit:hover {&#13;
+    background: #0057b8;&#13;
+}&#13;
+&#13;
+&#13;
+.clarification-submit:disabled {&#13;
+    opacity: 0.6;&#13;
+&#13;
+    cursor: not-allowed;&#13;
+}&#13;
+&#13;
+&#13;
+/* ---------- Mobile ---------- */&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .clarification-overlay {&#13;
+        padding: 12px;&#13;
+    }&#13;
+&#13;
+    .clarification-modal-body {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .clarification-modal-header {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .clarification-modal-footer {&#13;
+        padding: 14px 18px;&#13;
+    }&#13;
+&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>mentor_connect_feed</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Mentor Connect Feed</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.posts = [];
+    data.success = false;
+    data.message = '';
+
+
+    /*
+     * ==========================================
+     * CLARIFY NEWCOMER DOUBT
+     * ==========================================
+     */
+
+    if (input && input.action == 'clarify_doubt') {
+
+        var postId = String(input.postId || '');
+        var clarification = String(input.clarification || '').trim();
+
+        if (!postId) {
+            data.message = 'Doubt information is missing.';
+            return;
+        }
+
+        if (!clarification) {
+            data.message = 'Please enter a clarification.';
+            return;
+        }
+
+        var doubt = new GlideRecord(
+            'x_snc_campus_con_0_mentor_connect'
+        );
+
+        if (!doubt.get(postId)) {
+            data.message = 'The selected doubt was not found.';
+            return;
+        }
+
+
+        /*
+         * Check the DISPLAY value of Post Type.
+         */
+
+        var postTypeDisplay = String(
+            doubt.getDisplayValue('post_type') || ''
+        ).trim().toLowerCase();
+
+        var postTypeValue = String(
+            doubt.getValue('post_type') || ''
+        ).trim().toLowerCase();
+
+        if (
+            postTypeDisplay != 'newcomer doubt' &&
+            postTypeValue != 'newcomer_doubt' &&
+            postTypeValue != 'newcomer doubt'
+        ) {
+            data.message = 'Only Newcomer Doubts can be clarified.';
+            return;
+        }
+
+
+        /*
+         * Check whether already clarified.
+         */
+
+        var resolvedValue = String(
+            doubt.getValue('resolved_clarified') || ''
+        ).toLowerCase();
+
+        if (
+            resolvedValue == '1' ||
+            resolvedValue == 'true' ||
+            resolvedValue == 'yes'
+        ) {
+            data.message = 'This doubt has already been clarified.';
+            return;
+        }
+
+
+        /*
+         * Save clarification.
+         */
+
+        doubt.setValue(
+            'clarification',
+            clarification
+        );
+
+        doubt.setValue(
+            'resolved_clarified',
+            true
+        );
+
+
+        /*
+         * The update is performed by the currently
+         * logged-in student.
+         *
+         * ServiceNow will automatically update
+         * sys_updated_by with that student's
+         * user_name.
+         */
+
+        var updatedId = doubt.update();
+
+        if (!updatedId) {
+            data.message = 'Unable to save the clarification.';
+            return;
+        }
+
+        data.success = true;
+        data.message = 'Doubt clarified successfully.';
+
+        return;
+    }
+
+
+    /*
+     * ==========================================
+     * LOAD MENTOR CONNECT POSTS
+     * ==========================================
+     *
+     * Existing unresolved posts remain visible.
+     *
+     * Additionally, resolved Newcomer Doubts
+     * are loaded so the question + answer +
+     * clarifier details can be displayed.
+     */
+
+    var gr = new GlideRecord(
+        'x_snc_campus_con_0_mentor_connect'
+    );
+
+    gr.orderByDesc('sys_created_on');
+    gr.query();
+
+
+    while (gr.next()) {
+
+        var post = {};
+
+        post.sys_id = gr.getUniqueValue();
+
+        post.author =
+            gr.getDisplayValue('author');
+
+        post.content =
+            gr.getValue('content');
+
+        post.domain_tag =
+            gr.getValue('domain_tag');
+
+
+        /*
+         * Keep display value for UI.
+         */
+
+        post.post_type =
+            gr.getDisplayValue('post_type');
+
+
+        /*
+         * Reliable Newcomer Doubt check.
+         */
+
+        var displayType = String(
+            gr.getDisplayValue('post_type') || ''
+        ).trim().toLowerCase();
+
+        var storedType = String(
+            gr.getValue('post_type') || ''
+        ).trim().toLowerCase();
+
+        post.is_newcomer_doubt =
+            displayType == 'newcomer doubt' ||
+            storedType == 'newcomer_doubt' ||
+            storedType == 'newcomer doubt';
+
+
+        post.related_event =
+            gr.getDisplayValue('related_event');
+
+
+        /*
+         * Get resolved status.
+         */
+
+        var resolvedRaw = String(
+            gr.getValue('resolved_clarified') || ''
+        ).toLowerCase();
+
+        post.resolved_clarified =
+            resolvedRaw == '1' ||
+            resolvedRaw == 'true' ||
+            resolvedRaw == 'yes';
+
+
+        /*
+         * ==========================================
+         * CLARIFICATION DETAILS
+         * ==========================================
+         */
+
+        post.clarification =
+            gr.getValue('clarification') || '';
+
+        post.clarified_by = '';
+        post.clarifier_college = '';
+
+
+        /*
+         * Only fetch clarifier information when
+         * this is a resolved Newcomer Doubt.
+         */
+
+        if (
+            post.is_newcomer_doubt &&
+            post.resolved_clarified &&
+            post.clarification
+        ) {
+
+            /*
+             * sys_updated_by contains the user_name
+             * of the student who submitted the
+             * clarification.
+             */
+
+            var clarifierUserName = String(
+                gr.getValue('sys_updated_by') || ''
+            ).trim();
+
+
+            if (clarifierUserName) {
+
+                /*
+                 * Find the corresponding sys_user.
+                 */
+
+                var clarifierUser =
+                    new GlideRecord('sys_user');
+
+                clarifierUser.addQuery(
+                    'user_name',
+                    clarifierUserName
+                );
+
+                clarifierUser.setLimit(1);
+                clarifierUser.query();
+
+
+                if (clarifierUser.next()) {
+
+                    /*
+                     * Student name
+                     */
+
+                    clarifierUserName =
+                        clarifierUser.getDisplayValue();
+
+
+                    post.clarified_by =
+                        clarifierUserName;
+
+
+                    /*
+                     * Find Student Profile
+                     * belonging to this student.
+                     */
+
+                    var clarifierProfile =
+                        new GlideRecord(
+                            'x_snc_campus_con_0_student_profile'
+                        );
+
+                    clarifierProfile.addQuery(
+                        'student',
+                        clarifierUser.getUniqueValue()
+                    );
+
+                    clarifierProfile.setLimit(1);
+                    clarifierProfile.query();
+
+
+                    if (clarifierProfile.next()) {
+
+                        post.clarifier_college =
+                            clarifierProfile.getValue(
+                                'college_name'
+                            ) || '';
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        /*
+         * ==========================================
+         * IMPORTANT:
+         * ==========================================
+         *
+         * Show:
+         *
+         * 1. All unresolved posts
+         * 2. Resolved Newcomer Doubts
+         *
+         * Other resolved mentor posts continue
+         * to remain hidden as before.
+         */
+
+        if (
+            !post.resolved_clarified ||
+            (
+                post.is_newcomer_doubt &&
+                post.resolved_clarified
+            )
+        ) {
+
+            data.posts.push(post);
+
+        }
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 05:21:24</sys_created_on>
+        <sys_id>8dfe728919e303107f443733a6e8f282</sys_id>
+        <sys_mod_count>46</sys_mod_count>
+        <sys_name>Mentor Connect Feed</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_8dfe728919e303107f443733a6e8f282</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 04:49:02</sys_updated_on>
+        <template><![CDATA[<div class="mentor-connect-page">
+
+  <!-- ==============================
+       HEADER
+       ============================== -->
+
+  <div class="mentor-header">
+
+    <div class="mentor-eyebrow">
+      PEER MENTORSHIP
+    </div>
+
+    <h1 class="mentor-title">
+      Mentor Connect
+    </h1>
+
+    <p class="mentor-subtitle">
+      Learn from students, share knowledge, and help each other grow.
+    </p>
+
+    <!-- Post Mentor Tip / Doubt Button -->
+    <button
+        type="button"
+        class="mentor-post-button"
+        ng-click="c.openPostProducer()">
+
+      + Post a Mentor Tip or Doubt
+
+    </button>
+
+  </div>
+
+
+  <!-- ==============================
+       EMPTY STATE
+       ============================== -->
+
+  <div class="mentor-empty"
+       ng-if="!data.posts || data.posts.length == 0">
+
+    <div class="mentor-empty-icon">
+      ]]>💡
+<![CDATA[    </div>
+
+    <h3>
+      No Open Mentor Posts
+    </h3>
+
+    <p>
+      There are currently no unresolved doubts or mentor posts.
+    </p>
+
+  </div>
+
+
+  <!-- ==============================
+       MENTOR CARDS
+       ============================== -->
+
+  <div class="mentor-grid"
+       ng-if="data.posts && data.posts.length > 0">
+
+    <div class="mentor-card"
+         ng-repeat="post in data.posts">
+
+      <!-- Avatar -->
+      <div class="mentor-avatar">
+        {{post.author.charAt(0).toUpperCase()}}
+      </div>
+
+
+      <!-- Author -->
+      <div class="mentor-author">
+        {{post.author}}
+      </div>
+
+
+      <!-- Post Type -->
+      <div class="mentor-post-type">
+        {{post.post_type}}
+      </div>
+
+
+      <!-- Domain -->
+      <div class="mentor-domain"
+           ng-if="post.domain_tag">
+
+        {{post.domain_tag}}
+
+      </div>
+
+
+      <!-- Content -->
+      <div class="mentor-content">
+        {{post.content}}
+      </div>
+
+
+      <!-- Related Event -->
+      <div class="mentor-event"
+           ng-if="post.related_event">
+
+        <strong>
+          Related Event:
+        </strong>
+
+        {{post.related_event}}
+
+      </div>
+
+
+      <!-- ==============================
+           CLARIFICATION RESULT
+           ============================== -->
+
+      <div
+          class="mentor-clarification-result"
+          ng-if="post.is_newcomer_doubt && post.resolved_clarified">
+
+        <div class="mentor-clarification-title">
+          ]]>💡<![CDATA[ Clarification
+        </div>
+
+        <div class="mentor-clarification-answer">
+          {{post.clarification}}
+        </div>
+
+
+        <!-- Student who clarified -->
+        <div
+            class="mentor-clarified-by"
+            ng-if="post.clarified_by">
+
+          <strong>
+            Clarified by:
+          </strong>
+
+          {{post.clarified_by}}
+
+        </div>
+
+
+        <!-- College of student who clarified -->
+        <div
+            class="mentor-clarified-college"
+            ng-if="post.clarifier_college">
+
+          <strong>
+            College:
+          </strong>
+
+          {{post.clarifier_college}}
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           CLARIFY DOUBT BUTTON
+           ============================== -->
+
+      <!--
+           Button appears ONLY when:
+           1. Post is a Newcomer Doubt
+           2. Doubt is NOT already clarified
+      -->
+
+      <button
+          type="button"
+          class="mentor-clarify-button"
+          ng-if="
+              post.is_newcomer_doubt &&
+              !post.resolved_clarified
+          "
+          ng-click="c.clarifyDoubt(post)"
+          ng-disabled="c.submitting">
+
+        ✨ Clarify Doubt
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==============================
+       CLARIFICATION MODAL
+       ============================== -->
+
+  <div class="clarification-overlay"
+       ng-if="c.showClarificationBox">
+
+    <div class="clarification-modal">
+
+
+      <!-- ==============================
+           MODAL HEADER
+           ============================== -->
+
+      <div class="clarification-modal-header">
+
+        <div>
+
+          <div class="clarification-label">
+            MENTOR CONNECT
+          </div>
+
+          <h3>
+            Clarify Doubt
+          </h3>
+
+        </div>
+
+
+        <!-- Close Button -->
+
+        <button
+            type="button"
+            class="clarification-close"
+            ng-click="c.cancelClarification()"
+            ng-disabled="c.submitting">
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <!-- ==============================
+           MODAL BODY
+           ============================== -->
+
+      <div class="clarification-modal-body">
+
+
+        <!-- Selected Doubt -->
+
+        <div class="clarification-doubt">
+
+          <div class="clarification-doubt-label">
+            Newcomer Doubt
+          </div>
+
+          <strong>
+            {{c.clarifyingPost.author}}
+          </strong>
+
+          <p>
+            {{c.clarifyingPost.content}}
+          </p>
+
+        </div>
+
+
+        <!-- Clarification Input -->
+
+        <label class="clarification-input-label">
+          Your Clarification
+        </label>
+
+        <textarea
+            class="clarification-textarea"
+            ng-model="c.clarificationText"
+            placeholder="Write a clear and helpful explanation..."
+            rows="6"
+            ng-disabled="c.submitting">
+        </textarea>
+
+      </div>
+
+
+      <!-- ==============================
+           MODAL FOOTER
+           ============================== -->
+
+      <div class="clarification-modal-footer">
+
+
+        <!-- Cancel -->
+
+        <button
+            type="button"
+            class="clarification-cancel"
+            ng-click="c.cancelClarification()"
+            ng-disabled="c.submitting">
+
+          Cancel
+
+        </button>
+
+
+        <!-- Submit -->
+
+        <button
+            type="button"
+            class="clarification-submit"
+            ng-click="c.submitClarification()"
+            ng-disabled="c.submitting">
+
+          {{c.submitting ? 'Submitting...' : 'Submit Clarification'}}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_producer">
+    <sc_cat_item_producer action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>true</active>
+        <additional_review>false</additional_review>
+        <allow_edit>false</allow_edit>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <can_cancel>false</can_cancel>
+        <category display_value="Campus Connect">bedd9327b4d303107f44121bcaf323c0</category>
+        <cc_render_type>system</cc_render_type>
+        <checked_out/>
+        <cost>0</cost>
+        <create_universal_request>false</create_universal_request>
+        <custom_cart/>
+        <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-03 00:00:00</delivery_time>
+        <description><![CDATA[<p> </p>
+<style>.cc-event-form {
+  padding:8px 4px 18px 4px;
+  max-width:850px;
+}
+
+.cc-event-eyebrow {
+  display:inline-block;
+  margin-bottom:8px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  color:#0b63ce;
+}
+
+.cc-event-title {
+  margin:0 0 8px 0;
+  font-size:26px;
+  line-height:1.25;
+  font-weight:700;
+  color:#172033;
+}
+
+.cc-event-subtitle {
+  margin:0;
+  max-width:720px;
+  font-size:14px;
+  line-height:1.7;
+  color:#667085;
+}
+
+.cc-event-info {
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-top:20px;
+  padding:14px 16px;
+  background:#f4f8ff;
+  border:1px solid #d9e7fb;
+  border-left:4px solid #0b63ce;
+  border-radius:8px;
+  box-sizing:border-box;
+}
+
+.cc-event-info-icon {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#0b63ce;
+  color:#ffffff;
+  font-size:14px;
+  font-weight:700;
+}
+
+.cc-event-info-title {
+  margin-bottom:3px;
+  font-size:13px;
+  font-weight:700;
+  color:#172033;
+}
+
+.cc-event-info-text {
+  font-size:13px;
+  line-height:1.5;
+  color:#667085;
+}
+
+@media (max-width:600px) {
+  .cc-event-form { padding:6px 2px 14px 2px; }
+
+  .cc-event-title { font-size:22px; }
+
+  .cc-event-subtitle { font-size:13px; }
+
+  .cc-event-info { padding:12px; }
+}
+</style>
+<div class="cc-event-form">
+<div class="cc-event-eyebrow">ORGANIZER WORKSPACE</div>
+<h2 class="cc-event-title">Create a New Event</h2>
+<p class="cc-event-subtitle">Share your event with the verified Campus Connect community. Provide accurate details so students can discover, register, and participate with confidence.</p>
+<div class="cc-event-info">
+<div class="cc-event-info-icon">✓</div>
+<div>
+<div class="cc-event-info-title">Verification Required</div>
+<div class="cc-event-info-text">Your event will be submitted for verification before it becomes visible in Browse Events.</div>
+</div>
+</div>
+</div>]]></description>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <fulfillment_automation_level>unspecified</fulfillment_automation_level>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <location/>
+        <make_item_non_conversational>false</make_item_non_conversational>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Report an Event</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>false</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>false</no_proceed_checkout>
+        <no_quantity>false</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_save_as_draft>false</no_save_as_draft>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>false</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <picture/>
+        <post_insert_script><![CDATA[/**
+* This script is executed after the record is generated. 
+* `current` Is the GlideRecord produced by Record Producer. Use `current.update()` to update the record
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></post_insert_script>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=354fd3e7b4d303107f44121bcaf3233f&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <redirect_url>generated_record</redirect_url>
+        <request_method/>
+        <roles/>
+        <save_options/>
+        <save_script><![CDATA[/**
+* This script is executed at every step save in Catalog Builder. 
+* This script is executed before `Script` is executed.
+* `current` Is the GlideRecord produced by Record Producer. 
+* To access the variables, use `producer.var1` where var1 is the name of the variable
+* To access the Record Producer use `cat_item`
+*/]]></save_script>
+        <sc_catalogs>e0d08b13c3330100c8b837659bba8fb4</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <script><![CDATA[current.event_name = producer.event_name;
+
+current.event_type =
+    producer.event_type.toString();
+
+current.technology_tags =
+    producer.technology_tags;
+
+current.event_date =
+    producer.event_date;
+
+current.registration_deadline =
+    producer.registration_deadline;
+
+current.location =
+    producer.location;
+
+current.google_maps_link =
+    producer.google_maps_link;
+
+current.fees =
+    producer.fees;
+
+current.contact_number =
+    producer.contact_number;
+
+
+/* =====================================================
+   VENUE AUTHORIZATION DOCUMENT
+   ===================================================== */
+
+if (producer.venue_authorization_document) {
+
+    current.venue_authorization_document =
+        producer.venue_authorization_document;
+
+}
+
+
+/* =====================================================
+   AUTOMATICALLY FIND LOGGED-IN EVENT ORGANIZER
+   ===================================================== */
+
+var organizerGR = new GlideRecord(
+    "x_snc_campus_con_0_event_organizers"
+);
+
+organizerGR.addQuery(
+    "organizer_name",
+    gs.getUserID()
+);
+
+organizerGR.setLimit(1);
+
+organizerGR.query();
+
+
+if (organizerGR.next()) {
+
+    /* Store Event Organizer reference */
+
+    current.organizer =
+        organizerGR.getUniqueValue();
+
+
+    /* Save submitted Contact Number
+       into Event Organizer */
+
+    if (producer.contact_number) {
+
+        organizerGR.setValue(
+            "contact_number",
+            producer.contact_number.toString()
+        );
+
+        organizerGR.update();
+
+    }
+
+}
+
+
+/* =====================================================
+   EVERY NEW EVENT STARTS AS PENDING
+   ===================================================== */
+
+current.verification_status =
+    "pending";
+
+
+/* =====================================================
+   RETURN TO EVENT ORGANIZER DASHBOARD
+   ===================================================== */
+
+producer.portal_redirect =
+    "?id=event_organizer_dashboard";]]></script>
+        <secondary_owners/>
+        <short_description>Submit a hackathon, workshop, or event for verification.</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <start_closed>false</start_closed>
+        <state/>
+        <sys_class_name>sc_cat_item_producer</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-19 15:52:41</sys_created_on>
+        <sys_id>354fd3e7b4d303107f44121bcaf3233f</sys_id>
+        <sys_mod_count>55</sys_mod_count>
+        <sys_name>Report an Event</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sc_cat_item_producer_354fd3e7b4d303107f44121bcaf3233f</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2026-10-07 17:39:51</sys_updated_on>
+        <table_name>x_snc_campus_con_0_events</table_name>
+        <taxonomy_topic/>
+        <template/>
+        <template_manager_roles/>
+        <turn_off_nowassist_conversation>false</turn_off_nowassist_conversation>
+        <type>item</type>
+        <use_sc_layout>true</use_sc_layout>
+        <vendor/>
+        <version>56</version>
+        <view/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow/>
+    </sc_cat_item_producer>
+    <sys_translated_text action="delete_multiple" query="documentkey=354fd3e7b4d303107f44121bcaf3233f"/>
+    <fx_price action="delete_multiple" query="id=354fd3e7b4d303107f44121bcaf3233f"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="GBP">GBP</currency>
+        <field>price</field>
+        <id>354fd3e7b4d303107f44121bcaf3233f</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-19 15:52:42</sys_created_on>
+        <sys_id>64cf932bb4d303107f44121bcaf323ee</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-19 15:52:42</sys_updated_on>
+        <table>sc_cat_item_producer</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

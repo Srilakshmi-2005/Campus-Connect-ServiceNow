@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Browse Events</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    data.events = [];
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.addQuery('verification_status', 'verified');
+    gr.orderBy('event_date');
+    gr.query();
+
+    while (gr.next()) {
+        data.events.push({
+            sys_id: gr.getUniqueValue(),
+            name: gr.event_name.toString(),
+            type: gr.event_type.toString(),
+            tags: gr.technology_tags.toString(),
+            date: gr.event_date.getDisplayValue(),
+            deadline: gr.registration_deadline.getDisplayValue(),
+            location: gr.location.toString(),
+            maps_link: gr.google_maps_link.toString(),
+            fees: gr.fees.toString()
+        });
+    }
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 05:59:33</sys_created_on>
+        <sys_id>81c4b0e814a303107f4482b2cd2483ed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Browse Events</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_81c4b0e814a303107f4482b2cd2483ed</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 05:59:33</sys_updated_on>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</application>
+        <file_path/>
+        <instance_id>82d18dc7c38fcf94a03197af050131dc</instance_id>
+        <instance_name>ltm-hck-2876-0040</instance_name>
+        <name>sp_widget_81c4b0e814a303107f4482b2cd2483ed</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Browse Events&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    data.events = [];
+
+    var gr = new GlideRecord('x_snc_campus_con_0_events');
+    gr.addQuery('verification_status', 'verified');
+    gr.orderBy('event_date');
+    gr.query();
+
+    while (gr.next()) {
+        data.events.push({
+            sys_id: gr.getUniqueValue(),
+            name: gr.event_name.toString(),
+            type: gr.event_type.toString(),
+            tags: gr.technology_tags.toString(),
+            date: gr.event_date.getDisplayValue(),
+            deadline: gr.registration_deadline.getDisplayValue(),
+            location: gr.location.toString(),
+            maps_link: gr.google_maps_link.toString(),
+            fees: gr.fees.toString()
+        });
+    }
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-09-22 05:59:33&lt;/sys_created_on&gt;&lt;sys_id&gt;81c4b0e814a303107f4482b2cd2483ed&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Browse Events&lt;/sys_name&gt;&lt;sys_package display_value="Campus Connect" source="x_snc_campus_con_0"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Campus Connect"&gt;50d7e12f081303107f44bab7a44b4d9e&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_81c4b0e814a303107f4482b2cd2483ed&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-09-22 05:59:33&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div&gt;
+&lt;!-- your widget template --&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1792418188</payload_hash>
+        <record_name>Browse Events</record_name>
+        <reverted_from/>
+        <source>14d7e12f081303107f44bab7a44b4da4</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-22 05:59:33</sys_created_on>
+        <sys_id>41c4b0e814a303107f4482b2cd2483f0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a0c7b2b7dd0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-22 05:59:33</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>41c4b0e896a303102813d79e634d33ef</update_guid>
+        <update_guid_history>41c4b0e896a303102813d79e634d33ef:-1792418188</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Browse Events">e9327cd519a343107f443733a6e8f28c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-24 13:43:50</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>4c3fd066108c49758406324b6df0fc01</sys_id>
+        <sys_metadata>81c4b0e814a303107f4482b2cd2483ed</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Browse Events</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_scope_delete display_value="">1eedb35692804769ab09916dfdd4f4d1</sys_scope_delete>
+        <sys_update_name>sp_widget_81c4b0e814a303107f4482b2cd2483ed</sys_update_name>
+        <sys_update_version display_value="sp_widget_81c4b0e814a303107f4482b2cd2483ed">41c4b0e814a303107f4482b2cd2483f0</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-24 13:43:50</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

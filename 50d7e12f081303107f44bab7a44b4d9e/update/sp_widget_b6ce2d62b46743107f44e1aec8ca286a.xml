@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.cc-organizer-page {&#13;
+    padding: 28px;&#13;
+    background: #f6f8fc;&#13;
+    min-height: 100vh;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+/* Header */&#13;
+&#13;
+.cc-organizer-header {&#13;
+    display: flex;&#13;
+    align-items: flex-start;&#13;
+    justify-content: space-between;&#13;
+    gap: 24px;&#13;
+    margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+.cc-organizer-eyebrow,&#13;
+.cc-section-eyebrow {&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+    letter-spacing: 1.4px;&#13;
+    color: #0b63ce;&#13;
+}&#13;
+&#13;
+.cc-organizer-title {&#13;
+    margin: 7px 0 6px;&#13;
+    font-size: 30px;&#13;
+    font-weight: 700;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.cc-organizer-subtitle {&#13;
+    margin: 0;&#13;
+    color: #667085;&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+/* Create Event */&#13;
+&#13;
+.cc-create-event-btn {&#13;
+    display: inline-block;&#13;
+    padding: 12px 20px;&#13;
+    border-radius: 8px;&#13;
+    background: #0b63ce;&#13;
+    color: #ffffff !important;&#13;
+    font-size: 14px;&#13;
+    font-weight: 600;&#13;
+    text-decoration: none !important;&#13;
+    white-space: nowrap;&#13;
+}&#13;
+&#13;
+.cc-create-event-btn:hover {&#13;
+    background: #084f9f;&#13;
+}&#13;
+&#13;
+/* Statistics */&#13;
+&#13;
+.cc-organizer-stats {&#13;
+    display: grid;&#13;
+    grid-template-columns: repeat(4, 1fr);&#13;
+    gap: 16px;&#13;
+    margin-bottom: 30px;&#13;
+}&#13;
+&#13;
+.cc-stat-card {&#13;
+    padding: 20px;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5e9f2;&#13;
+    border-radius: 10px;&#13;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);&#13;
+}&#13;
+&#13;
+.cc-stat-label {&#13;
+    font-size: 13px;&#13;
+    color: #667085;&#13;
+    margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+.cc-stat-value {&#13;
+    font-size: 28px;&#13;
+    font-weight: 700;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+/* Events */&#13;
+&#13;
+.cc-events-section {&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5e9f2;&#13;
+    border-radius: 12px;&#13;
+    padding: 24px;&#13;
+}&#13;
+&#13;
+.cc-section-header {&#13;
+    margin-bottom: 22px;&#13;
+}&#13;
+&#13;
+.cc-section-header h2,&#13;
+.cc-verification-panel h2 {&#13;
+    margin: 6px 0;&#13;
+    font-size: 21px;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.cc-section-header p {&#13;
+    margin: 0;&#13;
+    font-size: 13px;&#13;
+    color: #667085;&#13;
+}&#13;
+&#13;
+/* Event card */&#13;
+&#13;
+.cc-event-list {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    gap: 12px;&#13;
+}&#13;
+&#13;
+.cc-organizer-event-card {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: space-between;&#13;
+    gap: 20px;&#13;
+    padding: 18px;&#13;
+    border: 1px solid #e5e9f2;&#13;
+    border-radius: 9px;&#13;
+    background: #ffffff;&#13;
+}&#13;
+&#13;
+.cc-event-main h3 {&#13;
+    margin: 0 0 9px;&#13;
+    font-size: 16px;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.cc-event-date,&#13;
+.cc-event-location {&#13;
+    display: inline-block;&#13;
+    margin-right: 18px;&#13;
+    font-size: 12px;&#13;
+    color: #667085;&#13;
+}&#13;
+&#13;
+.cc-event-meta {&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    gap: 18px;&#13;
+}&#13;
+&#13;
+.cc-registration-count {&#13;
+    display: flex;&#13;
+    flex-direction: column;&#13;
+    align-items: center;&#13;
+}&#13;
+&#13;
+.cc-registration-count strong {&#13;
+    font-size: 18px;&#13;
+    color: #172033;&#13;
+}&#13;
+&#13;
+.cc-registration-count span {&#13;
+    font-size: 11px;&#13;
+    color: #667085;&#13;
+}&#13;
+&#13;
+/* Status */&#13;
+&#13;
+.cc-status {&#13;
+    padding: 6px 10px;&#13;
+    border-radius: 20px;&#13;
+    font-size: 11px;&#13;
+    font-weight: 700;&#13;
+}&#13;
+&#13;
+.cc-status-verified {&#13;
+    background: #e9f8ef;&#13;
+    color: #18794e;&#13;
+}&#13;
+&#13;
+.cc-status-pending {&#13;
+    background: #fff5dc;&#13;
+    color: #9a6700;&#13;
+}&#13;
+&#13;
+.cc-status-rejected {&#13;
+    background: #fdecec;&#13;
+    color: #b42318;&#13;
+}&#13;
+&#13;
+/* Manage */&#13;
+&#13;
+.cc-manage-btn {&#13;
+    padding: 8px 13px;&#13;
+    border: 1px solid #d5dbea;&#13;
+    border-radius: 7px;&#13;
+    color: #0b63ce !important;&#13;
+    background: #ffffff;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+    text-decoration: none !important;&#13;
+}&#13;
+&#13;
+/* Empty */&#13;
+&#13;
+.cc-empty-events {&#13;
+    text-align: center;&#13;
+    padding: 45px 20px;&#13;
+    border: 1px dashed #d5dbea;&#13;
+    border-radius: 9px;&#13;
+}&#13;
+&#13;
+.cc-empty-icon {&#13;
+    font-size: 30px;&#13;
+    margin-bottom: 10px;&#13;
+}&#13;
+&#13;
+.cc-empty-events h3 {&#13;
+    margin: 0 0 7px;&#13;
+    font-size: 17px;&#13;
+}&#13;
+&#13;
+.cc-empty-events p {&#13;
+    margin: 0 0 18px;&#13;
+    color: #667085;&#13;
+    font-size: 13px;&#13;
+}&#13;
+&#13;
+.cc-empty-button {&#13;
+    display: inline-block;&#13;
+    padding: 9px 15px;&#13;
+    border-radius: 7px;&#13;
+    background: #0b63ce;&#13;
+    color: #ffffff !important;&#13;
+    text-decoration: none !important;&#13;
+    font-size: 12px;&#13;
+    font-weight: 600;&#13;
+}&#13;
+&#13;
+/* Verification */&#13;
+&#13;
+.cc-verification-panel {&#13;
+    margin-top: 20px;&#13;
+    padding: 22px 24px;&#13;
+    background: #ffffff;&#13;
+    border: 1px solid #e5e9f2;&#13;
+    border-radius: 12px;&#13;
+}&#13;
+&#13;
+.cc-verification-event {&#13;
+    margin-top: 15px;&#13;
+    padding: 15px;&#13;
+    background: #f6f8fc;&#13;
+    border-radius: 8px;&#13;
+}&#13;
+&#13;
+.cc-verification-event strong {&#13;
+    font-size: 14px;&#13;
+}&#13;
+&#13;
+.cc-verification-event p {&#13;
+    margin: 6px 0 0;&#13;
+    font-size: 12px;&#13;
+    color: #667085;&#13;
+}&#13;
+&#13;
+/* Mobile */&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+&#13;
+    .cc-organizer-stats {&#13;
+        grid-template-columns: repeat(2, 1fr);&#13;
+    }&#13;
+&#13;
+    .cc-organizer-event-card {&#13;
+        align-items: flex-start;&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-event-meta {&#13;
+        width: 100%;&#13;
+        justify-content: space-between;&#13;
+    }&#13;
+}&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+&#13;
+    .cc-organizer-page {&#13;
+        padding: 18px;&#13;
+    }&#13;
+&#13;
+    .cc-organizer-header {&#13;
+        flex-direction: column;&#13;
+    }&#13;
+&#13;
+    .cc-organizer-title {&#13;
+        font-size: 24px;&#13;
+    }&#13;
+&#13;
+    .cc-organizer-stats {&#13;
+        grid-template-columns: 1fr;&#13;
+    }&#13;
+&#13;
+    .cc-event-meta {&#13;
+        flex-wrap: wrap;&#13;
+    }&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Event organizer dashboard for managing events and registrations</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>organizer_dashboard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Organizer Dashboard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.publishedEvents = 0;
+    data.totalRegistrations = 0;
+    data.pendingEvents = 0;
+    data.attendanceRate = 0;
+
+    data.events = [];
+    data.latestVerification = null;
+
+    var currentUser = gs.getUserID();
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    /*
+     * ==========================================
+     * 1. FIND CURRENT EVENT ORGANIZER PROFILE
+     * ==========================================
+     *
+     * Event Organizer.organizer_name
+     * points to the logged-in sys_user.
+     *
+     */
+
+    var organizerProfile = new GlideRecord(
+        'x_snc_campus_con_0_event_organizers'
+    );
+
+    organizerProfile.addQuery(
+        'organizer_name',
+        currentUser
+    );
+
+    organizerProfile.setLimit(1);
+    organizerProfile.query();
+
+
+    /*
+     * If no Event Organizer profile exists,
+     * there are no events to display.
+     */
+
+    if (!organizerProfile.next()) {
+        return;
+    }
+
+
+    /*
+     * Get the Event Organizer record sys_id.
+     */
+
+    var organizerSysId =
+        organizerProfile.getUniqueValue();
+
+
+    /*
+     * ==========================================
+     * 2. GET ORGANIZER'S EVENTS
+     * ==========================================
+     *
+     * Events.organizer contains the
+     * Event Organizer record sys_id.
+     *
+     */
+
+    var events = new GlideRecord(
+        'x_snc_campus_con_0_events'
+    );
+
+    events.addQuery(
+        'organizer',
+        organizerSysId
+    );
+
+    events.orderByDesc('event_date');
+    events.query();
+
+
+    var eventIds = [];
+
+
+    while (events.next()) {
+
+        var eventId =
+            events.getUniqueValue();
+
+        eventIds.push(eventId);
+
+
+        /*
+         * ==========================================
+         * COUNT VERIFICATION STATUS
+         * ==========================================
+         */
+
+        var verificationStatus =
+            events.getValue(
+                'verification_status'
+            );
+
+
+        if (verificationStatus == 'verified') {
+
+            data.publishedEvents++;
+
+        }
+
+
+        if (verificationStatus == 'pending') {
+
+            data.pendingEvents++;
+
+        }
+
+
+        /*
+         * ==========================================
+         * COUNT REGISTRATIONS
+         * ==========================================
+         */
+
+        var registrationCount = 0;
+
+        var registrations = new GlideRecord(
+            'x_snc_campus_con_0_registrations'
+        );
+
+        registrations.addQuery(
+            'event',
+            eventId
+        );
+
+        registrations.query();
+
+
+        while (registrations.next()) {
+
+            registrationCount++;
+
+        }
+
+
+        data.totalRegistrations +=
+            registrationCount;
+
+
+        /*
+         * ==========================================
+         * ADD EVENT TO DASHBOARD
+         * ==========================================
+         */
+
+        data.events.push({
+
+            sys_id:
+                eventId,
+
+            eventName:
+                events.getDisplayValue(
+                    'event_name'
+                ),
+
+            eventDate:
+                events.getDisplayValue(
+                    'event_date'
+                ),
+
+            location:
+                events.getDisplayValue(
+                    'location'
+                ),
+
+            status:
+                events.getDisplayValue(
+                    'verification_status'
+                ),
+
+            registrationCount:
+                registrationCount
+
+        });
+
+
+        /*
+         * ==========================================
+         * LATEST VERIFICATION
+         * ==========================================
+         */
+
+        if (!data.latestVerification) {
+
+            data.latestVerification = {
+
+                eventName:
+                    events.getDisplayValue(
+                        'event_name'
+                    ),
+
+                status:
+                    events.getDisplayValue(
+                        'verification_status'
+                    )
+
+            };
+
+        }
+
+    }
+
+
+    /*
+     * ==========================================
+     * 3. ATTENDANCE RATE
+     * ==========================================
+     *
+     * Attendance Rate =
+     * Attended Registrations /
+     * Total Registrations × 100
+     *
+     */
+
+    if (
+        data.totalRegistrations > 0 &&
+        eventIds.length > 0
+    ) {
+
+        var attendedCount = 0;
+
+        var allRegistrations = new GlideRecord(
+            'x_snc_campus_con_0_registrations'
+        );
+
+        allRegistrations.addQuery(
+            'event',
+            'IN',
+            eventIds.join(',')
+        );
+
+        allRegistrations.query();
+
+
+        while (allRegistrations.next()) {
+
+            if (
+                allRegistrations.getValue(
+                    'registration_status'
+                ) == 'attended'
+            ) {
+
+                attendedCount++;
+
+            }
+
+        }
+
+
+        data.attendanceRate = Math.round(
+
+            (
+                attendedCount /
+                data.totalRegistrations
+            ) * 100
+
+        );
+
+    }
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-28 15:21:26</sys_created_on>
+        <sys_id>b6ce2d62b46743107f44e1aec8ca286a</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Organizer Dashboard</sys_name>
+        <sys_package display_value="Campus Connect" source="x_snc_campus_con_0">50d7e12f081303107f44bab7a44b4d9e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Campus Connect">50d7e12f081303107f44bab7a44b4d9e</sys_scope>
+        <sys_update_name>sp_widget_b6ce2d62b46743107f44e1aec8ca286a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-08 03:55:09</sys_updated_on>
+        <template><![CDATA[<div class="cc-organizer-page">
+
+  <!-- Header -->
+  <div class="cc-organizer-header">
+
+    <div>
+      <div class="cc-organizer-eyebrow">
+        ORGANIZER WORKSPACE
+      </div>
+
+      <h1 class="cc-organizer-title">
+        Event Organizer Dashboard
+      </h1>
+
+      <p class="cc-organizer-subtitle">
+        Create, monitor, and manage your events through Campus Connect.
+      </p>
+    </div>
+
+    <a
+      class="cc-create-event-btn"
+      href="?id=sc_cat_item&sys_id=354fd3e7b4d303107f44121bcaf3233f">
+      + Create Event
+    </a>
+
+  </div>
+
+
+  <!-- Summary Cards -->
+  <div class="cc-organizer-stats">
+
+    <div class="cc-stat-card">
+      <div class="cc-stat-label">
+        Published Events
+      </div>
+
+      <div class="cc-stat-value">
+        {{data.publishedEvents}}
+      </div>
+    </div>
+
+
+    <div class="cc-stat-card">
+      <div class="cc-stat-label">
+        Total Registrations
+      </div>
+
+      <div class="cc-stat-value">
+        {{data.totalRegistrations}}
+      </div>
+    </div>
+
+
+    <div class="cc-stat-card">
+      <div class="cc-stat-label">
+        Pending Review
+      </div>
+
+      <div class="cc-stat-value">
+        {{data.pendingEvents}}
+      </div>
+    </div>
+
+
+    <div class="cc-stat-card">
+      <div class="cc-stat-label">
+        Attendance Rate
+      </div>
+
+      <div class="cc-stat-value">
+        {{data.attendanceRate}}%
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Your Events -->
+  <div class="cc-events-section">
+
+    <div class="cc-section-header">
+
+      <div>
+        <div class="cc-section-eyebrow">
+          EVENT MANAGEMENT
+        </div>
+
+        <h2>
+          Your Events
+        </h2>
+
+        <p>
+          Events created by you in Campus Connect.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- Empty State -->
+    <div
+      class="cc-empty-events"
+      ng-if="!data.events || data.events.length === 0">
+
+      <div class="cc-empty-icon">
+        ]]>📅
+<![CDATA[      </div>
+
+      <h3>
+        No Events Yet
+      </h3>
+
+      <p>
+        Create your first event to start engaging with students.
+      </p>
+
+      <a
+        class="cc-empty-button"
+        href="?id=sc_cat_item&sys_id=354fd3e7b4d303107f44121bcaf3233f">
+        Create Your First Event
+      </a>
+
+    </div>
+
+
+    <!-- Event Cards -->
+    <div
+      class="cc-event-list"
+      ng-if="data.events && data.events.length > 0">
+
+      <div
+        class="cc-organizer-event-card"
+        ng-repeat="event in data.events">
+
+        <div class="cc-event-main">
+
+          <h3>
+            {{event.eventName}}
+          </h3>
+
+          <div class="cc-event-date">
+            ]]>📅<![CDATA[ {{event.eventDate}}
+          </div>
+
+          <div class="cc-event-location">
+            ]]>📍<![CDATA[ {{event.location}}
+          </div>
+
+        </div>
+
+
+        <div class="cc-event-meta">
+
+          <div class="cc-registration-count">
+            <strong>
+              {{event.registrationCount}}
+            </strong>
+
+            <span>
+              Registrations
+            </span>
+          </div>
+
+
+          <div
+            class="cc-status"
+            ng-class="{
+              'cc-status-verified': event.status == 'Verified',
+              'cc-status-pending': event.status == 'Pending',
+              'cc-status-rejected': event.status == 'Rejected'
+            }">
+
+            {{event.status}}
+
+          </div>
+
+
+          <a
+            class="cc-manage-btn"
+            href="?id=browse_events">
+            Manage
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Latest Verification -->
+  <div
+    class="cc-verification-panel"
+    ng-if="data.latestVerification">
+
+    <div class="cc-section-eyebrow">
+      VERIFICATION
+    </div>
+
+    <h2>
+      Latest Verification
+    </h2>
+
+    <div class="cc-verification-event">
+
+      <div>
+
+        <strong>
+          {{data.latestVerification.eventName}}
+        </strong>
+
+        <p>
+          Current verification status:
+          <span>
+            {{data.latestVerification.status}}
+          </span>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>]]></template>
+    </sp_widget>
+</record_update>
